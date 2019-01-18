@@ -54,7 +54,7 @@ export const loginUser = creds => (
     return api.auth.authenticate(creds)
       .then(auth => {
         // If login was successful, set the token in local storage
-        localStorage.setItem('logged_jlconservadora', true);
+        localStorage.setItem('id_token', creds.id_token);
         localStorage.setItem('user', JSON.stringify(auth.user));
 
         // Dispatch the success action

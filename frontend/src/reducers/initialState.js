@@ -1,6 +1,6 @@
 export default {
   auth: {
-    isAuthenticated: localStorage.getItem('logged_jlconservadora') ? true : false,
+    isAuthenticated: localStorage.getItem('id_token') ? true : false,
     user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {}
   },
   comments: [],
