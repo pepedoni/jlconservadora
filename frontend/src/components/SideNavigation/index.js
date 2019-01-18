@@ -14,7 +14,9 @@ const SideNavigation = () => {
     },
     faturamento: {
       name: 'Faturamento',
-      path: "/faturamento"
+      path: '/faturamento',
+      icon: 'assignment'
+
     }
   };
 
