@@ -1,39 +1,30 @@
-import axios from 'axios';
-
-let api = "http://127.0.0.1:8000/api/auth";
+import request from './request';
 
 const auth = {
   authenticate: user => new Promise(function(resolve, reject) {
-    let config = {
-      headers: {
-        'Content-type': 'application/json; charset=utf-8',
-        'Accept': 'application/json; charset=utf-8',
-        'Access-Control-Allow-Origin': "*",
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-      }
-    };
-
-    axios.post(api + '/login', user, config).then((response) => {
+    request.post('/api/auth/login', user).then((response) => {
       if (response.status == 401) {
         reject();
       } else {
-        let token = 'Bearer ' + response.data.access_token;
-        config.headers.Authorization = token;
-        axios.get(api + '/user', config).then((response) => {
+        let token = response.data.access_token;
+        localStorage.setItem('@jl_token', token);
+        request.get('/api/auth/user').then((response) => {
           resolve({
-            id_token: token,
+            jl_token: token,
             user: response.data
           });
         }).catch((error) => {
-          console.log(error);
           reject(error);
         });
       }
     }).catch((error) => {
-      console.log(error);
       reject(error);
     });
   })
 };
+
+export const TOKEN_KEY = '@jl_token';
+
+export const getToken = () => localStorage.getItem('@jl_token');
 
 export default auth;

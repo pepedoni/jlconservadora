@@ -1,0 +1,19 @@
+{
+
+    "version": "0.2.0",
+    "configurations": [        
+        
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:3000",
+            "breakOnLoad": true,
+            "webRoot": "${workspaceFolder}/frontend/src",
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "*": "${webRoot}/frontend/src/api/*"
+            }
+        }
+    ]
+}
