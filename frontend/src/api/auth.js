@@ -20,6 +20,14 @@ const auth = {
     }).catch((error) => {
       reject(error);
     });
+  }),
+
+  logout: () => new Promise(function(resolve, reject) {
+    request.get('api/auth/logout').then((response) => {
+      resolve();
+    }).catch((error) => {
+        reject(error);
+    });
   })
 };
 

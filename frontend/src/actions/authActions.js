@@ -41,6 +41,14 @@ const receiveLogout = () => {
   };
 };
 
+const logoutError = message => {
+  return {
+    type: types.LOGOUT_FAILURE,
+    isAuthenticated: true,
+    message
+  };
+};
+
 // Calls the API to get a token and
 // dispatches actions along the way
 export const loginUser = creds => (
@@ -71,9 +79,15 @@ export const loginUser = creds => (
 export const logoutUser = () => {
   return dispatch => {
     dispatch(requestLogout());
-    localStorage.removeItem('@jl_token');
-    localStorage.removeItem('user');
-    dispatch(receiveLogout());
-    browserHistory.push('/');
+    return api.auth.logout()
+      .then(response => {
+        localStorage.removeItem('@jl_token');
+        localStorage.removeItem('user');
+        dispatch(receiveLogout());
+        browserHistory.push('/');
+      }).catch(error => {
+        dispatch(ajaxCallError(error));
+        dispatch(logoutError(error.message))
+      });
   };
 };
