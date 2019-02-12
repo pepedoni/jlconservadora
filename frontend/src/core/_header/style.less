@@ -1,0 +1,45 @@
+//Media queries here until we find why it cant be at variables.less
+@media (max-width: 576px) {
+  .ant-layout-header {
+    padding: @padding-mobile-content !important;  
+  }
+}
+
+.jl-header {
+  @media (max-width: 576px) {
+    .title {
+      font-size: @title-mobile-size !important;
+    }
+  }
+
+  .title-container {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 16px);
+
+    .title {
+      font-size: @title-size;
+      color: @primary-text-color;
+      font-weight: 700;
+    }
+  }
+
+  .breadcrumb-container {
+    float:left;
+    margin-top: 3px;
+  }
+
+  .breadcrumb {
+    font-size: 11px;
+  }
+
+  .avatar-container {
+
+    .ant-badge {
+      float: right;
+      margin-top: 14px;
+      cursor: pointer;
+    }     
+  }
+}

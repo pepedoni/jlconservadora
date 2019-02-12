@@ -1,0 +1,24 @@
+.trigger {
+  width: 100%;
+  height: 60px;
+  cursor:pointer;
+
+  & > i {
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 24px;
+    position: absolute;
+    bottom: 5px;
+    left: 35px;
+    transform: translate(-50%, -50%);
+
+    &:hover {
+      color: @primary-color;
+    }
+  }
+
+  & > span {
+    position: absolute;
+    bottom: 18px;
+    left: 55px;
+  }
+}

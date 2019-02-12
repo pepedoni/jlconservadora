@@ -1,0 +1,114 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Row, Col, Avatar, Popover, Badge, Modal } from "antd";
+import { bindActionCreators } from "redux";
+import { logout } from "features/auth/authActions";
+import QueueAnim from 'rc-queue-anim';
+import "./style.less";
+
+import UserPopover from 'core/_user_popover';
+
+class JLHeader extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      showLogoutConfirmation: false,
+    }
+  }
+
+
+  //Renders
+  renderBreadcrumb = () => (
+    <Col className="hide-mobile breadcrumb-container">
+      <span className="breadcrumb">
+        {this.props.currentLocation.breadcrumb && this.props.currentLocation.breadcrumb.replace(/\//g, " \/  ")}
+      </span>
+    </Col>
+  )
+
+  renderTitle = () => (
+    <Col span={22}>
+      {this.renderBreadcrumb()}
+      <QueueAnim delay={0} duration={[1000,0]}
+      >
+        <Col key={this.props.currentLocation.title} className="title-container">
+          <span className="title">
+            {this.props.currentLocation.title}
+          </span>  
+        </Col>
+      </QueueAnim>
+    </Col>
+  )
+
+  renderAvatar = () => (
+    <Col span={2} className="avatar-container">
+    <Badge count={0}>
+      <Popover placement="bottomLeft" 
+        content={
+          <UserPopover 
+            userName="Pedro Moutinho" 
+            companyName="Jl Conservadora" 
+            hasNotification={true}
+            logout={this.confirmLogout}
+          />} 
+        trigger="click">
+        <Avatar icon="user" src={this.props.user && this.props.user.image} alt={this.props.user && this.props.user.name}/>
+      </Popover>
+    </Badge>
+    </Col>
+  )
+
+  renderLogoutConfirmation = () => (
+    <Modal visible={this.state.showLogoutConfirmation} 
+      onOk={this.logout}
+      confirmLoading={this.state.logginOut}
+      onCancel={() => this.setState({showLogoutConfirmation: false})}
+      title={this.state.logginOut? "Saindo" : "Sair"}
+      okText={this.state.logginOut? "Saindo" : "Sim"}
+      cancelText="Não"
+      okButtonProps={{disabled:this.state.logginOut}}
+      cancelButtonProps={{disabled:this.state.logginOut}}
+    >
+      <span>
+        Tem certeza que deseja sair do sistema?
+      </span>
+    </Modal>
+  )
+
+  //Actions
+  confirmLogout = () => {
+    this.setState({showLogoutConfirmation: true});
+  }
+
+  logout = async () => {
+    await this.setState({logginOut: true});
+    setTimeout(() => this.props.logout(), 1000);
+  }
+
+  render() {
+    return (
+      <Row>
+        {this.renderTitle()}
+        {this.renderAvatar()}
+        {this.renderLogoutConfirmation()}
+      </Row>
+    )
+  }
+}
+
+//Listen to path change
+const mapStateToProps = state => ({
+  currentLocation: state.general.currentLocation,
+  user: state.auth.user
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      logout
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(JLHeader);

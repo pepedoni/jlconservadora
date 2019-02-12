@@ -1,0 +1,84 @@
+//Main style files, import things here
+@import '~axios-progress-bar/dist/nprogress.css';
+@import (css) url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+@import (css) url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.jl {
+  height: 100vh;
+  
+  //Media queries here until we find why it cant be at variables.less
+  
+  @media (max-width: 576px) {
+    .hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .jl-content {
+      padding: @padding-mobile-content !important;
+    }
+  }
+
+  .jl-sider {
+    position: relative;
+    height: calc(100vh); 
+
+    .ant-layout-sider-children {
+      display: flex;
+      flex-direction: column;
+      -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.3);
+      -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.3);
+      box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.3);
+    }
+
+  }
+
+  .jl-content {
+    padding: @padding-content;
+  }
+  
+  // Override ant here
+  .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
+    border-right: none !important;
+  }
+  
+  .ant-menu-item.ant-menu-item-selected {
+    border-right: 3px solid @primary-color !important;
+  }
+
+  .ant-layout-header {
+    padding: @padding-content;
+  }
+
+  
+}
+
+.ant-popover-inner-content {
+  padding: 0 !important;
+}
+
+.ant-popover-placement-bottom > .ant-popover-content > .ant-popover-arrow, .ant-popover-placement-bottomLeft > .ant-popover-content > .ant-popover-arrow, .ant-popover-placement-bottomRight > .ant-popover-content > .ant-popover-arrow {
+  border-top-color: @jl-color-9 !important;
+  border-left-color: @jl-color-9 !important;
+}
+
+#nprogress {
+  
+  .bar {
+    background: @primary-color !important;
+  }
+
+  .peg {
+    box-shadow: 0 0 10px @primary-color, 0 0 5px @primary-color !important;
+  }
+
+  .spinner-icon {
+    border-top-color: @primary-color !important;
+    border-left-color: @primary-color !important;
+  }
+}
