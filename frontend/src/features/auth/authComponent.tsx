@@ -159,7 +159,7 @@ export default class Login extends React.Component {
   )
   
   render() {
-    const { from } = this.props.location.state || { from: { pathname: "/dashboard" } };
+    const { from } = this.props.location.state || {from: { pathname: "/dashboard" }};
     
     // If successful login
     if (this.props.user) {

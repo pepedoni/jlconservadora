@@ -1,5 +1,6 @@
 import Pipeline from 'features/Pipeline';
 import Contacts from 'features/contacts/containers/list';
+import Dashboard from "features/dashboard/dashboardContainer";
 
 export const routes = [
   {
@@ -11,6 +12,11 @@ export const routes = [
     path: '/contacts',
     exact: true,
     component: Contacts
+  },
+  {
+    path: "/dashboard",
+    exact: true,
+    component: Dashboard
   }
 
 ]

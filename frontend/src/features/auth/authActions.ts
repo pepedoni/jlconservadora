@@ -1,6 +1,4 @@
 import * as types from "./constants";
-import config from "config";
-import { object } from "prop-types";
 import cookies from 'js-cookie';
 import request from "api/request";
 
@@ -33,7 +31,19 @@ const requestLogout = () => {
  };
 };
 
-export const login = user => (dispatch, getState, axios) => {
+const logoutSuccess = () => {
+  return { 
+    type: types.LOGOUT_SUCCESS
+ };
+};
+
+const logoutFailure = () => {
+  return { 
+    type: types.LOGOUT_FAILURE
+ };
+};
+
+export const login = (user) => (dispatch) => {
   dispatch(requestLogin());
   if(typeof user === "object" && user.hasOwnProperty("email") && user.hasOwnProperty("password")) {
     
@@ -59,21 +69,26 @@ export const login = user => (dispatch, getState, axios) => {
       })
       .catch(error => {
         //console.log('[Login Error]', JSON.stringify(error));
-        dispatch(loginFailure(error));
+        if(error.response.status == 401) dispatch(loginFailure(error.response.data.message));
+        else dispatch(loginFailure("Ocorreu um erro ao realizar o login. Contate o administrador do sistema."));
       });
   } else {
     console.log('[Login Error]', 'Invalid object!');
-    dispatch(loginFailure());
+    dispatch(loginFailure("Ocorreu um erro ao realizar o login. Contate o administrador do sistema."));
   }
 };
 
-export const logout = () => async (dispatch, getState, axios) => {
-  if(cookies.get('@jl_token'))
-    await cookies.remove('@jl_token')
-  
-  if(sessionStorage.getItem('@jl_token'))
-    await sessionStorage.removeItem('@jl_token');
-
-  dispatch(requestLogout());            
-  window.location.reload();
+export const logout = (history) => (dispatch) => { 
+  dispatch(requestLogout());
+  request.get("api/auth/logout")
+    .then(() => {
+      cookies.set('@jl_token', ''); 
+      cookies.set('@jl_expire', ''); 
+      sessionStorage.setItem('@jl_token', '');
+      dispatch(logoutSuccess());
+      this.context.router.history.push('/login');
+    }).catch(() => {
+      dispatch(logoutFailure());
+    }
+  );
 };

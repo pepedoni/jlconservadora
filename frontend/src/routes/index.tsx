@@ -10,7 +10,8 @@ import { history } from '../store';
 import { hot } from 'react-hot-loader';
 
 import Boomy from '../app';
-import Login from '../features/auth/authContainer';
+import Login from 'features/auth/authContainer';
+import Dashboard from "features/dashboard/dashboardContainer";
 
 const getAccessToken = () => Cookies.get('@jl_token') || sessionStorage.getItem('@jl_token')
 const isAuthenticated = () => !!getAccessToken()
@@ -29,9 +30,9 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
 )
 
 //Redirect '/' to '/pipeline'
-const PipelineRoute = () => (
+const DashboardRoute = () => (
   <Route render={() => (
-   <Redirect to="/notafiscal"/>
+   <Redirect to="/dashboard"/>
   )} />
 )
 
@@ -41,7 +42,7 @@ class Router extends Component {
       <ConnectedRouter history={history}>
         <Switch>
           <Route exact path="/login" component={Login}/>
-          <PipelineRoute exact path='/'/>
+          <DashboardRoute exact path="/"/>
           <ProtectedRoute path='/' component={Boomy} />
         </Switch>
       </ConnectedRouter>
