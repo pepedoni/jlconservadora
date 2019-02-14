@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col, Avatar, Popover, Badge, Modal } from "antd";
 import { bindActionCreators } from "redux";
@@ -7,6 +8,7 @@ import QueueAnim from 'rc-queue-anim';
 import "./style.less";
 
 import UserPopover from 'core/_user_popover';
+import {withRouter} from "react-router-dom";
 
 class JLHeader extends Component {
   constructor(props) {
@@ -22,7 +24,7 @@ class JLHeader extends Component {
   renderBreadcrumb = () => (
     <Col className="hide-mobile breadcrumb-container">
       <span className="breadcrumb">
-        {this.props.currentLocation.breadcrumb && this.props.currentLocation.breadcrumb.replace(/\//g, " \/  ")}
+        {this.props.currentLocation && this.props.currentLocation.breadcrumb && this.props.currentLocation.breadcrumb.replace(/\//g, " \/  ")}
       </span>
     </Col>
   )
@@ -67,8 +69,8 @@ class JLHeader extends Component {
       title={this.state.logginOut? "Saindo" : "Sair"}
       okText={this.state.logginOut? "Saindo" : "Sim"}
       cancelText="Não"
-      okButtonProps={{disabled:this.state.logginOut}}
-      cancelButtonProps={{disabled:this.state.logginOut}}
+      okButtonProps={{disabled:this.props.logginOut}}
+      cancelButtonProps={{disabled:this.props.logginOut}}
     >
       <span>
         Tem certeza que deseja sair do sistema?
@@ -81,18 +83,23 @@ class JLHeader extends Component {
     this.setState({showLogoutConfirmation: true});
   }
 
-  logout = async () => {
-    await this.setState({logginOut: true});
-    setTimeout(() => this.props.logout(), 1000);
+  logout = () => {
+    this.props.logout(this.props.history);
   }
 
   render() {
+
+    if(this.props.user == undefined) {
+      return <Redirect to={"/login"} />
+    }
+
     return (
       <Row>
         {this.renderTitle()}
         {this.renderAvatar()}
         {this.renderLogoutConfirmation()}
       </Row>
+      
     )
   }
 }
@@ -111,4 +118,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(JLHeader);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(JLHeader));
