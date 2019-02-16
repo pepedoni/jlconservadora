@@ -21,7 +21,12 @@
       "children": [
         {
           "title": "Cliente",
-          "link": "/pipeline-steps",
+          "link": "/client",
+          "breadcrumb": "Cadastros /"
+        },
+        {
+          "title": "Colaborador",
+          "link": "/employee",
           "breadcrumb": "Cadastros /"
         }
       ]
