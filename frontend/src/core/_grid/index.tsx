@@ -1,27 +1,10 @@
+import React, { Component } from 'react'
 import { Table } from 'antd';
 
-const columns = [{
-  title: 'Name',
-  dataIndex: 'name',
-  sorter: true,
-  render: name => `${name.first} ${name.last}`,
-  width: '20%',
-}, {
-  title: 'Gender',
-  dataIndex: 'gender',
-  filters: [
-    { text: 'Male', value: 'male' },
-    { text: 'Female', value: 'female' },
-  ],
-  width: '20%',
-}, {
-  title: 'Email',
-  dataIndex: 'email',
-}];
+import request from 'api/request';
 
-class Grid extends React.Component {
+export default class App extends Component {
   state = {
-    data: [],
     pagination: {},
     loading: false,
   };
@@ -48,22 +31,14 @@ class Grid extends React.Component {
   fetch = (params = {}) => {
     console.log('params:', params);
     this.setState({ loading: true });
-    reqwest({
-      url: 'https://randomuser.me/api',
-      method: 'get',
-      data: {
-        results: 10,
-        ...params,
-      },
-      type: 'json',
-    }).then((data) => {
+    request.get('/api/clients/').then(result => {
       const pagination = { ...this.state.pagination };
       // Read total count from server
       // pagination.total = data.totalCount;
       pagination.total = 200;
       this.setState({
         loading: false,
-        data: data.results,
+        data: result.data,
         pagination,
       });
     });
@@ -72,8 +47,8 @@ class Grid extends React.Component {
   render() {
     return (
       <Table
-        columns={columns}
-        rowKey={record => record.login.uuid}
+        columns={this.props.columns}
+        // rowKey={record => record.login.uuid}
         dataSource={this.state.data}
         pagination={this.state.pagination}
         loading={this.state.loading}
@@ -82,5 +57,3 @@ class Grid extends React.Component {
     );
   }
 }
-
-export default Grid;

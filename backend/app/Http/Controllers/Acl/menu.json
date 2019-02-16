@@ -21,7 +21,7 @@
       "children": [
         {
           "title": "Cliente",
-          "link": "/client",
+          "link": "/clients",
           "breadcrumb": "Cadastros /"
         },
         {

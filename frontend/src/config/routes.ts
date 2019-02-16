@@ -1,6 +1,7 @@
 import Pipeline from 'features/Pipeline';
 import Dashboard from "features/dashboard/dashboardContainer";
 import Employee from "features/employee/employeeContainer";
+import Clients from "features/client/clientContainer"
 
 export const routes = [
   {
@@ -17,7 +18,11 @@ export const routes = [
     path: "/employee",
     exact: true,
     component: Employee
-
+  },
+  {
+    path: "/clients",
+    exact: true,
+    component: Clients
   }
 
 ]
