@@ -4,8 +4,6 @@ import { login } from "./authActions";
 
 import Login from "./authComponent";
 
-import {withRouter} from "react-router-dom";
-
 const mapStateToProps = state => ({
   user: state.auth.user,
   loadingLogin: state.auth.loadingLogin,

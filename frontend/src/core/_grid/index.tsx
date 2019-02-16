@@ -5,48 +5,6 @@ import request from 'api/request';
 
 export default class App extends Component {
   state = {
-    // data: [
-    //     {
-    //         name: 'Germano',
-    //         gender: 'Male',
-    //         email: 'ggmenezesjr1@gmail.com'
-    //     },
-    //     {
-    //         name: 'Germano',
-    //         gender: 'Male',
-    //         email: 'ggmenezesjr1@gmail.com'
-    //     },
-    //     {
-    //         name: 'Germano',
-    //         gender: 'Male',
-    //         email: 'ggmenezesjr1@gmail.com'
-    //     },
-    //     {
-    //         name: 'Germano',
-    //         gender: 'Male',
-    //         email: 'ggmenezesjr1@gmail.com'
-    //     },
-    //     {
-    //         name: 'Germano',
-    //         gender: 'Male',
-    //         email: 'ggmenezesjr1@gmail.com'
-    //     },
-    //     {
-    //         name: 'Germano',
-    //         gender: 'Male',
-    //         email: 'ggmenezesjr1@gmail.com'
-    //     },
-    //     {
-    //         name: 'Germana',
-    //         gender: 'Female',
-    //         email: 'ggmenezesjr1@gmail.com'
-    //     },
-    //     {
-    //         name: 'Germana',
-    //         gender: 'Female',
-    //         email: 'ggmenezesjr1@gmail.com'
-    //     },
-    // ],
     pagination: {},
     loading: false,
   };

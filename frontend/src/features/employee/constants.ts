@@ -1,0 +1,8 @@
+/**
+ * Employee
+ */
+export const EMPLOYEE_ADD = "EMPLOYEE_ADD";
+export const EMPLOYEE_VIEW = "EMPLOYEE_VIEW";
+export const EMPLOYEE_EDIT = "EMPLOYEE_EDIT";
+export const EMPLOYEE_DELETE = "EMPLOYEE_DELETE";
+export const EMPLOYEE_CLOSEFORM = "EMPLOYEE_CLOSEFORM";

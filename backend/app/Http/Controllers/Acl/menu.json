@@ -23,6 +23,11 @@
           "title": "Cliente",
           "link": "/clients",
           "breadcrumb": "Cadastros /"
+        },
+        {
+          "title": "Colaborador",
+          "link": "/employee",
+          "breadcrumb": "Cadastros /"
         }
       ]
     },

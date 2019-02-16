@@ -66,7 +66,6 @@ class JL extends React.Component {
             <JLHeader />
           </Header>
           <Content className="jl-content">
-            <FAB />
             <MainRouter />
           </Content>
         </Layout>
