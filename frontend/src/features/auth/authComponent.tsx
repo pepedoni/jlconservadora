@@ -102,7 +102,7 @@ export default class Login extends React.Component {
         validateStatus={this.state.validEmail}
         help={this.state.validEmail === "error" ? "Tem que ser um e-mail válido" : null}
       >
-        <Input placeholder="Ex.: jhondoe@boomy.com.br" id="email" value={this.state.email} onChange={this.onChangeEmail}
+        <Input placeholder="jl@jlconservadora.com.br" id="email" value={this.state.email} onChange={this.onChangeEmail}
           ref={(input) => this.email = input}/>
       </Form.Item>
       <Form.Item
@@ -159,7 +159,7 @@ export default class Login extends React.Component {
   )
   
   render() {
-    const { from } = this.props.location.state || {from: { pathname: "/dashboard" }};
+    const { from } = this.props.location.state || {from: { pathname: "/" }};
     
     // If successful login
     if (this.props.user) {

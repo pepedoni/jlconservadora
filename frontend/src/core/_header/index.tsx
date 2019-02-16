@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col, Avatar, Popover, Badge, Modal } from "antd";
 import { bindActionCreators } from "redux";
-import { logout } from "features/auth/authActions";
+import { logout, getToken } from "features/auth/authActions";
 import QueueAnim from 'rc-queue-anim';
 import "./style.less";
 
@@ -89,7 +89,7 @@ class JLHeader extends Component {
 
   render() {
 
-    if(this.props.user == undefined) {
+    if(this.props.user == undefined && getToken() == '') {
       return <Redirect to={"/login"} />
     }
 

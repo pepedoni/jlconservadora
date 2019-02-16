@@ -12,20 +12,11 @@ class MenuController extends Controller
     public function buildMenu(Request $request)
     {
 
-        $components = array(
-            array(
-                "icon"  => "dashboard",
-                "title" => "Dashboard",
-                "link"  =>  "/dashboard"
-            ),
-            array(
-                "icon"  => "tags",
-                "title" => "Oportunidades",
-                "link"  =>  "/pipeline"
-            )
-        );
+        $menu = file_get_contents(__DIR__.'/menu.json');
         
-        return response()->json($components, 200);
+        $menu = json_decode($menu, true);
+
+        return response()->json($menu, 200);
     }
 
 }

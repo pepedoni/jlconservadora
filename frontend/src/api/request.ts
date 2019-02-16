@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getToken } from "./auth";
+import { getToken } from "../features/auth/authActions";
 
 const request = axios.create({
   baseURL: "http://localhost:8000"

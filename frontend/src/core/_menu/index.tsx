@@ -6,6 +6,7 @@ import { Menu, Icon } from 'antd';
 import { setCurrentLocation } from "core/actions";
 
 import { images } from "assets";
+import { getMenu } from "./menuActions";
 import screensConfig from "config/screens";
 import "./style.less";
 
@@ -16,18 +17,27 @@ class JLMenu extends Component {
   constructor(props) {
     super(props);
 
-    this.screensConfigMap = {}
+    this.screensConfigMap = {};
   }
 
   //Lifecycles
   componentDidUpdate(oldProps) {
     if(oldProps.currentPath !== this.props.currentPath) {
+      if(this.screensConfigMap[this.props.currentPath]) {
+        this.props.setCurrentLocation(this.screensConfigMap[this.props.currentPath]);
+      }
+    }
+  }
+
+  componentDidMount() { 
+
+    if(this.screensConfigMap[this.props.currentPath]) {
       this.props.setCurrentLocation(this.screensConfigMap[this.props.currentPath]);
     }
   }
 
-  componentDidMount() {
-    this.props.setCurrentLocation(this.screensConfigMap[this.props.currentPath]);
+  componentWillMount() {
+    this.props.getMenu();
   }
 
   //Renders 
@@ -45,8 +55,13 @@ class JLMenu extends Component {
 
   renderMenu = (menuItem, index, parentIndex) => {
     
-    if(menuItem.link)
+    if(menuItem.link) {
+      if(menuItem.link == this.props.currentPath && this.screensConfigMap[menuItem.link] == null) {
+        this.props.setCurrentLocation(menuItem);
+      }
       this.screensConfigMap[menuItem.link] = menuItem;
+    }
+    
     
     //Check if has children
     let haveChildren = Array.isArray(menuItem.children) && menuItem.children.length > 0 ? true : false;
@@ -81,7 +96,7 @@ class JLMenu extends Component {
           mode="inline"
         >
           {
-            screensConfig.map((menuItem, index) => this.renderMenu(menuItem, index, ""))
+            this.props.menu.screens.map((menuItem, index) => this.renderMenu(menuItem, index, ""))
           }
         </Menu>
       </div>
@@ -91,14 +106,16 @@ class JLMenu extends Component {
 
 //Listen to path change
 const mapStateToProps = state => ({
-  currentPath: state.router.location.pathname
+  currentPath: state.router.location.pathname,
+  menu: state.menu
 });
 
 //Set current path with some infos in redux
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setCurrentLocation
+      setCurrentLocation,
+      getMenu
     },
     dispatch
   );
