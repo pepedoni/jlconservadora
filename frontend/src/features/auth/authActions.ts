@@ -1,6 +1,7 @@
 import * as types from "./constants";
 import cookies from 'js-cookie';
 import request from "api/request";
+import {setCurrentLocation} from "core/actions/index"
 
 /**
  * Login
@@ -85,10 +86,14 @@ export const logout = (history) => (dispatch) => {
       cookies.set('@jl_token', ''); 
       cookies.set('@jl_expire', ''); 
       sessionStorage.setItem('@jl_token', '');
+      localStorage.setItem('@jl_token', '');
       dispatch(logoutSuccess());
-      this.context.router.history.push('/login');
     }).catch(() => {
       dispatch(logoutFailure());
     }
   );
 };
+
+export const TOKEN_KEY = '@jl_token';
+
+export const getToken = () => localStorage.getItem('@jl_token');

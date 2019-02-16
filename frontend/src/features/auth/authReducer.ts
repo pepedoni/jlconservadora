@@ -14,6 +14,7 @@ export default function(state = { user: undefined, loadingLogin: false, errorLog
     case types.LOGIN_SUCCESS:
       console.log(`[Auth Reducer] Action: LOGIN_SUCCESS`);
       return {
+        ...state,
         user: action.payload,
         loadingLogin: false,
         errorLogin: null,
@@ -32,6 +33,7 @@ export default function(state = { user: undefined, loadingLogin: false, errorLog
     case types.LOGOUT:
       console.log(`[Auth Reducer] Action: LOGOUT`);
       return {
+        ...state,
         user: state.user,
         loadingLogin: false,
         errorLogin: null,
@@ -41,6 +43,7 @@ export default function(state = { user: undefined, loadingLogin: false, errorLog
     case types.LOGOUT_SUCCESS:
       console.log(`[Auth Reducer] Action: LOGOUT_SUCCESS`);
       return {
+        ...state,
         user: undefined,
         loadingLogin: false,
         logged: false,
