@@ -21,7 +21,7 @@ const menu = [
     "children": [
       {
         "title": "Cliente",
-        "link": "/pipeline-steps",
+        "link": "/clients",
         "breadcrumb": "Parametrizações / Oportunidades /"
       }
     ]
