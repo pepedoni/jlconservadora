@@ -33,7 +33,7 @@ export default class App extends Component {
     console.log('params:', params);
     this.setState({ loading: true });
     
-    let url = (params.url) ? params.url : this.props.url;
+    let url = (params.page) ? this.props.url + '?page=' + params.page : this.props.url;
 
     request.get(url).then(result => {
       const pagination = { ...this.state.pagination };
@@ -60,6 +60,12 @@ export default class App extends Component {
         pagination={this.state.pagination}
         loading={this.state.loading}
         onChange={this.handleTableChange}
+        rowKey={this.props.rowKey}
+        onRow={(record) => {
+          return {
+            onClick: (event) => { this.props.onRowClick(record) }, 
+          };
+        }}
       />
     );
   }
