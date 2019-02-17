@@ -26,7 +26,7 @@ const menuFailure = () => {
 
 export const getMenu = () => (dispatch) => { 
   dispatch(requestMenu());
-  request.get("api/menu/buildMenu")
+  request.get("/menu/buildMenu")
     .then((response) => {
       dispatch(menuSuccess(response.data));
     }).catch(() => {

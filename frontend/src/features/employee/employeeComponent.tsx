@@ -2,6 +2,7 @@ import { Table } from 'antd';
 import React, { Component } from 'react';
 import AddButton from "core/_fab/index";
 import EmployeeForm from "./employeeForm";
+import EmployeeGrid from "./employeeGrid";
 import JlDrawer from "core/_drawer/";
 import './style.less';
 
@@ -14,6 +15,7 @@ export default class EmployeeComponent extends Component {
   render() {
     return (
       <div className="component">
+        <EmployeeGrid />
         <JlDrawer isVisible={this.props.formOpen} 
                   onClose={this.props.employeeCloseForm} 
                   onEdit={this.props.employeeEdit} 

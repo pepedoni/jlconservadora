@@ -48,7 +48,7 @@ export const login = (user) => (dispatch) => {
   dispatch(requestLogin());
   if(typeof user === "object" && user.hasOwnProperty("email") && user.hasOwnProperty("password")) {
     
-    request.post('/api/auth/login', user)
+    request.post('/auth/login', user)
       .then(response => response.data)
       .then(result => {
         if(result) {
@@ -59,7 +59,7 @@ export const login = (user) => (dispatch) => {
           } else {
             sessionStorage.setItem('@jl_token', result.access_token);
           }
-          request.get('/api/auth/user').then((response) => {
+          request.get('/auth/user').then((response) => {
             dispatch(loginSuccess(response.data));
           }).catch(error => {
             dispatch(loginFailure(result.error));  
@@ -81,7 +81,7 @@ export const login = (user) => (dispatch) => {
 
 export const logout = (history) => (dispatch) => { 
   dispatch(requestLogout());
-  request.get("api/auth/logout")
+  request.get("/auth/logout")
     .then(() => {
       cookies.set('@jl_token', ''); 
       cookies.set('@jl_expire', ''); 

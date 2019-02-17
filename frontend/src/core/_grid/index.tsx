@@ -21,6 +21,7 @@ export default class App extends Component {
     });
     this.fetch({
       results: pagination.pageSize,
+      url: pagination.nextPage,
       page: pagination.current,
       sortField: sorter.field,
       sortOrder: sorter.order,
@@ -31,14 +32,20 @@ export default class App extends Component {
   fetch = (params = {}) => {
     console.log('params:', params);
     this.setState({ loading: true });
-    request.get('/api/clients/').then(result => {
+    
+    let url = (params.url) ? params.url : this.props.url;
+
+    request.get(url).then(result => {
       const pagination = { ...this.state.pagination };
       // Read total count from server
       // pagination.total = data.totalCount;
-      pagination.total = 200;
+      pagination.total = result.data.total;
+      pagination.nextPage = result.data.next_page_url; 
+      pagination.pageSize = result.data.per_page;
+      this.setState({...this.state, pagination});
       this.setState({
         loading: false,
-        data: result.data,
+        data: result.data.data,
         pagination,
       });
     });

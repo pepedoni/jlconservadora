@@ -46,7 +46,7 @@ class ClientController extends Controller {
     } 
 
     public function getClients(Request $request) {
-        $clients = Client::all();
+        $clients = Client::paginate(2);
         foreach($clients as &$client) {
             $client['complete_address'] = $client['address'].', '.$client['address_number'];
             if($client['address_complement'] != '')

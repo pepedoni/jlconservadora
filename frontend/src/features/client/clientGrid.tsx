@@ -23,7 +23,7 @@ const columns = [
     }   
 ];
 
-const url = '/api/clients/get';
+const url = '/clients';
 
 export default class ClientGrid extends Component {
     render() {
