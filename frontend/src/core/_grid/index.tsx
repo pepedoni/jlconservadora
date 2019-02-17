@@ -5,7 +5,7 @@ import request from 'api/request';
 
 export default class App extends Component {
   state = {
-    pagination: {},
+    pagination: {position: 'top'},
     loading: false,
   };
 

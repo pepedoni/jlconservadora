@@ -1,4 +1,5 @@
 import * as types from "./constants";
+import request from "api/request";
 /**
  * CLIENT
  */
@@ -63,18 +64,18 @@ const clientSaveFailure = (client) => {
 
 
 
-export const clientSave = (client, mode) => {
+export const clientSave = (client, mode) => (dispatch) => {
     dispatch(clientRequest);
     if(mode == 'new') {
-        request.post('/employee/insert', employee).then( response =>  {
-            dispatch(clientSaveSuccess);
+        request.post('/clients/insert', client).then( response =>  {
+            dispatch(clientSaveSuccess(client));
         }).catch( error => {
             dispatch(clientSaveFailure({client: client, mode: mode}));
         });
     }
     else if(mode == 'edit') {
-        request.put('/employee/edit', employee).then( response =>  {
-            dispatch(clientSaveSuccess(employee));
+        request.put('/clients/edit', client).then( response =>  {
+            dispatch(clientSaveSuccess(client));
         }).catch( error => {
             dispatch(clientSaveFailure({client: client, mode: mode}));
         });

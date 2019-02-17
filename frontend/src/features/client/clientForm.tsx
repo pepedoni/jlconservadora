@@ -35,7 +35,8 @@ class ClientForm extends React.Component {
       this.state = {
         validEmail: "",
         cpf: null,
-        syndic_email: null,
+        address: '',
+        syndic_email: '',
         name: "Pedro",
         valid: false
       }
@@ -53,10 +54,11 @@ class ClientForm extends React.Component {
 
     save = () => {
       console.log('1');
-      this.props.onSave(this.state);
+      this.props.onSave(this.state, this.props.mode);
     }
 
     handleChange = name => event => {
+      this.props.client[name] = event.target.value;
       this.setState({ [name]: event.target.value });
     };
 
@@ -72,7 +74,7 @@ class ClientForm extends React.Component {
                   label="Nome"
                   className={classes.textField}
                   disabled={this.isReadOnly(this.props.mode, true)}
-                  value={this.state.name}
+                  value={this.props.client.name}
                   fullWidth
                   onChange={this.handleChange('name')}
                   margin="normal"
@@ -83,7 +85,7 @@ class ClientForm extends React.Component {
                   label="Endereço"
                   className={classes.textField}
                   disabled={this.isReadOnly(this.props.mode, true)}
-                  value={this.state.address}
+                  value={this.props.client.address}
                   fullWidth
                   onChange={this.handleChange('address')}
                   margin="normal"
@@ -95,7 +97,7 @@ class ClientForm extends React.Component {
               label="Email"
               className={classes.textField}
               disabled={this.isReadOnly(this.props.mode, false)}
-              value={this.state.syndic_email}
+              value={this.props.client.syndic_email}
               fullWidth
               onChange={this.handleChange('syndic_email')}
               margin="normal"

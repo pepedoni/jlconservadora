@@ -13,7 +13,7 @@ export default class ClientComponent extends Component {
   
     render() {
       return (
-        <div>
+        <div className="component">
             <ClientGrid onRowClick= {this.props.onRowClick} />
             <JlDrawer isVisible={this.props.formOpen} 
                         onClose={this.props.clientCloseForm} 
@@ -21,7 +21,7 @@ export default class ClientComponent extends Component {
                         onDelete={this.props.clientDelete} 
                         mode={this.props.mode}
                         title="Adicionar Cliente">
-                <ClientForm />
+                <ClientForm mode={this.props.mode} onSave={this.props.clientSave} client={this.props.client}/>
             </JlDrawer>
             <AddButton onClick={this.props.clientAdd} />
         </div>

@@ -7,7 +7,8 @@ export default function(state = { formOpen: false, mode: null, client: {} }, act
       return {
         ...state,
         formOpen: true,
-        mode: 'new'
+        mode: 'new',
+        client: {name: '', address: '', syndic_email: ''}
       };
     case types.CLIENT_EDIT:
       console.log(`[Client Reducer] Action: CLIENT_EDIT`);
@@ -46,25 +47,15 @@ export default function(state = { formOpen: false, mode: null, client: {} }, act
         mode: 'view'
       }
     case types.CLIENT_SAVE_SUCCESS:
-      console.log(`[Client Reducer] Action: CLIENT_ON_ROW_CLICK`);
+      console.log(`[Client Reducer] Action: CLIENT_SAVE_SUCCESS`);
       return {
         ...state,
         formOpen: true,
         client: action.payload,
         mode: 'view'
       }
-    
-    case types.CLIENT_SAVE_SUCCESS:
-    console.log(`[Client Reducer] Action: CLIENT_ON_ROW_CLICK`);
-    return {
-      ...state,
-      formOpen: true,
-      client: action.payload,
-      mode: 'view'
-    }
-    
     case types.CLIENT_SAVE_FAILURE:
-    console.log(`[Client Reducer] Action: CLIENT_ON_ROW_CLICK`);
+    console.log(`[Client Reducer] Action: CLIENT_SAVE_FAILURE`);
     return {
       ...state,
       formOpen: true,
