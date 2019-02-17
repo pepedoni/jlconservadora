@@ -11,15 +11,15 @@ const columns = [
         // width: '50%',
     },
     {
-        title: 'Endereco',
-        dataIndex: 'complete_address',
+        title: 'CPF',
+        dataIndex: 'cpf',
         // render: (address, data) => `${address}, ${data.address_number}/${da}`,
         // sorter: true,
         // width: '20%',
     },
     {
         title: 'Email',
-        dataIndex: 'syndic_email',
+        dataIndex: 'email',
     }   
 ];
 

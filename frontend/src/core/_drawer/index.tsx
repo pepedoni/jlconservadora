@@ -15,11 +15,6 @@ export default class JlDrawer extends Component {
                 <Button shape="circle" type="primary" icon="delete" size="large" onClick={this.props.onDelete}></Button>
             </div>);
         }
-        else {
-            return (<div className="center-actions">
-                <Button shape="circle" type="primary" icon="check" onClick={this.props.onEdit}></Button>
-            </div>);
-        }
     }
 
     state = { visible: false };

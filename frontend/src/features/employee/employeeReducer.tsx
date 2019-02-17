@@ -7,7 +7,7 @@ export default function(state = { formOpen: false, mode: null }, action) {
       return {
         ...state,
         formOpen: true,
-        mode: 'view'
+        mode: 'new'
       };
     case types.EMPLOYEE_EDIT:
       console.log(`[Employee Reducer] Action: EMPLOYEE_EDIT`);
@@ -30,7 +30,28 @@ export default function(state = { formOpen: false, mode: null }, action) {
         formOpen: true,
         mode: 'delete'
       };
-    case types.EMPLOYEE_CLOSEFORM:
+      case types.EMPLOYEE_SAVE_SUCCESS:
+        console.log(`[Employee Reducer] Action: EMPLOYEE_SAVE_SUCCESS`);
+        return {
+          ...state,
+          formOpen: true,
+          mode: null
+        };
+      case types.EMPLOYEE_SAVE_FAILURE:
+        console.log(`[Employee Reducer] Action: EMPLOYEE_SAVE_FAILURE`);
+        return {
+          ...state,
+          formOpen: true,
+          mode: 'new'
+        };
+      
+      case types.EMPLOYEE_REQUEST:
+        console.log(`[Employee Reducer] Action: EMPLOYEE_REQUEST`);
+        return {
+          ...state,
+          loading: true
+        };
+      case types.EMPLOYEE_CLOSEFORM:
       console.log(`[Employee Reducer] Action: EMPLOYEE_FORM_CLOSE`);
       return {
         ...state,
