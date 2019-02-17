@@ -39,3 +39,44 @@ export const onRowClick = (record) => {
         payload: record
     }
 }
+
+
+const clientRequest = () => {
+    return {
+        type: types.CLIENT_REQUEST
+    }
+};
+
+const clientSaveSuccess = (client) => {
+    return {
+        type: types.CLIENT_SAVE_SUCCESS,
+        payload: client
+    }
+}
+
+const clientSaveFailure = (client) => {
+    return {
+        type: types.CLIENT_SAVE_FAILURE,
+        payload: client
+    }
+}
+
+
+
+export const clientSave = (client, mode) => {
+    dispatch(clientRequest);
+    if(mode == 'new') {
+        request.post('/employee/insert', employee).then( response =>  {
+            dispatch(clientSaveSuccess);
+        }).catch( error => {
+            dispatch(clientSaveFailure({client: client, mode: mode}));
+        });
+    }
+    else if(mode == 'edit') {
+        request.put('/employee/edit', employee).then( response =>  {
+            dispatch(clientSaveSuccess(employee));
+        }).catch( error => {
+            dispatch(clientSaveFailure({client: client, mode: mode}));
+        });
+    }
+}

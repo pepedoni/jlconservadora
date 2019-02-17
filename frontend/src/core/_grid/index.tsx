@@ -16,8 +16,9 @@ export default class App extends Component {
   handleTableChange = (pagination, filters, sorter) => {
     const pager = { ...this.state.pagination };
     pager.current = pagination.current;
+    pager.position =  'top';
     this.setState({
-      pagination: pager,
+      pagination: pager
     });
     this.fetch({
       results: pagination.pageSize,

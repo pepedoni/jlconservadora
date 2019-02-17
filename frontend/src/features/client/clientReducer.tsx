@@ -1,6 +1,6 @@
 import * as types from "./constants";
 
-export default function(state = { formOpen: false, mode: null }, action) {
+export default function(state = { formOpen: false, mode: null, client: {} }, action) {
   switch (action.type) {
     case types.CLIENT_ADD:
       console.log(`[Client Reducer] Action: CLIENT_ADD`);
@@ -42,8 +42,35 @@ export default function(state = { formOpen: false, mode: null }, action) {
       return {
         ...state,
         formOpen: true,
+        client: action.payload,
         mode: 'view'
       }
+    case types.CLIENT_SAVE_SUCCESS:
+      console.log(`[Client Reducer] Action: CLIENT_ON_ROW_CLICK`);
+      return {
+        ...state,
+        formOpen: true,
+        client: action.payload,
+        mode: 'view'
+      }
+    
+    case types.CLIENT_SAVE_SUCCESS:
+    console.log(`[Client Reducer] Action: CLIENT_ON_ROW_CLICK`);
+    return {
+      ...state,
+      formOpen: true,
+      client: action.payload,
+      mode: 'view'
+    }
+    
+    case types.CLIENT_SAVE_FAILURE:
+    console.log(`[Client Reducer] Action: CLIENT_ON_ROW_CLICK`);
+    return {
+      ...state,
+      formOpen: true,
+      client: action.payload.client,
+      mode: action.payload.mode
+    }
     default:
       return state;
     }
