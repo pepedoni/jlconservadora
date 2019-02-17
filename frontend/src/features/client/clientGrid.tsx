@@ -29,7 +29,7 @@ export default class ClientGrid extends Component {
     render() {
         return (
             <div>
-                <Grid columns={columns} url= {url}/>
+                <Grid columns={columns} url= {url} rowKey="id" onRowClick={ this.props.onRowClick } />
             </div>
         )
     }
