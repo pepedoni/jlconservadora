@@ -74,7 +74,7 @@ export const clientSave = (client, mode) => (dispatch) => {
         });
     }
     else if(mode == 'edit') {
-        request.put('/clients/edit', client).then( response =>  {
+        request.put('/clients/update/' + client.id, client).then( response =>  {
             dispatch(clientSaveSuccess(client));
         }).catch( error => {
             dispatch(clientSaveFailure({client: client, mode: mode}));

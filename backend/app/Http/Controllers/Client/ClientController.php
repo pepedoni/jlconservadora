@@ -9,6 +9,7 @@ use App\Client;
 use Carbon\Carbon;
 
 class ClientController extends Controller {
+
     public function insertClient(Request $request) {
         $request->validate([
             'name' => 'required|string',
@@ -38,15 +39,23 @@ class ClientController extends Controller {
         ]);
             
         $client->save();
-        var_dump('uei gida');die;
 
         return response()->json([
             'message' => __('client.insert_ok')
         ], 201);
     } 
 
+    public function updateClient(Request $request, Client $client) {
+        
+        $client = $client->fill($request->all());
+
+        $client->save();
+        
+        return response()->json(['data'=> $client]);
+    }
+
     public function getClients(Request $request) {
-        $clients = Client::paginate(2);
+        $clients = Client::paginate(8);
         foreach($clients as &$client) {
             $client['complete_address'] = $client['address'].', '.$client['address_number'];
             if($client['address_complement'] != '')
