@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class EmployeeController extends Controller {
     public function insertEmployee(Request $request) {
-        var_dump('312313123');die;
+        // var_dump('312313123');die;
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:employees'//,

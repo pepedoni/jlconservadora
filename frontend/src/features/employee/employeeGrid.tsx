@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import Grid from 'core/_grid'
-import { Card } from 'antd';
+// import { Card } from 'antd';
 
 const columns = [
     {
@@ -29,9 +29,7 @@ const url = '/employee';
 export default class EmployeeGrid extends Component {
     render() {
         return (
-            <Card>
-                <Grid columns={columns} url= {url}/>
-            </Card>
+            <Grid columns={columns} url= {url}/>
         )
     }
 }

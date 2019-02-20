@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
@@ -12,30 +11,41 @@ class ClientController extends Controller {
 
     public function insertClient(Request $request) {
         $request->validate([
-            'name' => 'required|string',
-            'syndic_email' => 'required|string|email|unique:clients'//,
-            // 'password' => 'required|string|confirmed'
-            ]);
-        // var_dump($request->syndic_email);die;
-        
+            'name' => 'required|string|max:255',
+            'type' => 'required|integer|min:1|max:2',
+            'syndic_ap' => 'required|string|max:5',
+            'syndic_birthday' => 'required|string|max:10',
+            'syndic_email' => 'required|string|email|unique:clients|max:50',
+            'home_contact' => 'string|max:11', 
+            'phone_contact' => 'required|string|max:11',
+            'commerce_contact' => 'string|max:11',
+            'manage_init' => 'required|string|max:10',
+            'manage_end' => 'required|string|max:10',
+            'cond_blocks' => 'required|integer|max:99',
+            'cond_floors' => 'required|integer|max:99',
+            'cond_aps' => 'required|integer',
+            'address' => 'required|string|max:255',
+            'address_number' => 'required|integer',
+            'address_complement' => 'required|string'
+        ]);
         
         $client = new Client([
             'name' => $request->name,
-            'type' => 1,
-            'syndic_ap' => '309',
-            'syndic_birthday' => Carbon::now(),
+            'type' => $request->type,
+            'syndic_ap' => $request->syndic_ap,
+            'syndic_birthday' => Carbon::parse($request->syndic_birthday),
             'syndic_email' => $request->syndic_email,
-            'home_contact' => '84950495049',
-            'phone_contact' => '84950695049',
-            'commerce_contact' => '93949599945',
-            'manage_init' => Carbon::now(),
-            'manage_end' => Carbon::now(),
-            'cond_blocks' => 3,
-            'cond_floors' => 2,
-            'cond_aps' => 12,
+            'home_contact' => $request->home_contact || '',
+            'phone_contact' => $request->phone_contact,
+            'commerce_contact' => $request->commerce_contact || '',
+            'manage_init' => Carbon::parse($request->manage_init),
+            'manage_end' => Carbon::parse($request->manage_end),
+            'cond_blocks' => $request->cond_blocks,
+            'cond_floors' => $request->cond_floors,
+            'cond_aps' => $request->cond_aps,
             'address' => $request->address,
-            'address_number' => 234,
-            'address_complement' => 'AP202'
+            'address_number' => $request->address_number,
+            'address_complement' => $request->address_complement
         ]);
             
         $client->save();
@@ -55,7 +65,7 @@ class ClientController extends Controller {
     }
 
     public function getClients(Request $request) {
-        $clients = Client::paginate(8);
+        $clients = Client::paginate(7);
         foreach($clients as &$client) {
             $client['complete_address'] = $client['address'].', '.$client['address_number'];
             if($client['address_complement'] != '')
