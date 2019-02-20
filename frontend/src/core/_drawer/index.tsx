@@ -26,6 +26,7 @@ export default class JlDrawer extends Component {
                     width={920}
                     onClose={this.props.onClose}
                     visible={this.props.isVisible}
+                    className="drawer"
                     style={{
                     overflow: 'auto',
                     height: 'calc(100% - 108px)',

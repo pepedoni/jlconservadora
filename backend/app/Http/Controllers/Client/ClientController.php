@@ -33,7 +33,7 @@ class ClientController extends Controller {
             'cond_blocks' => 3,
             'cond_floors' => 2,
             'cond_aps' => 12,
-            'address' => 'Rua Não Te Interessa',
+            'address' => $request->address,
             'address_number' => 234,
             'address_complement' => 'AP202'
         ]);
