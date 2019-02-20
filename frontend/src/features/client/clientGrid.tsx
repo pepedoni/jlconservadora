@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import Grid from 'core/_grid'
-import { Card } from '@material-ui/core';
 
 const columns = [
     {
@@ -29,9 +28,7 @@ const url = '/clients';
 export default class ClientGrid extends Component {
     render() {
         return (
-            <Card>
-                <Grid columns={columns} url= {url} rowKey="id" onRowClick={ this.props.onRowClick } />
-            </Card>
+            <Grid columns={columns} url= {url} rowKey="id" onRowClick={ this.props.onRowClick } />
         )
     }
 }

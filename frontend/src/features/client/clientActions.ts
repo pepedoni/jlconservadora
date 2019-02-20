@@ -41,7 +41,6 @@ export const onRowClick = (record) => {
     }
 }
 
-
 const clientRequest = () => {
     return {
         type: types.CLIENT_REQUEST
@@ -61,8 +60,6 @@ const clientSaveFailure = (client) => {
         payload: client
     }
 }
-
-
 
 export const clientSave = (client, mode) => (dispatch) => {
     dispatch(clientRequest);

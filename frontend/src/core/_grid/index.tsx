@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table } from 'antd';
+import { Table, Card } from 'antd';
 
 import request from 'api/request';
 
@@ -54,20 +54,22 @@ export default class App extends Component {
 
   render() {
     return (
-      <Table
-        columns={this.props.columns}
-        // rowKey={record => record.login.uuid}
-        dataSource={this.state.data}
-        pagination={this.state.pagination}
-        loading={this.state.loading}
-        onChange={this.handleTableChange}
-        rowKey={this.props.rowKey}
-        onRow={(record) => {
-          return {
-            onClick: (event) => { this.props.onRowClick(record) }, 
-          };
-        }}
-      />
+      <Card>
+        <Table
+          columns={this.props.columns}
+          // rowKey={record => record.login.uuid}
+          dataSource={this.state.data}
+          pagination={this.state.pagination}
+          loading={this.state.loading}
+          onChange={this.handleTableChange}
+          rowKey={this.props.rowKey}
+          onRow={(record) => {
+            return {
+              onClick: (event) => { this.props.onRowClick(record) }, 
+            };
+          }}
+        />
+      </Card>
     );
   }
 }

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import ClientGrid from './clientGrid'
-import ClientForm from './clientForm'
+
 import JlDrawer from "core/_drawer/"
-import AddButton from "core/_fab/index"
+
+import ClientForm from './clientForm'
+import ClientGrid from './clientGrid'
 import ClientHeader from './clientHeader'
-import { Button } from 'antd';
+
 import './style.less';
 
 export default class ClientComponent extends Component {
