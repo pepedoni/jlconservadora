@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Table, Card } from 'antd';
+import { Table, Card, Pagination } from 'antd';
 
 import request from 'api/request';
+import GridHeader from '../_grid_header';
 
 export default class App extends Component {
   state = {
@@ -50,26 +51,40 @@ export default class App extends Component {
         pagination,
       });
     });
+
+  }
+
+  
+  reload = () =>  {
+    if(this.state.pagination) {
+      return this.handleTableChange(this.state.pagination, {}, {});
+    }
+    else {
+      return this.fetch({});
+    }
   }
 
   render() {
     return (
-      <Card>
-        <Table
-          columns={this.props.columns}
-          // rowKey={record => record.login.uuid}
-          dataSource={this.state.data}
-          pagination={this.state.pagination}
-          loading={this.state.loading}
-          onChange={this.handleTableChange}
-          rowKey={this.props.rowKey}
-          onRow={(record) => {
-            return {
-              onClick: (event) => { this.props.onRowClick(record) }, 
-            };
-          }}
-        />
-      </Card>
+      <div>
+        <GridHeader addLabel={'Adicionar ' + this.props.addLabel} onAdd={this.props.onAdd} onClickFilter={this.reload}/>
+        <Card>
+          <Table
+            columns={this.props.columns}
+            // rowKey={record => record.login.uuid}
+            dataSource={this.state.data}
+            pagination={this.state.pagination}
+            loading={this.state.loading}
+            onChange={this.handleTableChange}
+            rowKey={this.props.rowKey}
+            onRow={(record) => {
+              return {
+                onClick: (event) => { this.props.onRowClick(record) }, 
+              };
+            }}
+          />
+        </Card>
+      </div>
     );
   }
 }
