@@ -16,7 +16,10 @@ export default class ClientComponent extends Component {
     render() {
       return (
         <div className="component">
-            <ClientGrid onAdd={this.props.clientAdd} onRowClick= {this.props.onRowClick} />
+            <ClientGrid onAdd={this.props.clientAdd} onRowClick= {this.props.onRowClick}
+              openFilter={this.props.clientOpenFilter} filterOpen={this.props.filterOpen}
+              clientCloseFilter={this.props.clientCloseFilter} clientOnFilter={this.props.clientOnFilter}
+              filter={this.props.filter} />
             <JlDrawer isVisible={this.props.formOpen} 
                         onClose={this.props.clientCloseForm} 
                         onEdit={this.props.clientEdit} 

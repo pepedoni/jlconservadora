@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Input } from "antd";
+import { Button, Input } from "antd"
 
 import './style.less';
 

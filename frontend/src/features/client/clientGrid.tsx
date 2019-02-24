@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import Grid from 'core/_grid'
+import ClientFilter from './clientFilter'
 
 const columns = [
     {
@@ -28,13 +29,19 @@ const url = '/clients';
 export default class ClientGrid extends Component {
     render() {
         return (
-            <Grid onAdd={this.props.onAdd} 
-                addLabel={"Cliente"} 
-                columns={columns} 
-                url= {url} 
-                rowKey="id"
-                onRowClick={ this.props.onRowClick }
-            />
+            <div>
+                <Grid onAdd={this.props.onAdd} 
+                    addLabel={"Cliente"} 
+                    columns={columns} 
+                    url= {url} 
+                    rowKey="id"
+                    onRowClick={ this.props.onRowClick }
+                    openFilter={this.props.openFilter}
+                />
+
+                <ClientFilter visible={this.props.filterOpen} clientCloseFilter={this.props.clientCloseFilter}
+                    clientOnFilter={this.props.clientOnFilter} filter={this.props.filter}/>
+            </div>
         )
     }
 }

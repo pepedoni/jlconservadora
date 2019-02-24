@@ -1,6 +1,8 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { clientAdd, clientEdit, clientView, clientSave, clientDelete, clientCloseForm, onRowClick } from './clientActions';
+import { clientAdd, clientEdit, clientView, clientSave, clientDelete, 
+    clientCloseForm, onRowClick, clientOpenFilter, clientCloseFilter,
+    clientOnFilter } from './clientActions';
 
 import Client from "./clientComponent";
 // import {withRouter} from "react-router-dom";
@@ -8,13 +10,17 @@ import Client from "./clientComponent";
 const mapStateToProps = state => ({
     formOpen: state.client.formOpen,
     mode: state.client.mode,
-    client: state.client.client
+    client: state.client.client,
+    filterOpen: state.client.filterOpen,
+    filter: state.client.filter
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-        clientAdd, clientEdit, clientView, clientSave, clientDelete, clientCloseForm, onRowClick
+        clientAdd, clientEdit, clientView, clientSave, clientDelete,
+            clientCloseForm, onRowClick, clientOpenFilter, clientCloseFilter,
+            clientOnFilter
     },
     dispatch
 );

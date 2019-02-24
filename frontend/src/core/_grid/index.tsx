@@ -69,7 +69,7 @@ export default class App extends Component {
       <div>
         <GridHeader addLabel={'Adicionar ' + this.props.addLabel} 
           onAdd={this.props.onAdd}
-          onClickFilter={this.reload}
+          onClickFilter={this.props.openFilter}
           onReload={this.reload}
           />
         <Card>

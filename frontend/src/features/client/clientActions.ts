@@ -78,3 +78,39 @@ export const clientSave = (client, mode) => (dispatch) => {
         });
     }
 }
+
+export const clientOpenFilter = () => {
+    return {
+        type: types.CLIENT_OPEN_FILTER
+    }
+}
+
+export const clientCloseFilter = () => {
+    return {
+        type: types.CLIENT_CLOSE_FILTER
+    }
+}
+
+export const clientOnFilter = (filter) => (dispatch) => {
+    dispatch(clientRequest);
+
+    request.get('/clients?', filter).then( response =>  {
+        dispatch(clientFilterSuccess(response));
+    }).catch( error => {
+        dispatch(clientFilterFailure(error));
+    });
+}
+
+const clientFilterSuccess = response => {
+    return {
+        type: types.CLIENT_FILTER_SUCCESS,
+        payload: response.data
+    }
+}
+
+const clientFilterFailure = (error) => {
+    return {
+        type: types.CLIENT_FILTER_FAILURE,
+        payload: error
+    }
+}
