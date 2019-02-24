@@ -23,7 +23,7 @@ export default class JlDrawer extends Component {
         return (
                 <Drawer
                     title={this.props.title}
-                    width={920}
+                    width={(window.innerWidth > 700) ? ((window.innerWidth * 70) / 100) : window.innerWidth}
                     onClose={this.props.onClose}
                     visible={this.props.isVisible}
                     className="drawer"

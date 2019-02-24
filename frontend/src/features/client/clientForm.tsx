@@ -3,7 +3,6 @@ import {Row, Col, Button} from 'antd';
 import { DatePicker } from 'antd';
 import { withStyles } from '@material-ui/core/styles';
 import JlInput from "core/_input/input";
-import locale from 'antd/lib/date-picker/locale/pt_BR';
 
 
 const RangePicker = DatePicker.RangePicker;
@@ -56,8 +55,7 @@ class ClientForm extends React.Component {
     }
 
     save = () => {
-      console.log('1');
-      this.props.onSave(this.state, this.props.mode);
+      this.props.onSave(this.props.client, this.props.mode);
     }
 
     handleChange = name => event => {
@@ -71,9 +69,9 @@ class ClientForm extends React.Component {
         return (
           
           <form noValidate autoComplete="off" className={classes.container} onSubmit={this.save}> 
-            <Row gutter={16}>
+            <Row gutter={8}>
               
-              <Col className="gutter-row" span={12}>
+              <Col className="gutter-row" md={12}>
                 <JlInput
                     id="standard-address"
                     label="CPF/CNPJ"
@@ -86,7 +84,7 @@ class ClientForm extends React.Component {
                     variant="outlined"
                   />
               </Col>   
-              <Col className="gutter-row" span={12}>
+              <Col className="gutter-row" md={12}>
                   <JlInput
                     id="standard-controlled"
                     label="Nome"
@@ -99,7 +97,7 @@ class ClientForm extends React.Component {
                     variant="outlined"
                   />
               </Col>
-              <Col className="gutter-row" span={12}>
+              <Col className="gutter-row" md={12} sm={18} xs={18}>
                 <JlInput
                     id="standard-address"
                     label="Endereço"
@@ -112,7 +110,7 @@ class ClientForm extends React.Component {
                     variant="outlined"
                   />
               </Col> 
-              <Col className="gutter-row" span={4}>
+              <Col className="gutter-row" md={6} sm={6} xs={6}>
                 <JlInput
                     id="standard-address_number"
                     label="Número"
@@ -125,7 +123,7 @@ class ClientForm extends React.Component {
                     variant="outlined"
                   />
               </Col> 
-              <Col className="gutter-row" span={8}>
+              <Col className="gutter-row" md={6} sm={24} xs={24}>
                 <JlInput
                     id="standard-address_complement"
                     label="Complemento"
@@ -138,23 +136,10 @@ class ClientForm extends React.Component {
                     variant="outlined"
                   />
               </Col> 
-              <Col className="gutter-row" span={8}>
-                <JlInput
-                  id="standard-home_contact"
-                  label="Telefone 1"
-                  className={classes.textField}
-                  disabled={this.isReadOnly(this.props.mode, false)}
-                  value={this.props.client.home_contact}
-                  fullWidth
-                  onChange={this.handleChange('home_contact')}
-                  margin="normal"
-                  variant="outlined"
-                />
-              </Col>
-              <Col className="gutter-row" span={8}>
+              <Col className="gutter-row" span={12}>
                 <JlInput
                   id="standard-phone_contact"
-                  label="Telefone 2"
+                  label="Celular"
                   className={classes.textField}
                   disabled={this.isReadOnly(this.props.mode, false)}
                   value={this.props.client.phone_contact}
@@ -162,12 +147,13 @@ class ClientForm extends React.Component {
                   onChange={this.handleChange('phone_contact')}
                   margin="normal"
                   variant="outlined"
+                  mask="(99) 99999-9999"
                 />
               </Col>
-              <Col className="gutter-row" span={8}>
+              <Col className="gutter-row" span={12}>
                 <JlInput
                   id="standard-commerce_contact"
-                  label="Telefone 3"
+                  label="Telefone Comercial"
                   className={classes.textField}
                   disabled={this.isReadOnly(this.props.mode, false)}
                   value={this.props.client.commerce_contact}
@@ -175,9 +161,10 @@ class ClientForm extends React.Component {
                   onChange={this.handleChange('commerce_contact')}
                   margin="normal"
                   variant="outlined"
+                  mask="(99) 9999-9999"
                 />
               </Col>
-              <Col className="gutter-row" span={12}>
+              <Col className="gutter-row" md={12} sm={24} xs={24}>
                 <JlInput
                   id="standard-email"
                   label="Email Sindico"
@@ -190,7 +177,7 @@ class ClientForm extends React.Component {
                   variant="outlined"
                 />
               </Col>
-              <Col className="gutter-row" span={6}>
+              <Col className="gutter-row" md={6} sm={12} xs={12}>
                 <JlInput
                   id="standard-email"
                   label="Apartamento do Sindico"
@@ -203,7 +190,7 @@ class ClientForm extends React.Component {
                   variant="outlined"
                 />
               </Col>
-              <Col className="gutter-row" span={6}>
+              <Col className="gutter-row" md={6} sm={12} xs={12}>
                 <JlInput
                   id="standard-syndic_birthday"
                   label="Aniversario do Sindico"

@@ -7,7 +7,8 @@ export default function(state = { formOpen: false, mode: null }, action) {
       return {
         ...state,
         formOpen: true,
-        mode: 'new'
+        mode: 'new',
+        employee: {cpf: '', name: '', email: ''}
       };
     case types.EMPLOYEE_EDIT:
       console.log(`[Employee Reducer] Action: EMPLOYEE_EDIT`);
@@ -35,6 +36,7 @@ export default function(state = { formOpen: false, mode: null }, action) {
         return {
           ...state,
           formOpen: true,
+          employee: action.payload.employee,
           mode: null
         };
       case types.EMPLOYEE_SAVE_FAILURE:
@@ -42,6 +44,7 @@ export default function(state = { formOpen: false, mode: null }, action) {
         return {
           ...state,
           formOpen: true,
+          employee: action.payload.employee,
           mode: 'new'
         };
       
@@ -63,6 +66,7 @@ export default function(state = { formOpen: false, mode: null }, action) {
       return {
         ...state,
         formOpen: true,
+        employee: action.payload,
         mode: 'view'
       }
     default:

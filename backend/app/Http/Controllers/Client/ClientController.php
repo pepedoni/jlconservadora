@@ -10,17 +10,19 @@ use Carbon\Carbon;
 class ClientController extends Controller {
 
     public function insertClient(Request $request) {
+
+        $request->phone_contact = str_replace(array("(", ")", "-", " "), "", $request->phone_contact);
+        $request->commerce_contact = str_replace(array("(", ")", "-", " "), "", $request->commerce_contact);
+
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|integer|min:1|max:2',
             'syndic_ap' => 'required|string|max:5',
             'syndic_birthday' => 'required|string|max:10',
             'syndic_email' => 'required|string|email|unique:clients|max:50',
-            'home_contact' => 'string|max:11', 
-            'phone_contact' => 'required|string|max:11',
-            'commerce_contact' => 'string|max:11',
+            'phone_contact' => 'required|string|max:18',
+            'commerce_contact' => 'string|max:18',/* 
             'manage_init' => 'required|string|max:10',
-            'manage_end' => 'required|string|max:10',
+            'manage_end' => 'required|string|max:10', */
             'cond_blocks' => 'required|integer|max:99',
             'cond_floors' => 'required|integer|max:99',
             'cond_aps' => 'required|integer',
@@ -31,12 +33,12 @@ class ClientController extends Controller {
         
         $client = new Client([
             'name' => $request->name,
-            'type' => $request->type,
+            'type' => 1,
             'syndic_ap' => $request->syndic_ap,
             'syndic_birthday' => Carbon::parse($request->syndic_birthday),
             'syndic_email' => $request->syndic_email,
-            'home_contact' => $request->home_contact || '',
             'phone_contact' => $request->phone_contact,
+            'home_contact' => '99999999',
             'commerce_contact' => $request->commerce_contact || '',
             'manage_init' => Carbon::parse($request->manage_init),
             'manage_end' => Carbon::parse($request->manage_end),

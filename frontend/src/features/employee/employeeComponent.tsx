@@ -20,10 +20,11 @@ export default class EmployeeComponent extends Component {
                   onDelete={this.props.employeeDelete} 
                   mode={this.props.mode}
                   model={this.props.row}
-                  title="Adicionar Colaborador">
+                  title="Colaborador">
             <EmployeeForm 
                   mode={this.props.mode} 
-                  onSave={this.props.employeeSave}>
+                  onSave={this.props.employeeSave}
+                  employee={this.props.employee}>
             </EmployeeForm>
         </JlDrawer>
       </div>
