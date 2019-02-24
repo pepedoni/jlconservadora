@@ -38,6 +38,7 @@ class ClientController extends Controller {
             'syndic_birthday' => Carbon::parse($request->syndic_birthday),
             'syndic_email' => $request->syndic_email,
             'phone_contact' => $request->phone_contact,
+            'home_contact' => '99999999',
             'commerce_contact' => $request->commerce_contact || '',
             'manage_init' => Carbon::parse($request->manage_init),
             'manage_end' => Carbon::parse($request->manage_end),
