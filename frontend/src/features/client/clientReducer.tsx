@@ -8,7 +8,9 @@ export default function(state = { formOpen: false, mode: null, client: {} }, act
         ...state,
         formOpen: true,
         mode: 'new',
-        client: {name: '', address: '', syndic_email: ''}
+        client: {name: '', type: '', syndic_ap: '', syndic_birthday: '', syndic_email: '', home_contact: '', phone_contact: '',
+                 commerce_contact: '', manage_init: '', manage_end: '', cond_blocks: '', cond_floors: '', cond_aps: '', address: '', 
+                 address_number: '', address_complement: '' }
       };
     case types.CLIENT_EDIT:
       console.log(`[Client Reducer] Action: CLIENT_EDIT`);

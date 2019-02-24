@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {Row, Col, Button} from 'antd';
-import classNames from 'classnames';
+import { DatePicker } from 'antd';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import JlInput from "core/_input/input";
+import locale from 'antd/lib/date-picker/locale/pt_BR';
 
+
+const RangePicker = DatePicker.RangePicker;
   
 const styles = theme => ({
   container: {
@@ -71,7 +73,7 @@ class ClientForm extends React.Component {
           <form noValidate autoComplete="off" className={classes.container} onSubmit={this.save}> 
             <Row gutter={16}>
               
-              <Col className="gutter-row" span={8}>
+              <Col className="gutter-row" span={12}>
                 <JlInput
                     id="standard-address"
                     label="CPF/CNPJ"
@@ -84,7 +86,7 @@ class ClientForm extends React.Component {
                     variant="outlined"
                   />
               </Col>   
-              <Col className="gutter-row" span={8}>
+              <Col className="gutter-row" span={12}>
                   <JlInput
                     id="standard-controlled"
                     label="Nome"
@@ -97,7 +99,7 @@ class ClientForm extends React.Component {
                     variant="outlined"
                   />
               </Col>
-              <Col className="gutter-row" span={8}>
+              <Col className="gutter-row" span={12}>
                 <JlInput
                     id="standard-address"
                     label="Endereço"
@@ -110,19 +112,152 @@ class ClientForm extends React.Component {
                     variant="outlined"
                   />
               </Col> 
-                <Col className="gutter-row" span={24}>
-                  <JlInput
-                    id="standard-email"
-                    label="Email"
+              <Col className="gutter-row" span={4}>
+                <JlInput
+                    id="standard-address_number"
+                    label="Número"
                     className={classes.textField}
-                    disabled={this.isReadOnly(this.props.mode, false)}
-                    value={this.props.client.syndic_email}
+                    disabled={this.isReadOnly(this.props.mode, true)}
+                    value={this.props.client.address_number}
                     fullWidth
-                    onChange={this.handleChange('syndic_email')}
+                    onChange={this.handleChange('address_number')}
                     margin="normal"
                     variant="outlined"
                   />
-                </Col>
+              </Col> 
+              <Col className="gutter-row" span={8}>
+                <JlInput
+                    id="standard-address_complement"
+                    label="Complemento"
+                    className={classes.textField}
+                    disabled={this.isReadOnly(this.props.mode, true)}
+                    value={this.props.client.address_complement}
+                    fullWidth
+                    onChange={this.handleChange('address_complement')}
+                    margin="normal"
+                    variant="outlined"
+                  />
+              </Col> 
+              <Col className="gutter-row" span={8}>
+                <JlInput
+                  id="standard-home_contact"
+                  label="Telefone 1"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  value={this.props.client.home_contact}
+                  fullWidth
+                  onChange={this.handleChange('home_contact')}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Col>
+              <Col className="gutter-row" span={8}>
+                <JlInput
+                  id="standard-phone_contact"
+                  label="Telefone 2"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  value={this.props.client.phone_contact}
+                  fullWidth
+                  onChange={this.handleChange('phone_contact')}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Col>
+              <Col className="gutter-row" span={8}>
+                <JlInput
+                  id="standard-commerce_contact"
+                  label="Telefone 3"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  value={this.props.client.commerce_contact}
+                  fullWidth
+                  onChange={this.handleChange('commerce_contact')}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Col>
+              <Col className="gutter-row" span={12}>
+                <JlInput
+                  id="standard-email"
+                  label="Email Sindico"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  value={this.props.client.syndic_email}
+                  fullWidth
+                  onChange={this.handleChange('syndic_email')}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Col>
+              <Col className="gutter-row" span={6}>
+                <JlInput
+                  id="standard-email"
+                  label="Apartamento do Sindico"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  value={this.props.client.syndic_ap}
+                  fullWidth
+                  onChange={this.handleChange('syndic_ap')}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Col>
+              <Col className="gutter-row" span={6}>
+                <JlInput
+                  id="standard-syndic_birthday"
+                  label="Aniversario do Sindico"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  value={this.props.client.syndic_birthday}
+                  fullWidth
+                  onChange={this.handleChange('syndic_birthday')}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Col>
+              
+              <Col className="gutter-row" span={8}>
+                <JlInput
+                  id="standard-cond_blocks"
+                  label="Nº de Blocos"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  value={this.props.client.cond_blocks}
+                  fullWidth
+                  onChange={this.handleChange('cond_blocks')}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Col>
+              
+              <Col className="gutter-row" span={8}>
+                <JlInput
+                  id="standard-cond_floors"
+                  label="Nº de Andares"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  value={this.props.client.cond_floors}
+                  fullWidth
+                  onChange={this.handleChange('cond_floors')}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Col>
+              
+              <Col className="gutter-row" span={8}>
+                <JlInput
+                  id="standard-cond_aps"
+                  label="Nº de Apartamentos"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  value={this.props.client.cond_aps}
+                  fullWidth
+                  onChange={this.handleChange('cond_aps')}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Col>
             </Row>
             <div className="center-actions">
                   <Button shape="circle" size="large" type="primary" icon="check" onClick={this.save}></Button>

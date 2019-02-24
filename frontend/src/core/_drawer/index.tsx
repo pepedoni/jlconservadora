@@ -11,7 +11,7 @@ export default class JlDrawer extends Component {
     renderButtons(mode) {
         if(mode == 'view') {
             return (<div className="center-actions">
-                <Button shape="circle" type="primary" icon="edit" size="large" onClick={this.props.onEdit}></Button>
+                <Button shape="circle" type="primary" icon="form" size="large" onClick={this.props.onEdit}></Button>
                 <Button shape="circle" type="primary" icon="delete" size="large" onClick={this.props.onDelete}></Button>
             </div>);
         }

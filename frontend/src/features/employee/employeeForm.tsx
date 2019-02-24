@@ -69,7 +69,7 @@ class Employee extends React.Component {
                             )}
                     </Form.Item>
               <div className="center-actions">
-                  <Button shape="circle" type="primary" icon="check" htmlType="submit"></Button>
+                  <Button shape="circle" size="large" type="primary" icon="check" htmlType="submit"></Button>
               </div>
             </Form>
         );

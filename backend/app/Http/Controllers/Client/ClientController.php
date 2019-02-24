@@ -56,11 +56,11 @@ class ClientController extends Controller {
     } 
 
     public function updateClient(Request $request, Client $client) {
-        
-        $client = $client->fill($request->all());
 
-        $client->save();
-        
+        $client = Client::findOrFail($request->id);
+
+        $client->fill($request->all())->save();
+
         return response()->json(['data'=> $client]);
     }
 

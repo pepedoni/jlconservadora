@@ -1,2 +1,4 @@
 node_modules/
 public/app.js
+request.js
+package-lock.json
