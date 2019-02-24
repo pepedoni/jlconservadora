@@ -10,6 +10,10 @@ use Carbon\Carbon;
 class ClientController extends Controller {
 
     public function insertClient(Request $request) {
+
+        $request->phone_contact = str_replace(array("(", ")", "-", " "), "", $request->phone_contact);
+        $request->commerce_contact = str_replace(array("(", ")", "-", " "), "", $request->commerce_contact);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'syndic_ap' => 'required|string|max:5',
