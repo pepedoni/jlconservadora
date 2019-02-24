@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
 import { connectRouter } from 'connected-react-router'
-import auth from "features/auth/authReducer";
-import employee from "features/employee/employeeReducer";
-import general from "core/reducers";
-import menu from "core/_menu/menuReducer";
+import auth from "features/auth/authReducer"
+import employee from "features/employee/employeeReducer"
+import general from "core/reducers"
+import menu from "core/_menu/menuReducer"
 import client from "features/client/clientReducer"
+import service from "features/service/serviceReducer"
 
 export default (history) => combineReducers({
   router: connectRouter(history),
@@ -12,5 +13,6 @@ export default (history) => combineReducers({
   menu,
   employee,
   general,
-  client
+  client,
+  service
 });

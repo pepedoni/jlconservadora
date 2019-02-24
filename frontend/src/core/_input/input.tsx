@@ -3,8 +3,8 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import blue from '@material-ui/core/colors/blue';
-import black from '@material-ui/core/colors/black';
 
+import InputMask from 'react-input-mask';
 
 
 const theme = createMuiTheme({
@@ -70,52 +70,49 @@ class JlInput extends Component {
 
         const { classes } = this.props;
 
-        if(this.props.fullWidth) {
-            return (
-            <TextField
-                    className={classes.margin}
-                    InputProps={{
-                        classes: {
-                            root: classes.cssOutlinedInput,
-                            focused: classes.cssFocused,
-                            disabled: classes.disabled,
-                            notchedOutline: classes.notchedOutline,
-                        },
-                    }}
-                    id={this.props.id}
-                    label={this.props.label}
-                    className={this.props.className}
-                    disabled={this.props.disabled}
-                    value={this.props.value}
-                    fullWidth
-                    onChange={this.props.onChange}
-                    margin={this.props.margin || "normal"}
-                    variant={this.props.variant || "outlined"}
-                />
+          return (
+            <InputMask 
+              value={this.props.value} 
+              mask={this.props.mask} 
+              onChange={this.props.onChange}
+              disabled={this.props.disabled}
+              fullWidth
+              type={this.props.type}
+              >
+              {() => <TextField
+                      className={classes.margin}
+                      InputProps={{
+                          classes: {
+                              root: classes.cssOutlinedInput,
+                              focused: classes.cssFocused,
+                              disabled: classes.disabled,
+                              notchedOutline: classes.notchedOutline,
+                          },
+                      }}
+                      id={this.props.id}
+                      label={this.props.label}
+                      className={this.props.className}
+                      value={this.props.value}
+                      fullWidth
+                      onChange={this.props.onChange}
+                      disabled={this.props.disabled}
+                      margin={this.props.margin || "normal"}
+                      variant={this.props.variant || "outlined"}
+                      type={this.props.type}
+                      rows={this.props.rows}
+                  ></TextField>
+                }
+                </InputMask>
             );
-        }
-        else {
-            return (<TextField
-                    className={classes.margin}
-                    InputProps={{
-                        classes: {
-                            root: classes.cssOutlinedInput,
-                            focused: classes.cssFocused,
-                            disabled: classes.disabled,
-                            notchedOutline: classes.notchedOutline,
-                        },
-                    }}
-                    id={this.props.id}
-                    label={this.props.label}
-                    className={this.props.className}
-                    disabled={this.props.disabled}
-                    value={this.props.value}
-                    onChange={this.props.onChange}
-                    margin={this.props.margin || "normal"}
-                    variant={this.props.variant || "outlined"}
-                />
-            );
-        }
+        
+    }
+
+    renderFieldMask(value, mask) {
+      if(mask) {
+        return (
+          <InputMask value={value} mask={mask} />
+        )
+      }
     }
 
     render() {

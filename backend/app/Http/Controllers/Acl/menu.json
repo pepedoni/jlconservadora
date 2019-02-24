@@ -28,6 +28,11 @@
           "title": "Colaborador",
           "link": "/employee",
           "breadcrumb": "Cadastros /"
+        },
+        {
+          "title": "Serviços",
+          "link": "/service",
+          "breadcrumb": "Cadastros /"
         }
       ]
     },

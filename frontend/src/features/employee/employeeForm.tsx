@@ -1,9 +1,28 @@
 import React, {Component} from 'react';
 import {
     Form, Button, Col, Row, Input, Select, DatePicker, Icon,
-  } from 'antd';
-  
-class Employee extends React.Component {
+  } from 'antd';  
+import JlInput from "core/_input/input";
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  dense: {
+    marginTop: 16,
+  },
+  menu: {
+    width: 200,
+  },
+});
+
+class EmployeeForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -28,54 +47,64 @@ class Employee extends React.Component {
       this.props.onSave(this.props.form.getFieldsValue());
     }
 
-    handleChange(key,value) {
-        this.props.form.setFieldsValue({
-                [key]: value,
-            });
-    }
+    handleChange = name => event => {
+      this.props.employee[name] = event.target.value;
+      this.setState({ [name]: event.target.value });
+    };
 
     render() {
-      const { getFieldDecorator } = this.props.form;
+      const { classes } = this.props;
+
         return (
           
-            <Form layout="inline" onSubmit={this.save}>
-                <Form.Item
-                      label="CPF"
-                      >
-                        {getFieldDecorator('cpf', {
-                          rules: [{ required: true, message: 'Informe o CPF do colaborador!' }],
-                        })(
-                          <Input placeholder="999.999.99-99" id="cpf" value={this.state.cpf}  disabled={this.isReadOnly(this.props.mode, true)}/>
-                        )}
-                </Form.Item>
-                    
-                  <Form.Item
-                        label="Nome"
-                        >
-                          {getFieldDecorator('name', {
-                            rules: [{ required: true, message: 'Informe o Nome do colaborador!' }],
-                          })(
-                            <Input placeholder="João Carlos" id="name" value={this.state.name}  disabled={this.isReadOnly(this.props.mode, true)}/>
-                          )}
-                  </Form.Item>
-                    
-                  <Form.Item
-                          label="E-mail"
-                          >
-                            {getFieldDecorator('email', {
-                              rules: [{ required: true, message: 'Informe o email do colaborador!' }],
-                            })(
-                              <Input placeholder="example@jlconservadora.com.br" id="email" value={this.state.email} disabled={this.isReadOnly(this.props.mode, true)}/>
-                            )}
-                    </Form.Item>
+          <form noValidate autoComplete="off" className={classes.container} onSubmit={this.save}> 
+              <Col className="gutter-row" md={12}>
+                <JlInput
+                    id="standard-cpf"
+                    label="CPF"
+                    className={classes.textField}
+                    disabled={this.isReadOnly(this.props.mode, true)}
+                    value={this.props.employee.cpf}
+                    fullWidth
+                    onChange={this.handleChange('cpf')}
+                    margin="normal"
+                    variant="outlined"
+                  />
+              </Col>   
+              <Col className="gutter-row" md={12}>
+                  <JlInput
+                    id="standard-controlled"
+                    label="Nome"
+                    className={classes.textField}
+                    disabled={this.isReadOnly(this.props.mode, true)}
+                    value={this.props.employee.name}
+                    fullWidth
+                    onChange={this.handleChange('name')}
+                    margin="normal"
+                    variant="outlined"
+                  />
+              </Col>
+              <Col className="gutter-row" md={12} sm={18} xs={18}>
+                <JlInput
+                    id="standard-address"
+                    label="Endereço"
+                    className={classes.textField}
+                    disabled={this.isReadOnly(this.props.mode, true)}
+                    value={this.props.employee.email}
+                    fullWidth
+                    onChange={this.handleChange('email')}
+                    margin="normal"
+                    variant="outlined"
+                  />
+              </Col> 
               <div className="center-actions">
                   <Button shape="circle" size="large" type="primary" icon="check" htmlType="submit"></Button>
               </div>
-            </Form>
+            </form>
         );
     }
   }
   
-const EmployeeForm = Form.create({name: 'employee'})(Employee);
 
-export default EmployeeForm;
+
+export default withStyles(styles)(EmployeeForm);
