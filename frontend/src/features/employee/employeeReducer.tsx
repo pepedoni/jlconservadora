@@ -58,6 +58,13 @@ export default function(state = { formOpen: false, mode: null }, action) {
         formOpen: false,
         mode: null
       }
+      case types.ON_ROW_CLICK:
+      console.log(`[Employee Reducer] Action: ON_ROW_CLICK`);
+      return {
+        ...state,
+        formOpen: true,
+        mode: 'view'
+      }
     default:
       return state;
     }

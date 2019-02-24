@@ -67,7 +67,11 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <GridHeader addLabel={'Adicionar ' + this.props.addLabel} onAdd={this.props.onAdd} onClickFilter={this.reload}/>
+        <GridHeader addLabel={'Adicionar ' + this.props.addLabel} 
+          onAdd={this.props.onAdd}
+          onClickFilter={this.reload}
+          onReload={this.reload}
+          />
         <Card>
           <Table
             columns={this.props.columns}

@@ -28,7 +28,13 @@ const url = '/clients';
 export default class ClientGrid extends Component {
     render() {
         return (
-            <Grid onAdd={this.props.onAdd} addLabel={"Cliente"} columns={columns} url= {url} rowKey="id" onRowClick={ this.props.onRowClick } />
+            <Grid onAdd={this.props.onAdd} 
+                addLabel={"Cliente"} 
+                columns={columns} 
+                url= {url} 
+                rowKey="id"
+                onRowClick={ this.props.onRowClick }
+            />
         )
     }
 }

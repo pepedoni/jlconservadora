@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import AddButton from "core/_fab/index";
 import EmployeeForm from "./employeeForm";
 import EmployeeGrid from "./employeeGrid";
-import EmployeeHeader from './employeeHeader';
 import JlDrawer from "core/_drawer/";
 import './style.less';
 
@@ -15,8 +13,7 @@ export default class EmployeeComponent extends Component {
   render() {
     return (
       <div className="component">
-        <EmployeeHeader onAdd={this.props.employeeAdd}/>
-        <EmployeeGrid />
+        <EmployeeGrid onAdd={ this.props.employeeAdd } onRowClick= {this.props.onRowClick}/>
         <JlDrawer isVisible={this.props.formOpen} 
                   onClose={this.props.employeeCloseForm} 
                   onEdit={this.props.employeeEdit} 
@@ -29,7 +26,6 @@ export default class EmployeeComponent extends Component {
                   onSave={this.props.employeeSave}>
             </EmployeeForm>
         </JlDrawer>
-        <AddButton onClick={this.props.employeeAdd}/>
       </div>
     );
   }

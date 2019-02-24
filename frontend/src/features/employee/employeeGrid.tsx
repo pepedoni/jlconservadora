@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import Grid from 'core/_grid'
-// import { Card } from 'antd';
 
 const columns = [
     {
@@ -29,7 +28,13 @@ const url = '/employee';
 export default class EmployeeGrid extends Component {
     render() {
         return (
-            <Grid columns={columns} url= {url}/>
+            <Grid onAdd={this.props.onAdd} 
+                addLabel={"Colaborador"} 
+                columns={columns} 
+                url= {url} 
+                rowKey="id"
+                onRowClick={ this.props.onRowClick }
+            />
         )
     }
 }
