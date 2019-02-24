@@ -54,6 +54,13 @@ const employeeRequest = () => {
     }
 };
 
+export const onRowClick = (record) => {
+    return {
+        type: types.ON_ROW_CLICK,
+        payload: record
+    }
+}
+
 export const employeeSave = (employee) => (dispatch) => { 
     console.log('1');
     dispatch(employeeRequest);

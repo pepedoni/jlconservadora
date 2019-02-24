@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { employeeAdd, employeeEdit, employeeView, employeeDelete, employeeCloseForm, employeeSave } from './employeeActions';
+import { employeeAdd, employeeEdit, employeeView, employeeDelete, employeeCloseForm, employeeSave, onRowClick } from './employeeActions';
 import Employee from "./employeeComponent";
 
 const mapStateToProps = state => ({
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { employeeAdd, employeeEdit, employeeView, employeeDelete, employeeCloseForm, employeeSave },
+    { employeeAdd, employeeEdit, employeeView, employeeDelete, employeeCloseForm, employeeSave, onRowClick },
     dispatch
   );
 
