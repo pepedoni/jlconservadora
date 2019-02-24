@@ -13,16 +13,16 @@ class ClientController extends Controller {
 
         $request->phone_contact = str_replace(array("(", ")", "-", " "), "", $request->phone_contact);
         $request->commerce_contact = str_replace(array("(", ")", "-", " "), "", $request->commerce_contact);
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
             'syndic_ap' => 'required|string|max:5',
             'syndic_birthday' => 'required|string|max:10',
             'syndic_email' => 'required|string|email|unique:clients|max:50',
-            'phone_contact' => 'required|string|max:12',
-            'commerce_contact' => 'string|max:12',
+            'phone_contact' => 'required|string|max:13',
+            'commerce_contact' => 'string|max:13',/* 
             'manage_init' => 'required|string|max:10',
-            'manage_end' => 'required|string|max:10',
+            'manage_end' => 'required|string|max:10', */
             'cond_blocks' => 'required|integer|max:99',
             'cond_floors' => 'required|integer|max:99',
             'cond_aps' => 'required|integer',
