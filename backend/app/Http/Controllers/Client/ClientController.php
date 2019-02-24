@@ -19,8 +19,8 @@ class ClientController extends Controller {
             'syndic_ap' => 'required|string|max:5',
             'syndic_birthday' => 'required|string|max:10',
             'syndic_email' => 'required|string|email|unique:clients|max:50',
-            'phone_contact' => 'required|string|max:13',
-            'commerce_contact' => 'string|max:13',/* 
+            'phone_contact' => 'required|string|max:18',
+            'commerce_contact' => 'string|max:18',/* 
             'manage_init' => 'required|string|max:10',
             'manage_end' => 'required|string|max:10', */
             'cond_blocks' => 'required|integer|max:99',
