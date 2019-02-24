@@ -12,7 +12,6 @@ class ClientController extends Controller {
     public function insertClient(Request $request) {
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|integer|min:1|max:2',
             'syndic_ap' => 'required|string|max:5',
             'syndic_birthday' => 'required|string|max:10',
             'syndic_email' => 'required|string|email|unique:clients|max:50',
@@ -31,7 +30,7 @@ class ClientController extends Controller {
         
         $client = new Client([
             'name' => $request->name,
-            'type' => $request->type,
+            'type' => 1,
             'syndic_ap' => $request->syndic_ap,
             'syndic_birthday' => Carbon::parse($request->syndic_birthday),
             'syndic_email' => $request->syndic_email,
