@@ -6,7 +6,8 @@ import Employee from "./employeeComponent";
 const mapStateToProps = state => ({
   formOpen: state.employee.formOpen,
   mode: state.employee.mode,
-  employee: state.employee.employee
+  employee: state.employee.employee,
+  loading: state.employee.loading
 });
 
 const mapDispatchToProps = dispatch =>

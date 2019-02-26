@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  Row, Col, Icon, Button, Input, AutoComplete,
+  Row, Col, Icon, Button, Spin
 } from 'antd';
 import { withStyles } from '@material-ui/core/styles';
 import JlInput from "core/_input/input";
@@ -88,8 +88,8 @@ class ServiceForm extends Component {
         return (
           
           <form noValidate autoComplete="off" className={classes.container} onSubmit={this.save}> 
-              
-              <Col className="gutter-row" md={12}>
+            <Spin spinning={this.props.loading}>
+            <Col className="gutter-row" md={12}>
                 <JlInput
                     id="standard-address"
                     label="Nome"
@@ -147,7 +147,8 @@ class ServiceForm extends Component {
                     rows={3}
                   />
               </Col> 
-  
+
+            </Spin>
             <div className="center-actions">
                   <Button shape="circle" size="large" type="primary" icon="check" onClick={this.save}></Button>
               </div>

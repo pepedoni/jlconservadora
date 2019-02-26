@@ -25,8 +25,12 @@ export default class ClientComponent extends Component {
                         onEdit={this.props.clientEdit} 
                         onDelete={this.props.clientDelete} 
                         mode={this.props.mode}
-                        title="Cliente">
-                <ClientForm mode={this.props.mode} onSave={this.props.clientSave} client={this.props.client}/>
+                        title="Cliente"
+                        loading={this.props.loading}>
+                <ClientForm mode={this.props.mode} 
+                            onSave={this.props.clientSave} 
+                            client={this.props.client} 
+                            loading={this.props.loading}/>
             </JlDrawer>
         </div>
       )

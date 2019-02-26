@@ -48,11 +48,12 @@ const employeeSaveFailure = () => {
     };
 };
 
-const employeeRequest = () => {
+const loading = (loading) => {
     return {
-        type: types.EMPLOYEE_REQUEST
+        type: types.LOADING,
+        payload: loading
     }
-};
+}
 
 export const onRowClick = (record) => {
     return {
@@ -63,11 +64,13 @@ export const onRowClick = (record) => {
 
 export const employeeSave = (employee) => (dispatch) => { 
     console.log('1');
-    dispatch(employeeRequest);
+    dispatch(loading(true));
     console.log('2');
     request.get('/employee').then( response =>  {
         dispatch(employeeSaveSuccess);
+        dispatch(loading(false));
     }).catch( error => {
         dispatch(employeeSaveFailure);
+        dispatch(loading(false));
     });
 }

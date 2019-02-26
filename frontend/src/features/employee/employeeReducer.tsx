@@ -1,6 +1,6 @@
 import * as types from "./constants";
 
-export default function(state = { formOpen: false, mode: null }, action) {
+export default function(state = { formOpen: false, mode: null, loading: false }, action) {
   switch (action.type) {
     case types.EMPLOYEE_ADD:
       console.log(`[Employee Reducer] Action: EMPLOYEE_ADD`);
@@ -69,6 +69,12 @@ export default function(state = { formOpen: false, mode: null }, action) {
         employee: action.payload,
         mode: 'view'
       }
+      case types.LOADING: 
+      console.log(`[Employee Reducer] Action: LOADING`);
+        return {
+          ...state,
+          loading: action.payload
+        }
     default:
       return state;
     }

@@ -17,27 +17,32 @@ export default class JlDrawer extends Component {
         }
     }
 
+    renderLoading(loading) {
+        if(loading) {
+            return 
+        }
+    }
+
     state = { visible: false };
 
     render() {
         return (
-                <Drawer
-                    title={this.props.title}
-                    width={(window.innerWidth > 700) ? ((window.innerWidth * 70) / 100) : window.innerWidth}
-                    onClose={this.props.onClose}
-                    visible={this.props.isVisible}
-                    className="drawer"
-                    style={{
-                    overflow: 'auto',
-                    height: 'calc(100% - 108px)',
-                    paddingBottom: '108px',
-                    }}
-                >   
-                    <div>
-                        {this.props.children}
-                        {this.renderButtons(this.props.mode)}
-                    </div>
-                </Drawer>
+            <Drawer
+                title={this.props.title}
+                width={(window.innerWidth > 700) ? ((window.innerWidth * 70) / 100) : window.innerWidth}
+                onClose={this.props.onClose}
+                visible={this.props.isVisible}
+                className="drawer"
+                style={{
+                overflow: 'auto',
+                height: 'calc(100% - 108px)',
+                paddingBottom: '108px',
+                }}
+            >   
+                {this.props.children}
+                {this.renderButtons(this.props.mode)}
+
+            </Drawer>
         );
     }
 }

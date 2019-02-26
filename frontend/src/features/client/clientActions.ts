@@ -41,12 +41,6 @@ export const onRowClick = (record) => {
     }
 }
 
-const clientRequest = () => {
-    return {
-        type: types.CLIENT_REQUEST
-    }
-};
-
 const clientSaveSuccess = (client) => {
     return {
         type: types.CLIENT_SAVE_SUCCESS,
@@ -61,23 +55,6 @@ const clientSaveFailure = (client) => {
     }
 }
 
-export const clientSave = (client, mode) => (dispatch) => {
-    dispatch(clientRequest);
-    if(mode == 'new') {
-        request.post('/clients/insert', client).then( response =>  {
-            dispatch(clientSaveSuccess(client));
-        }).catch( error => {
-            dispatch(clientSaveFailure({client: client, mode: mode}));
-        });
-    }
-    else if(mode == 'edit') {
-        request.put('/clients/update/' + client.id, client).then( response =>  {
-            dispatch(clientSaveSuccess(client));
-        }).catch( error => {
-            dispatch(clientSaveFailure({client: client, mode: mode}));
-        });
-    }
-}
 
 export const clientOpenFilter = () => {
     return {
@@ -91,15 +68,6 @@ export const clientCloseFilter = () => {
     }
 }
 
-export const clientOnFilter = (filter) => (dispatch) => {
-    dispatch(clientRequest);
-
-    request.get('/clients?', filter).then( response =>  {
-        dispatch(clientFilterSuccess(response));
-    }).catch( error => {
-        dispatch(clientFilterFailure(error));
-    });
-}
 
 const clientFilterSuccess = response => {
     return {
@@ -113,4 +81,46 @@ const clientFilterFailure = (error) => {
         type: types.CLIENT_FILTER_FAILURE,
         payload: error
     }
+}
+
+const loading = (loading) => {
+    return {
+        type: types.LOADING,
+        payload: loading
+    }
+}
+
+
+export const clientSave = (client, mode) => (dispatch) => {
+    dispatch(loading(true));
+    if(mode == 'new') {
+        request.post('/clients/insert', client).then( response =>  {
+            dispatch(clientSaveSuccess(client));
+            dispatch(loading(false));
+        }).catch( error => {
+            dispatch(clientSaveFailure({client: client, mode: mode}));
+            dispatch(loading(false));
+        });
+    }
+    else if(mode == 'edit') {
+        request.put('/clients/update/' + client.id, client).then( response =>  {
+            dispatch(clientSaveSuccess(client));
+            dispatch(loading(false));
+        }).catch( error => {
+            dispatch(clientSaveFailure({client: client, mode: mode}));
+            dispatch(loading(false));
+        });
+    }
+}
+
+export const clientOnFilter = (filter) => (dispatch) => {
+    dispatch(loading(true));
+
+    request.get('/clients?', filter).then( response =>  {
+        dispatch(clientFilterSuccess(response));
+        dispatch(loading(false));
+    }).catch( error => {
+        dispatch(clientFilterFailure(error));
+        dispatch(loading(false));
+    });
 }

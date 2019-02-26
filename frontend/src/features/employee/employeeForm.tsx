@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Form, Button, Col, Row, Input, Select, DatePicker, Icon,
+    Form, Button, Col, Spin
   } from 'antd';  
 import JlInput from "core/_input/input";
 import { withStyles } from '@material-ui/core/styles';
@@ -58,45 +58,48 @@ class EmployeeForm extends React.Component {
         return (
           
           <form noValidate autoComplete="off" className={classes.container} onSubmit={this.save}> 
-              <Col className="gutter-row" md={12}>
-                <JlInput
-                    id="standard-cpf"
-                    label="CPF"
-                    className={classes.textField}
-                    disabled={this.isReadOnly(this.props.mode, true)}
-                    value={this.props.employee.cpf}
-                    fullWidth
-                    onChange={this.handleChange('cpf')}
-                    margin="normal"
-                    variant="outlined"
-                  />
-              </Col>   
+            <Spin spinning={this.props.loading}>
               <Col className="gutter-row" md={12}>
                   <JlInput
-                    id="standard-controlled"
-                    label="Nome"
-                    className={classes.textField}
-                    disabled={this.isReadOnly(this.props.mode, true)}
-                    value={this.props.employee.name}
-                    fullWidth
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                    variant="outlined"
-                  />
-              </Col>
-              <Col className="gutter-row" md={12} sm={18} xs={18}>
-                <JlInput
-                    id="standard-address"
-                    label="Endereço"
-                    className={classes.textField}
-                    disabled={this.isReadOnly(this.props.mode, true)}
-                    value={this.props.employee.email}
-                    fullWidth
-                    onChange={this.handleChange('email')}
-                    margin="normal"
-                    variant="outlined"
-                  />
-              </Col> 
+                      id="standard-cpf"
+                      label="CPF"
+                      className={classes.textField}
+                      disabled={this.isReadOnly(this.props.mode, true)}
+                      value={this.props.employee.cpf}
+                      fullWidth
+                      onChange={this.handleChange('cpf')}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                </Col>   
+                <Col className="gutter-row" md={12}>
+                    <JlInput
+                      id="standard-controlled"
+                      label="Nome"
+                      className={classes.textField}
+                      disabled={this.isReadOnly(this.props.mode, true)}
+                      value={this.props.employee.name}
+                      fullWidth
+                      onChange={this.handleChange('name')}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                </Col>
+                <Col className="gutter-row" md={12} sm={18} xs={18}>
+                  <JlInput
+                      id="standard-address"
+                      label="Endereço"
+                      className={classes.textField}
+                      disabled={this.isReadOnly(this.props.mode, true)}
+                      value={this.props.employee.email}
+                      fullWidth
+                      onChange={this.handleChange('email')}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                </Col> 
+              </Spin>
+              
               <div className="center-actions">
                   <Button shape="circle" size="large" type="primary" icon="check" htmlType="submit"></Button>
               </div>

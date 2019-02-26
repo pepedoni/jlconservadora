@@ -23,7 +23,11 @@ export default class ServiceComponent extends Component {
                         onDelete={this.props.serviceDelete} 
                         mode={this.props.mode}
                         title="Serviço">
-                <ServiceForm mode={this.props.mode} onSave={this.props.serviceSave} service={this.props.service}/>
+                <ServiceForm 
+                        mode={this.props.mode} 
+                        onSave={this.props.serviceSave} 
+                        service={this.props.service}
+                        loading={this.props.loading}/>
             </JlDrawer>
         </div>
       )

@@ -2,3 +2,5 @@ node_modules/
 public/app.js
 request.js
 package-lock.json
+node_modules
+node_modules/*

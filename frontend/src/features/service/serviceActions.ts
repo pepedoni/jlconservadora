@@ -61,20 +61,31 @@ const serviceSaveFailure = (service) => {
     }
 }
 
+const loading = (loading) => {
+    return {
+        type: types.LOADING,
+        payload: loading
+    }
+}
+
 export const serviceSave = (service, mode) => (dispatch) => {
-    dispatch(serviceRequest);
+    dispatch(loading(true));
     if(mode == 'new') {
         request.post('/service/insert', service).then( response =>  {
             dispatch(serviceSaveSuccess(service));
+            dispatch(loading(false));
         }).catch( error => {
             dispatch(serviceSaveFailure({service: service, mode: mode}));
+            dispatch(loading(false));
         });
     }
     else if(mode == 'edit') {
         request.put('/service/update/' + service.id, service).then( response =>  {
             dispatch(serviceSaveSuccess(service));
+            dispatch(loading(false));
         }).catch( error => {
             dispatch(serviceSaveFailure({service: service, mode: mode}));
+            dispatch(loading(false));
         });
     }
 }

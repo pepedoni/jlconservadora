@@ -8,7 +8,8 @@ import Service from "./serviceComponent";
 const mapStateToProps = state => ({
     formOpen: state.service.formOpen,
     mode: state.service.mode,
-    service: state.service.service
+    service: state.service.service,
+    loading: state.service.loading
 });
 
 const mapDispatchToProps = dispatch =>

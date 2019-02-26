@@ -1,6 +1,6 @@
 import * as types from "./constants";
 
-export default function(state = { formOpen: false, mode: null, client: {} }, action) {
+export default function(state = { formOpen: false, mode: null, client: {}, loading: false }, action) {
   filterOpen: false
   switch (action.type) {
     case types.CLIENT_ADD:
@@ -86,6 +86,11 @@ export default function(state = { formOpen: false, mode: null, client: {} }, act
         ...state,
         formOpen: false,
         filterOpen: false
+      }
+    case types.LOADING: 
+      return {
+        ...state,
+        loading: action.payload
       }
     default:
       return state;

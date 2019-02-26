@@ -12,7 +12,8 @@ const mapStateToProps = state => ({
     mode: state.client.mode,
     client: state.client.client,
     filterOpen: state.client.filterOpen,
-    filter: state.client.filter
+    filter: state.client.filter,
+    loading: state.client.loading
 });
 
 const mapDispatchToProps = dispatch =>
