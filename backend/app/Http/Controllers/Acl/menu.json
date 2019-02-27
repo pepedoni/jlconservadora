@@ -30,6 +30,11 @@
           "breadcrumb": "Cadastros /"
         },
         {
+          "title": "Empresa",
+          "link": "/company",
+          "breadcrumb": "Cadastros /"
+        },
+        {
           "title": "Serviços",
           "link": "/service",
           "breadcrumb": "Cadastros /"

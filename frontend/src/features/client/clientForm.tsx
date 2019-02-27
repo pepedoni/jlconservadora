@@ -24,7 +24,7 @@ const styles = theme => ({
   },
 });
 
-class ClientForm extends React.Component {
+class ClientForm extends Component {
 
   constructor(props) {
     super(props);

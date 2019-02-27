@@ -3,6 +3,7 @@ import Dashboard from "features/dashboard/dashboardContainer"
 import Employee from "features/employee/employeeContainer"
 import Clients from "features/client/clientContainer"
 import Service from "features/service/serviceContainer"
+import Company from "features/company/companyContainer"
 
 export const routes = [
   {
@@ -29,6 +30,11 @@ export const routes = [
     path: "/service",
     exact: true,
     component: Service
+  },
+  {
+    path: "/company",
+    exact: true,
+    component: Company
   }
 
 ]

@@ -20,5 +20,6 @@ require __DIR__ . '/menu/menu.php';
 require __DIR__ . '/auth/auth.php';
 require __DIR__ . '/auth/passwordReset.php';
 require __DIR__ . '/clients/clients.php';
+require __DIR__ . '/company/company.php';
 require __DIR__ . '/service/service.php';
 require __DIR__ . '/employee/employee.php';

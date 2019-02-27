@@ -6,6 +6,7 @@ import general from "core/reducers"
 import menu from "core/_menu/menuReducer"
 import client from "features/client/clientReducer"
 import service from "features/service/serviceReducer"
+import company from "features/company/companyReducer"
 
 export default (history) => combineReducers({
   router: connectRouter(history),
@@ -14,5 +15,6 @@ export default (history) => combineReducers({
   employee,
   general,
   client,
-  service
+  company,
+  service,
 });
