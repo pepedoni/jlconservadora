@@ -1,142 +1,196 @@
-import React, {Component} from 'react';
-import {
-  Col, Button, Spin
-} from 'antd';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from "react";
+import { Row, Col, Button, Spin } from "antd";
+import { withStyles } from "@material-ui/core/styles";
 import JlInput from "core/_input/input";
-  
 
 const styles = theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap"
   },
   textField: {
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing.unit
   },
   dense: {
-    marginTop: 16,
+    marginTop: 16
   },
   menu: {
-    width: 200,
-  },
+    width: 200
+  }
 });
 
 class CompanyForm extends Component {
-
   constructor(props) {
     super(props);
 
-    if(props.company)  {
+    if (props.company) {
       this.state = this.props.company;
-    }
-    else {
-      
+    } else {
       this.state = {
         validEmail: "",
         cpf: null,
-        address: '',
-        syndic_email: '',
+        address: "",
+        syndic_email: "",
         name: "Pedro",
         valid: false
-      }
+      };
     }
-    
-    this.onSelect = this.onSelect.bind(this);
-
   }
 
-    isReadOnly(mode, readOnlyOnEdit) {
-      if(mode == 'view' || (mode == 'edit' && readOnlyOnEdit)) {
-        return true;
-      }
-      else return false;
-    }
+  isReadOnly(mode, readOnlyOnEdit) {
+    if (mode == "view" || (mode == "edit" && readOnlyOnEdit)) {
+      return true;
+    } else return false;
+  }
 
-    save = () => {
-      this.props.onSave(this.props.company, this.props.mode);
-    }
+  save = () => {
+    this.props.onSave(this.props.company, this.props.mode);
+  };
 
-    getTextItem(item) {
-      return item.code + ' | ' + item.description + ' | ' + item.aliquot;
-    }
+  getTextItem(item) {
+    return item.code + " | " + item.description + " | " + item.inscription;
+  }
 
-    onSelect(value, option) {
-      let aliquota = parseFloat(option.props.children[2].replace(" ", "").replace("|", ""));
-      this.props.company["aliquot"] = aliquota;
-      this.props.company["list_item"] = option.key;
-      this.setState({aliquot: aliquota});
-      this.setState({list_item: option.key})
-    }
+  handleChange = name => event => {
+    this.props.company[name] = event.target.value;
+    this.setState({ [name]: event.target.value });
+  };
 
-    handleChange = name => event => {
-      this.props.company[name] = event.target.value;
-      this.setState({ [name]: event.target.value });
-    };
+  handleSearch() {
+    console.log("teste");
+  }
 
-    handleSearch() {
-      console.log('teste');
-    }
+  render() {
+    const { classes } = this.props;
 
-    render() {
-      const { classes } = this.props;
-
-        return (
-          
-          <form noValidate autoComplete="off" className={classes.container} onSubmit={this.save}> 
-            <Spin spinning={this.props.loading}>
-            <Col className="gutter-row" md={12}>
-                <JlInput
-                    id="standard-address"
-                    label="Nome"
-                    className={classes.textField}
-                    value={this.props.company.name}
-                    disabled={this.isReadOnly(this.props.mode, true)}
-                    fullWidth
-                    onChange={this.handleChange('name')}
-                    mask=""
-                    margin="normal"
-                    variant="outlined"
-                  />
-              </Col>  
-              <Col className="gutter-row" md={4} sm={12} xs={12}>
-                <JlInput
-                    id="standard-aliquot"
-                    label="Aliquota"
-                    className={classes.textField}
-                    disabled={true}
-                    value={this.props.company.aliquot}
-                    fullWidth
-                    onChange={this.handleChange('aliquot')}
-                    margin="normal"
-                    variant="outlined"
-                    type="float"
-                  />
-              </Col> 
-              <Col className="gutter-row" md={24} sm={24} xs={24}>
-                <JlInput
-                    id="standard-description"
-                    label="Descrição"
-                    className={classes.textField}
-                    disabled={this.isReadOnly(this.props.mode, true)}
-                    value={this.props.company.description}
-                    fullWidth
-                    multiline
-                    onChange={this.handleChange('description')}
-                    margin="normal"
-                    variant="outlined"
-                    rows={3}
-                  />
-              </Col> 
-
-            </Spin>
-            <div className="center-actions">
-                  <Button shape="circle" size="large" type="primary" icon="check" onClick={this.save}></Button>
-              </div>
-          </form>
-        );
-    }
+    return (
+      <form
+        noValidate
+        autoComplete="off"
+        className={classes.container}
+        onSubmit={this.save}
+      >
+        <Spin
+          spinning={this.props.loading}
+          tip="Carregando..."
+          wrapperClassName="spin"
+        >
+          <Row gutter={8}>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="company-inscription"
+                label="Inscrição"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, true)}
+                value={this.props.company.inscription}
+                fullWidth
+                onChange={this.handleChange("inscription")}
+                margin="normal"
+                variant="outlined"
+                mask="99.999.999/9999-99"
+                type="float"
+              />
+            </Col>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="company-name"
+                label="Nome"
+                className={classes.textField}
+                value={this.props.company.name}
+                disabled={this.isReadOnly(this.props.mode, true)}
+                fullWidth
+                onChange={this.handleChange("name")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+          </Row>
+          <Row gutter={8}>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="company-municipal_inscription"
+                label="Inscrição Municipal"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.props.company.municipal_inscription}
+                fullWidth
+                onChange={this.handleChange("municipal_inscription")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="company-nature_operation"
+                label="Natureza da Operação"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.props.company.nature_operation}
+                fullWidth
+                onChange={this.handleChange("nature_operation")}
+                margin="normal"
+                variant="outlined"
+                select={true}
+              />
+            </Col>
+          </Row>          
+          <Row gutter={8}>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="company-taxation_regime"
+                label="Regime de Tributação"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.props.company.taxation_regime}
+                fullWidth
+                onChange={this.handleChange("taxation_regime")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="company-national_simple"
+                label="Simples Nacional"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.props.company.national_simple}
+                fullWidth
+                onChange={this.handleChange("national_simple")}
+                margin="normal"
+                variant="outlined"
+                select={true}
+              />
+            </Col>
+          </Row><Row gutter={8}>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="company-cultural_promoter"
+                label="Incentivador Cultural"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.props.company.cultural_promoter}
+                fullWidth
+                onChange={this.handleChange("cultural_promoter")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+          </Row>
+        </Spin>
+        <div className="center-actions">
+          <Button
+            shape="circle"
+            size="large"
+            type="primary"
+            icon="check"
+            onClick={this.save}
+          />
+        </div>
+      </form>
+    );
+  }
 }
 
 export default withStyles(styles)(CompanyForm);

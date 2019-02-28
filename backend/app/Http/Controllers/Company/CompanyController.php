@@ -11,7 +11,6 @@ class CompanyController extends Controller
 {
     public function insertCompany(Request $request) {
         $request->validate([
-            'code'                        => 'required|integer|max:2',
             'municipal_inscription'       => 'required|string|max:255',
             'inscription'       => 'required|string|max:255',
             'name'              => 'required|string|max:255',
@@ -21,8 +20,7 @@ class CompanyController extends Controller
             'cultural_promoter' => 'required|string|min:1|max:1',
         ]);
         
-        $company = new Company([
-            'code' => $request->code,                                               
+        $company = new Company([                                        
             'municipal_inscription' => $request->municipal_inscription,            
             'inscription' => $request->inscription,
             'name' => $request->name,                           

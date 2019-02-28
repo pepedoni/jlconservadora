@@ -5,8 +5,6 @@ import JlDrawer from "core/_drawer/"
 import CompanyForm from './companyForm'
 import CompanyGrid from './companyGrid'
 
-import './style.less';
-
 export default class CompanyComponent extends Component {
 
     constructor(props) {

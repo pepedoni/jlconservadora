@@ -8,7 +8,7 @@ export default function(state = { formOpen: false, mode: null, company: {}, load
         ...state,
         formOpen: true,
         mode: 'new',
-        company: {name: '', item_list: '', aliquot: '', description: '' }
+        company: {municipal_inscription: '',  inscription: '',  name: '', nature_operation: '',  taxation_regime: '',  national_simple: '',  cultural_promoter: '' }
       };
     case types.COMPANY_EDIT:
       console.log(`[Company Reducer] Action: COMPANY_EDIT`);

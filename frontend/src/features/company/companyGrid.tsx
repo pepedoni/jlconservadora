@@ -8,18 +8,19 @@ const columns = [
         dataIndex: 'inscription',
         // sorter: true,
         // render: name => `${name.first} ${name.last}`,
-        // width: '50%',
+        width: '20%',
     },
     {
         title: 'Nome',
         dataIndex: 'name',
         // render: (address, data) => `${address}, ${data.address_number}/${da}`,
-        // sorter: true,
-        // width: '20%',
+        sorter: true,
+        width: '60%',
     },
     {
         title: 'Inscrição Municipal',
         dataIndex: 'municipal_inscription',
+        width: '20%'
     }   
 ];
 

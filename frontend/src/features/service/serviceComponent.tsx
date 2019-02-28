@@ -5,8 +5,6 @@ import JlDrawer from "core/_drawer/"
 import ServiceForm from './serviceForm'
 import ServiceGrid from './serviceGrid'
 
-import './style.less';
-
 export default class ServiceComponent extends Component {
 
     constructor(props) {

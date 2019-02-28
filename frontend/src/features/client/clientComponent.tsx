@@ -5,8 +5,6 @@ import JlDrawer from "core/_drawer/"
 import ClientForm from './clientForm'
 import ClientGrid from './clientGrid'
 
-import './style.less';
-
 export default class ClientComponent extends Component {
 
     constructor(props) {

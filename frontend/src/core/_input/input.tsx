@@ -69,7 +69,7 @@ class JlInput extends Component {
     renderInput() {
 
         const { classes } = this.props;
-
+      
           return (
             <InputMask 
               value={this.props.value} 
