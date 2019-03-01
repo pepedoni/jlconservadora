@@ -61,7 +61,7 @@ class CompanyForm extends Component {
   };
 
   onSelect(event, name) {
-    if(event) {
+    if (event) {
       this.props.company[name] = event.target.value;
       this.setState({ [name]: event.target.value });
     }
@@ -127,22 +127,6 @@ class CompanyForm extends Component {
               />
             </Col>
             <Col className="gutter-row" md={12} sm={12} xs={12}>
-              <JlInput
-                id="company-nature_operation"
-                label="Natureza da Operação"
-                className={classes.textField}
-                disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.company.nature_operation}
-                fullWidth
-                onSelect={this.onSelect()}
-                margin="normal"
-                variant="outlined"
-                select={true}
-              />
-            </Col>
-          </Row>          
-          <Row gutter={8}>
-            <Col className="gutter-row" md={12} sm={12} xs={12}>
               <JlSelect
                 id="company-taxation_regime"
                 name="taxation_regime"
@@ -150,22 +134,38 @@ class CompanyForm extends Component {
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.props.company.taxation_regime}
-                dataSource={
-                  [
-                    {key: 1, description: 'Microempresa Municipal', label: 'Microempresa Municipal'},
-                    {key: 2, description: 'Estimativa', label: 'Estimativa'},
-                    {key: 3, description: 'Sociedade de Profissionais', label: 'Sociedade de Profissionais'},
-                    {key: 4, description: 'Cooperativa', label: 'Cooperativa'},
-                    {key: 5, description: 'MEI - Simples Nacional', label: 'MEI - Simples Nacional'},
-                    {key: 6, description: 'ME EPP - Simples Nacional', label: 'ME EPP - Simples Nacional'}
-                  ]
-                }
+                dataSource={[
+                  {
+                    key: 1,
+                    description: "Microempresa Municipal",
+                    label: "Microempresa Municipal"
+                  },
+                  { key: 2, description: "Estimativa", label: "Estimativa" },
+                  {
+                    key: 3,
+                    description: "Sociedade de Profissionais",
+                    label: "Sociedade de Profissionais"
+                  },
+                  { key: 4, description: "Cooperativa", label: "Cooperativa" },
+                  {
+                    key: 5,
+                    description: "MEI - Simples Nacional",
+                    label: "MEI - Simples Nacional"
+                  },
+                  {
+                    key: 6,
+                    description: "ME EPP - Simples Nacional",
+                    label: "ME EPP - Simples Nacional"
+                  }
+                ]}
                 fullWidth
                 onSelect={this.onSelect}
                 margin="normal"
                 variant="outlined"
               />
             </Col>
+          </Row>
+          <Row gutter={8}>
             <Col className="gutter-row" md={12} sm={12} xs={12}>
               <JlSelect
                 id="company-national_simple"
@@ -174,33 +174,28 @@ class CompanyForm extends Component {
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.props.company.national_simple}
-                dataSource={
-                  [
-                    {key: 0, description: 'Não', label: 'Não'},
-                    {key: 1, description: 'Sim', label: 'Sim'},
-                  ]
-                }
+                dataSource={[
+                  { key: 0, description: "Não", label: "Não" },
+                  { key: 1, description: "Sim", label: "Sim" }
+                ]}
                 fullWidth
                 onSelect={this.onSelect}
                 margin="normal"
                 variant="outlined"
               />
             </Col>
-          </Row><Row gutter={8}>
             <Col className="gutter-row" md={12} sm={12} xs={12}>
               <JlSelect
                 id="company-cultural_promoter"
                 name="cultural_promoter"
-                label="Simples Nacional"
+                label="Incentivador Cultural"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.props.company.cultural_promoter}
-                dataSource={
-                  [
-                    {key: 0, description: 'Não', label: 'Não'},
-                    {key: 1, description: 'Sim', label: 'Sim'},
-                  ]
-                }
+                dataSource={[
+                  { key: 0, description: "Não", label: "Não" },
+                  { key: 1, description: "Sim", label: "Sim" }
+                ]}
                 fullWidth
                 onSelect={this.onSelect}
                 margin="normal"
