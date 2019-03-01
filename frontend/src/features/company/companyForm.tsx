@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Button, Spin } from "antd";
 import { withStyles } from "@material-ui/core/styles";
 import JlInput from "core/_input/input";
+import JlSelect from "core/_input/select";
 
 const styles = theme => ({
   container: {
@@ -36,6 +37,8 @@ class CompanyForm extends Component {
         valid: false
       };
     }
+
+    this.onSelect = this.onSelect.bind(this);
   }
 
   isReadOnly(mode, readOnlyOnEdit) {
@@ -57,8 +60,11 @@ class CompanyForm extends Component {
     this.setState({ [name]: event.target.value });
   };
 
-  handleSearch() {
-    console.log("teste");
+  onSelect(event, name) {
+    if(event) {
+      this.props.company[name] = event.target.value;
+      this.setState({ [name]: event.target.value });
+    }
   }
 
   render() {
@@ -128,7 +134,7 @@ class CompanyForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.props.company.nature_operation}
                 fullWidth
-                onChange={this.handleChange("nature_operation")}
+                onSelect={this.onSelect()}
                 margin="normal"
                 variant="outlined"
                 select={true}
@@ -137,42 +143,66 @@ class CompanyForm extends Component {
           </Row>          
           <Row gutter={8}>
             <Col className="gutter-row" md={12} sm={12} xs={12}>
-              <JlInput
+              <JlSelect
                 id="company-taxation_regime"
+                name="taxation_regime"
                 label="Regime de Tributação"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.props.company.taxation_regime}
+                dataSource={
+                  [
+                    {key: 1, description: 'Microempresa Municipal', label: 'Microempresa Municipal'},
+                    {key: 2, description: 'Estimativa', label: 'Estimativa'},
+                    {key: 3, description: 'Sociedade de Profissionais', label: 'Sociedade de Profissionais'},
+                    {key: 4, description: 'Cooperativa', label: 'Cooperativa'},
+                    {key: 5, description: 'MEI - Simples Nacional', label: 'MEI - Simples Nacional'},
+                    {key: 6, description: 'ME EPP - Simples Nacional', label: 'ME EPP - Simples Nacional'}
+                  ]
+                }
                 fullWidth
-                onChange={this.handleChange("taxation_regime")}
+                onSelect={this.onSelect}
                 margin="normal"
                 variant="outlined"
               />
             </Col>
             <Col className="gutter-row" md={12} sm={12} xs={12}>
-              <JlInput
+              <JlSelect
                 id="company-national_simple"
+                name="national_simple"
                 label="Simples Nacional"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.props.company.national_simple}
+                dataSource={
+                  [
+                    {key: 0, description: 'Não', label: 'Não'},
+                    {key: 1, description: 'Sim', label: 'Sim'},
+                  ]
+                }
                 fullWidth
-                onChange={this.handleChange("national_simple")}
+                onSelect={this.onSelect}
                 margin="normal"
                 variant="outlined"
-                select={true}
               />
             </Col>
           </Row><Row gutter={8}>
             <Col className="gutter-row" md={12} sm={12} xs={12}>
-              <JlInput
+              <JlSelect
                 id="company-cultural_promoter"
-                label="Incentivador Cultural"
+                name="cultural_promoter"
+                label="Simples Nacional"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.props.company.cultural_promoter}
+                dataSource={
+                  [
+                    {key: 0, description: 'Não', label: 'Não'},
+                    {key: 1, description: 'Sim', label: 'Sim'},
+                  ]
+                }
                 fullWidth
-                onChange={this.handleChange("cultural_promoter")}
+                onSelect={this.onSelect}
                 margin="normal"
                 variant="outlined"
               />
