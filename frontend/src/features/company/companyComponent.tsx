@@ -26,7 +26,8 @@ export default class CompanyComponent extends Component {
                         mode={this.props.mode} 
                         onSave={this.props.companySave} 
                         company={this.props.company}
-                        loading={this.props.loading}/>
+                        loading={this.props.loading}
+                        callLoading={this.props.callLoading}/>
             </JlDrawer>
         </div>
       )

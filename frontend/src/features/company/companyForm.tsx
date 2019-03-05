@@ -3,6 +3,8 @@ import { Row, Col, Button, Spin } from "antd";
 import { withStyles } from "@material-ui/core/styles";
 import JlInput from "core/_input/input";
 import JlSelect from "core/_input/select";
+import axios from "axios";
+import { async } from "q";
 
 const styles = theme => ({
   container: {
@@ -66,6 +68,42 @@ class CompanyForm extends Component {
       this.setState({ [name]: event.target.value });
     }
   }
+
+  onChangeCep = name => async event => {
+    if (event.target.value.replace("-", "").replace(/_/g, "").length == 8) {
+      this.setCepFields(event.target.value.replace("-", ""));
+    }
+    else {
+      this.clearCepFields();
+    }
+    this.setState({ [name]: event.target.value });
+  };
+
+  clearCepFields() {
+    this.props.company.city = '';
+    this.props.company.state = '';
+    this.props.company.address = '';
+    this.props.company.address_neighborhood = '';
+    this.setState({ city: '' });
+    this.setState({ state: '' });
+    this.setState({ address: '' });
+    this.setState({ address_neighborhood: '' });
+  }
+
+  setCepFields = async cep => {
+    this.props.callLoading(true);
+    const response = await fetch(`http://api.postmon.com.br/v1/cep/${cep}`);
+    const json = await response.json();
+    this.props.company.city = json.cidade;
+    this.props.company.state = json.estado;
+    this.props.company.address = json.logradouro;
+    this.props.company.address_neighborhood = json.bairro;
+    this.setState({ city: json.localidade });
+    this.setState({ state: json.uf });
+    this.setState({ address: json.logradouro });
+    this.setState({ address_neighborhood: json.bairro });
+    this.props.callLoading(false);
+  };
 
   render() {
     const { classes } = this.props;
@@ -198,6 +236,102 @@ class CompanyForm extends Component {
                 ]}
                 fullWidth
                 onSelect={this.onSelect}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+          </Row>
+          <Row gutter={8}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="company-cep"
+                name="cep"
+                label="CEP"
+                mask="99999-999"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                fullWidth
+                onChange={this.onChangeCep("cep")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="company-state"
+                label="Estado"
+                className={classes.textField}
+                value={this.props.company.state}
+                disabled={true}
+                fullWidth
+                onChange={this.handleChange("state")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="company-city"
+                label="Cidade"
+                className={classes.textField}
+                value={this.props.company.city}
+                disabled={true}
+                fullWidth
+                onChange={this.handleChange("city")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="company-address_neighborhood"
+                label="Bairro"
+                className={classes.textField}
+                value={this.props.company.address_neighborhood}
+                disabled={true}
+                fullWidth
+                onChange={this.handleChange("address_neighborhood")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+          </Row>
+          <Row gutter={8}>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="company-city"
+                label="Logradouro"
+                className={classes.textField}
+                value={this.props.company.address}
+                disabled={true}
+                fullWidth
+                onChange={this.handleChange("address")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={4} sm={12} xs={12}>
+              <JlInput
+                id="company-address_number"
+                label="Número"
+                className={classes.textField}
+                value={this.props.company.address_number}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                fullWidth
+                onChange={this.handleChange("address_number")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={8} sm={12} xs={12}>
+              <JlInput
+                id="company-address_complement"
+                label="Complemento"
+                className={classes.textField}
+                value={this.props.company.address_complement}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                fullWidth
+                onChange={this.handleChange("address_complement")}
                 margin="normal"
                 variant="outlined"
               />

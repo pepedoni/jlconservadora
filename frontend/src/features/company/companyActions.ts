@@ -61,7 +61,7 @@ const companySaveFailure = (company) => {
     }
 }
 
-const loading = (loading) => {
+export const callLoading = (loading) => {
     return {
         type: types.LOADING,
         payload: loading
@@ -69,23 +69,23 @@ const loading = (loading) => {
 }
 
 export const companySave = (company, mode) => (dispatch) => {
-    dispatch(loading(true));
+    dispatch(callLoading(true));
     if(mode == 'new') {
         request.post('/company/insert', company).then( response =>  {
             dispatch(companySaveSuccess(company));
-            dispatch(loading(false));
+            dispatch(callLoading(false));
         }).catch( error => {
             dispatch(companySaveFailure({company: company, mode: mode}));
-            dispatch(loading(false));
+            dispatch(callLoading(false));
         });
     }
     else if(mode == 'edit') {
         request.put('/company/update/' + company.id, company).then( response =>  {
             dispatch(companySaveSuccess(company));
-            dispatch(loading(false));
+            dispatch(callLoading(false));
         }).catch( error => {
             dispatch(companySaveFailure({company: company, mode: mode}));
-            dispatch(loading(false));
+            dispatch(callLoading(false));
         });
     }
 }
