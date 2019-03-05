@@ -90,6 +90,7 @@ class JlInput extends Component {
                           },
                       }}
                       id={this.props.id}
+                      {...this.props.extraProps}
                       label={this.props.label}
                       className={this.props.className}
                       value={this.props.value}

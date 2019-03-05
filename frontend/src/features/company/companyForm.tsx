@@ -129,6 +129,7 @@ class CompanyForm extends Component {
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.props.company.inscription}
+                extraProps={{required: true}}
                 fullWidth
                 onChange={this.handleChange("inscription")}
                 margin="normal"
@@ -143,6 +144,7 @@ class CompanyForm extends Component {
                 label="Nome"
                 className={classes.textField}
                 value={this.props.company.name}
+                extraProps={{required: true}}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 fullWidth
                 onChange={this.handleChange("name")}
@@ -159,6 +161,7 @@ class CompanyForm extends Component {
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.props.company.municipal_inscription}
+                extraProps={{required: true}}
                 fullWidth
                 onChange={this.handleChange("municipal_inscription")}
                 margin="normal"
@@ -319,6 +322,7 @@ class CompanyForm extends Component {
                 value={this.props.company.address_number}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 fullWidth
+                extraProps={{required: true}}
                 onChange={this.handleChange("address_number")}
                 margin="normal"
                 variant="outlined"
