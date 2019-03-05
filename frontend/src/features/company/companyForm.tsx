@@ -76,6 +76,7 @@ class CompanyForm extends Component {
     else {
       this.clearCepFields();
     }
+    this.props.company.cep = event.target.value;
     this.setState({ [name]: event.target.value });
   };
 
