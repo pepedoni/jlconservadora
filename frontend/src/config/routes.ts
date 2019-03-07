@@ -4,6 +4,7 @@ import Employee from "features/employee/employeeContainer"
 import Clients from "features/client/clientContainer"
 import Service from "features/service/serviceContainer"
 import Company from "features/company/companyContainer"
+import Invoice from "features/invoice/invoiceContainer"
 
 export const routes = [
   {
@@ -35,6 +36,11 @@ export const routes = [
     path: "/company",
     exact: true,
     component: Company
+  },
+  {
+    path: "/invoice",
+    exact: true,
+    component: Invoice
   }
 
 ]

@@ -10,7 +10,7 @@
       "children": [
         {
           "title": "Nota Fiscal",
-          "link": "/notafiscal",
+          "link": "/invoice",
           "breadcrumb": "Faturamento /"
         }
       ]
