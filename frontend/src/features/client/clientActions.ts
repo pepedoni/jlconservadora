@@ -83,6 +83,20 @@ const clientFilterFailure = (error) => {
     }
 }
 
+const clientDistrictsSuccess = response => {
+    return {
+        type: types.CLIENT_DISTRICTS_SUCCESS,
+        payload: response.data
+    }
+}
+
+const clientDistrictsFailure = (error) => {
+    return {
+        type: types.CLIENT_DISTRICTS_FAILURE,
+        payload: error  
+    }
+}
+
 export const callLoading = (loading) => {
     return {
         type: types.CLIENT_LOADING,
@@ -116,7 +130,14 @@ export const clientSave = (client, mode) => (dispatch) => {
 export const clientOnFilter = (filter) => (dispatch) => {
     dispatch(callLoading(true));
 
-    request.get('/clients?', filter).then( response =>  {
+    request.get('/clients/filter', { params: 
+        { 
+            name: filter.nome,
+            cpfCnpj: filter.cpfCnpj,
+            address: filter.rua,
+            email: filter.email
+        }
+    }).then( response =>  {
         dispatch(clientFilterSuccess(response));
         dispatch(callLoading(false));
         
@@ -134,5 +155,13 @@ export const onDelete = (client) => (dispatch) => {
         dispatch(callLoading(false));
     }).catch( error => {
         dispatch(callLoading(false));
+    });
+}
+
+export const clientFindDistricts = () => (dispatch) => {
+    request.get('/clients/districts').then( response => {
+        dispatch(clientDistrictsSuccess(response));
+    }).catch( error => {
+        dispatch(clientDistrictsFailure(error));
     });
 }

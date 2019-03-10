@@ -40,7 +40,8 @@ export default class ClientGrid extends Component {
                 />
 
                 <ClientFilter visible={this.props.filterOpen} clientCloseFilter={this.props.clientCloseFilter}
-                    clientOnFilter={this.props.clientOnFilter} filter={this.props.filter}/>
+                    clientOnFilter={this.props.clientOnFilter} filter={this.props.filter}
+                    clientFindDistricts={this.props.clientFindDistricts} clientDistricts={this.props.districts}/>
             </div>
         )
     }

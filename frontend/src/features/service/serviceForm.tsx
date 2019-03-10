@@ -106,7 +106,7 @@ class ServiceForm extends Component {
             </Col>
             <Col className="gutter-row" md={8}>
               <JlAutoComplete
-                className={classes.textField}
+                textField={classes.textField}
                 label="Item da Lista"
                 size="large"
                 style={{ width: "100%" }}

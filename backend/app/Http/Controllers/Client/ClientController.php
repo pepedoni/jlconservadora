@@ -19,8 +19,7 @@ class ClientController extends Controller {
             'syndic_ap' => 'required|string|max:5',
             'syndic_birthday' => 'required|string|max:10',
             'syndic_email' => 'required|string|email|unique:clients|max:50',
-            'phone_contact' => 'required|string|max:18',
-            'commerce_contact' => 'string|max:18',/* 
+            'phone_contact' => 'required|string|max:18',/* 
             'manage_init' => 'required|string|max:10',
             'manage_end' => 'required|string|max:10', */
             'cond_blocks' => 'required|integer|max:99',
@@ -39,7 +38,6 @@ class ClientController extends Controller {
             'syndic_email' => $request->syndic_email,
             'phone_contact' => $request->phone_contact,
             'home_contact' => '99999999',
-            'commerce_contact' => $request->commerce_contact || '',
             'manage_init' => Carbon::parse($request->manage_init),
             'manage_end' => Carbon::parse($request->manage_end),
             'cond_blocks' => $request->cond_blocks,
@@ -48,10 +46,11 @@ class ClientController extends Controller {
             'cep' => $request->cep,
             'state' => $request->state,
             'city' => $request->city,
-            'address_neighborhood' => $request->address_neighborhood,
+            'address_district' => $request->address_district,
             'address' => $request->address,
             'address_number' => $request->address_number,
-            'address_complement' =>$request->address_complement 
+            'address_complement' =>$request->address_complement ,
+            'inscription' =>$request->inscription
         ]);
             
         $client->save();
@@ -83,5 +82,16 @@ class ClientController extends Controller {
                 $client['complete_address'] = $client['complete_address'].'/'.$client['address_complement'];
         }
         return $clients;
+    }
+
+    public function filterClients(Request $request) {
+        return Client::where('name', 'like', '%'. $request->name .'%')
+                ->where('syndic_email', 'like', '%' . $request->email . '%')
+                ->where('address', 'like', '%' . $request->address .'%')
+                ->where('cpf_cnpj', 'like', '%' . $request->cpfCnpj .'%')->get();
+    }
+
+    public function getDistricts(Request $request) {
+        return Client::distinct()->get(['address_district']);
     }
 }

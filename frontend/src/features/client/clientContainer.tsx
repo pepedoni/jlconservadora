@@ -2,8 +2,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { clientAdd, clientEdit, clientView, clientSave, onDelete, 
     clientCloseForm, onRowClick, clientOpenFilter, clientCloseFilter,
-    clientOnFilter, callLoading } from './clientActions';
-
+    clientOnFilter, callLoading, clientFindDistricts } from './clientActions';
 import Client from "./clientComponent";
 // import {withRouter} from "react-router-dom";
 
@@ -13,7 +12,8 @@ const mapStateToProps = state => ({
     client: state.client.client,
     filterOpen: state.client.filterOpen,
     filter: state.client.filter,
-    loading: state.client.loading
+    loading: state.client.loading,
+    districts: state.client.districts
 });
 
 const mapDispatchToProps = dispatch =>
@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch =>
     {
         clientAdd, clientEdit, clientView, clientSave, onDelete,
             clientCloseForm, onRowClick, clientOpenFilter, clientCloseFilter,
-            clientOnFilter, callLoading
+            clientOnFilter, callLoading, clientFindDistricts
     },
     dispatch
 );
