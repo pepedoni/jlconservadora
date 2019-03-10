@@ -20,8 +20,6 @@ export default class ClientComponent extends Component {
               filter={this.props.filter} />
             <JlDrawer isVisible={this.props.formOpen} 
                         onClose={this.props.clientCloseForm} 
-                        onEdit={this.props.clientEdit} 
-                        onDelete={this.props.clientDelete} 
                         mode={this.props.mode}
                         title="Cliente"
                         loading={this.props.loading}>
@@ -29,6 +27,8 @@ export default class ClientComponent extends Component {
                             onSave={this.props.clientSave} 
                             client={this.props.client} 
                             loading={this.props.loading}
+                            onEdit={this.props.clientEdit} 
+                            onDelete={this.props.onDelete} 
                         callLoading={this.props.callLoading}/>
             </JlDrawer>
         </div>

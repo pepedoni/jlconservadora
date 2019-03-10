@@ -4,15 +4,18 @@ import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/
 import {
     AutoComplete,
 } from 'antd';
+import './autoComplete.less';
 import { CLIENT_SAVE_SUCCESS } from '../../features/client/constants';
 
 const Option = AutoComplete.Option;
 
 const styles = theme => ({
-    textField: {
+    filter: {
+    },
+    default: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
-    },
+    }
 });
 
 class JlAutoComplete extends Component {
@@ -52,7 +55,7 @@ class JlAutoComplete extends Component {
 
         return ( 
             <AutoComplete
-                  className={classes.textField}
+                  className={this.props.className || 'default'}
                   size={this.props.size}
                   style={{ width: '100%' }}
                   disabled={this.props.disabled}

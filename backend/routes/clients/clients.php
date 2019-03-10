@@ -6,5 +6,6 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::get('', 'ClientController@getClients');
         Route::post('insert', 'ClientController@insertClient');
         Route::put('update/{id}', 'ClientController@updateClient');
+        Route::delete('delete/{id}', 'ClientController@deleteClient');
     });
 });

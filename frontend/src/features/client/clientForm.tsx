@@ -44,8 +44,18 @@ class ClientForm extends Component {
     this.props.onSave(this.state, this.props.mode);
   };
 
-  renderSave() {
-    if (this.props.mode == "edit" || this.props.mode == "new") {
+  delete = () => {
+    this.props.onDelete(this.state);
+  }
+
+  renderButtons(mode) {
+    if(mode == 'view') {
+        return (<div className="center-actions">
+            <Button shape="circle" type="primary" icon="form" size="large" onClick={this.props.onEdit}></Button>
+            <Button shape="circle" type="primary" icon="delete" size="large" onClick={this.delete}></Button>
+        </div>);
+    }
+    else if(this.props.mode == "edit" || this.props.mode == "new") {
       return (
         <div className="center-actions">
           <Button
@@ -57,7 +67,7 @@ class ClientForm extends Component {
           />
         </div>
       );
-    }
+    } 
   }
 
   handleChange = name => event => {
@@ -367,7 +377,7 @@ class ClientForm extends Component {
             </Col>
           </Row>
         </Spin>
-        {this.renderSave()}
+        {this.renderButtons(this.props.mode)}
       </form>
     );
   }

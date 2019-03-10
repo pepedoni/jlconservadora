@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { clientAdd, clientEdit, clientView, clientSave, clientDelete, 
+import { clientAdd, clientEdit, clientView, clientSave, onDelete, 
     clientCloseForm, onRowClick, clientOpenFilter, clientCloseFilter,
     clientOnFilter, callLoading } from './clientActions';
 
@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-        clientAdd, clientEdit, clientView, clientSave, clientDelete,
+        clientAdd, clientEdit, clientView, clientSave, onDelete,
             clientCloseForm, onRowClick, clientOpenFilter, clientCloseFilter,
             clientOnFilter, callLoading
     },

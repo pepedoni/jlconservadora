@@ -11,7 +11,7 @@ const columns = [
         width: '20%',
     },
     {
-        title: 'Nome',
+        title: 'Razão Social',
         dataIndex: 'name',
         // render: (address, data) => `${address}, ${data.address_number}/${da}`,
         sorter: true,

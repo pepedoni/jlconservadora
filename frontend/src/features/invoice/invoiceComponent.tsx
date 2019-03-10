@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 
 import JlDrawer from "core/_drawer/"
-
+import { Tabs } from 'antd';
 import InvoiceForm from './invoiceForm'
 import InvoiceGrid from './invoiceGrid'
+const TabPane = Tabs.TabPane;
 
 export default class InvoiceComponent extends Component {
 
@@ -25,10 +26,18 @@ export default class InvoiceComponent extends Component {
                         mode={this.props.mode}
                         title="Nota Fiscal"
                         loading={this.props.loading}>
-                <InvoiceForm mode={this.props.mode} 
-                            onSave={this.props.invoiceSave} 
-                            invoice={this.props.invoice} 
-                            loading={this.props.loading}/>
+                          <Tabs defaultActiveKey="1">
+                            <TabPane tab="Corpo da Nota" key="1">
+                                <InvoiceForm mode={this.props.mode} 
+                                onSave={this.props.invoiceSave} 
+                                invoice={this.props.invoice} 
+                                loading={this.props.loading}/>
+                            </TabPane>
+                            <TabPane tab="Produtos" key="2">
+                            </TabPane>
+                            <TabPane tab="Impostos" key="3">
+                            </TabPane>
+                          </Tabs>
             </JlDrawer>
         </div>
       )

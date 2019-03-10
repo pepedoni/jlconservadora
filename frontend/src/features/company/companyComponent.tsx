@@ -18,13 +18,13 @@ export default class CompanyComponent extends Component {
             <JlDrawer   addLabel={"Empresa"}
                         isVisible={this.props.formOpen} 
                         onClose={this.props.companyCloseForm} 
-                        onEdit={this.props.companyEdit} 
-                        onDelete={this.props.companyDelete} 
                         mode={this.props.mode}
                         title="Empresa">
                 <CompanyForm 
                         mode={this.props.mode} 
                         onSave={this.props.companySave} 
+                        onEdit={this.props.companyEdit} 
+                        onDelete={this.props.companyDelete} 
                         company={this.props.company}
                         loading={this.props.loading}
                         callLoading={this.props.callLoading}/>

@@ -70,6 +70,11 @@ class ClientController extends Controller {
         return response()->json(['data'=> $client]);
     }
 
+    public function deleteClient(Request $request, Client $client) {
+        $client = Client::findOrFail($request->id);
+        $client->delete();
+    }
+
     public function getClients(Request $request) {
         $clients = Client::paginate(7);
         foreach($clients as &$client) {

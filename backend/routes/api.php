@@ -23,3 +23,4 @@ require __DIR__ . '/clients/clients.php';
 require __DIR__ . '/company/company.php';
 require __DIR__ . '/service/service.php';
 require __DIR__ . '/employee/employee.php';
+require __DIR__ . '/invoice/invoice.php';

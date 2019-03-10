@@ -32,7 +32,7 @@ const columns = [
     }   
 ];
 
-const url = '/invoices';
+const url = '/invoice';
 
 export default class InvoiceGrid extends Component {
     render() {

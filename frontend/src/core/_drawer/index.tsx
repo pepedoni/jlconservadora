@@ -8,15 +8,6 @@ export default class JlDrawer extends Component {
         super(props);
     }
 
-    renderButtons(mode) {
-        if(mode == 'view') {
-            return (<div className="center-actions">
-                <Button shape="circle" type="primary" icon="form" size="large" onClick={this.props.onEdit}></Button>
-                <Button shape="circle" type="primary" icon="delete" size="large" onClick={this.props.onDelete}></Button>
-            </div>);
-        }
-    }
-
     renderLoading(loading) {
         if(loading) {
             return 
@@ -40,8 +31,6 @@ export default class JlDrawer extends Component {
                 }}
             >   
                 {this.props.children}
-                {this.renderButtons(this.props.mode)}
-
             </Drawer>
         );
     }

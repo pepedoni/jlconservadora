@@ -44,6 +44,10 @@ class CompanyForm extends Component {
     this.props.onSave(this.state, this.props.mode);
   };
 
+  delete = () => {
+    this.props.onDelete(this.state);
+  }
+
   getTextItem(item) {
     return item.code + " | " + item.description + " | " + item.inscription;
   }
@@ -103,6 +107,28 @@ class CompanyForm extends Component {
 
   };
 
+  renderButtons(mode) {
+    if(mode == 'view') {
+        return (<div className="center-actions">
+            <Button shape="circle" type="primary" icon="form" size="large" onClick={this.props.onEdit}></Button>
+            <Button shape="circle" type="primary" icon="delete" size="large" onClick={this.delete}></Button>
+        </div>);
+    }
+    else if(this.props.mode == "edit" || this.props.mode == "new") {
+      return (
+        <div className="center-actions">
+          <Button
+            shape="circle"
+            size="large"
+            type="primary"
+            icon="check"
+            onClick={this.save}
+          />
+        </div>
+      );
+    } 
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -138,7 +164,7 @@ class CompanyForm extends Component {
             <Col className="gutter-row" md={12} sm={12} xs={12}>
               <JlInput
                 id="company-name"
-                label="Nome"
+                label="Razão Social"
                 className={classes.textField}
                 value={this.state.name}
                 extraProps={{required: true}}
@@ -351,6 +377,7 @@ class CompanyForm extends Component {
             onClick={this.save}
           />
         </div>
+        {this.renderButtons(this.props.mode)}
       </form>
     );
   }

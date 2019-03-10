@@ -1,6 +1,7 @@
 import * as types from "./constants";
+import { getData } from "core/_util/dateUtil";
 
-export default function(state = { formOpen: false, mode: null, invoice: {}, loading: false, filterOpen: true }, action) {
+export default function(state = { formOpen: false, mode: null, invoice: {}, loading: false, filterOpen: false }, action) {
   switch (action.type) {
     case types.INVOICE_ADD:
       console.log(`[Invoice Reducer] Action: INVOICE_ADD`);
@@ -9,7 +10,7 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, load
         formOpen: true,
         mode: 'new',
         filterOpen: false,
-        invoice: {name: '', type: '', syndic_ap: '', syndic_birthday: '', syndic_email: '', home_contact: '', phone_contact: '',
+        invoice: {date: getData(), name: '', type: '', syndic_ap: '', syndic_birthday: '', syndic_email: '', home_contact: '', phone_contact: '',
                  commerce_contact: '', manage_init: '', manage_end: '', cond_blocks: '', cond_floors: '', cond_aps: '', address: '', 
                  address_number: '', address_complement: '' }
       };

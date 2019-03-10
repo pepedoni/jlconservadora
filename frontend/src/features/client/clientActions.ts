@@ -22,7 +22,7 @@ export const clientView = () => {
     }
 }
 
-export const clientDelete= () => {
+const clientDelete = () => {
     return {
         type: types.CLIENT_DELETE
     }
@@ -122,6 +122,17 @@ export const clientOnFilter = (filter) => (dispatch) => {
         
     }).catch( error => {
         dispatch(clientFilterFailure(error));
+        dispatch(callLoading(false));
+    });
+}
+
+export const onDelete = (client) => (dispatch) => {
+    dispatch(callLoading(true));
+
+    request.delete('/clients/delete/' + client.id, client).then( response =>  {
+        dispatch(clientCloseForm());
+        dispatch(callLoading(false));
+    }).catch( error => {
         dispatch(callLoading(false));
     });
 }
