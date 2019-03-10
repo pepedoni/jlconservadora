@@ -28,7 +28,6 @@ class CreateClientsTable extends Migration
             $table->string('syndic_email', 50);
             $table->string('home_contact', 11);
             $table->string('phone_contact', 11);
-            $table->string('commerce_contact', 11);
             $table->date('manage_init');
             $table->date('manage_end');
             $table->timestamps();

@@ -75,4 +75,15 @@ class ClientController extends Controller {
         }
         return $clients;
     }
+
+    public function filterClients(Request $request) {
+        return Client::where('name', 'like', '%'. $request->name .'%')
+                ->where('syndic_email', 'like', '%' . $request->email . '%')
+                ->where('address', 'like', '%' . $request->address .'%')
+                ->where('cpf_cnpj', 'like', '%' . $request->cpfCnpj .'%')->get();
+    }
+
+    public function getDistricts(Request $request) {
+        return Client::distinct()->get(['address_district']);
+    }
 }

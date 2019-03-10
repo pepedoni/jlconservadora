@@ -1,6 +1,6 @@
 import * as types from "./constants";
 
-export default function(state = { formOpen: false, mode: null, client: {}, loading: false }, action) {
+export default function(state = { formOpen: false, mode: null, client: {}, loading: false, filterOpen: true }, action) {
   filterOpen: false
   switch (action.type) {
     case types.CLIENT_ADD:
@@ -86,6 +86,17 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         ...state,
         formOpen: false,
         filterOpen: false
+      }
+    case types.CLIENT_DISTRICTS_SUCCESS:
+      console.log(`[Client Reducer] Action: CLIENT_DISTRICTS_SUCCESS`);
+      return {
+        ...state,
+        districts: action.payload
+      }
+    case types.CLIENT_DISTRICTS_FAILURE:
+      console.log(`[Client Reducer] Action: CLIENT_DISTRICTS_FAILURE`);
+      return {
+        ...state
       }
     case types.LOADING: 
       return {

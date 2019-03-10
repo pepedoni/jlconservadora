@@ -9,7 +9,10 @@ import { CLIENT_SAVE_SUCCESS } from '../../features/client/constants';
 const Option = AutoComplete.Option;
 
 const styles = theme => ({
-    textField: {
+    filter: {
+
+    },
+    default: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
     },
@@ -20,10 +23,15 @@ class JlAutoComplete extends Component {
     constructor(props) {
 
         super(props);
+        
+        this.state = {
+            data: []
+        };
 
         this.getTextItem = this.getTextItem.bind(this);
         this.renderOption = this.renderOption.bind(this);
-    
+        this.setData       = this.setData.bind(this);
+        this.setData(this.props.dataSource);
     }
 
     renderOption(item) {
@@ -46,17 +54,24 @@ class JlAutoComplete extends Component {
         }); 
     }
 
+    setData(dataSource) {
+        if(dataSource.map != undefined) {
+            let dataSource = dataSource.map(this.renderOption);
+            this.setState({data: dataSource});
+        }
+    }
+
     render() {
 
         const { classes } = this.props;
 
         return ( 
             <AutoComplete
-                  className={classes.textField}
+                  className={this.props.className || "default"}
                   size={this.props.size}
                   style={{ width: '100%' }}
                   disabled={this.props.disabled}
-                  dataSource={this.props.dataSource.map(this.renderOption)}
+                  dataSource={this.state.data}
                   onSelect={this.props.onSelect}
                   onSearch={this.props.handleSearch}
                   value={this.props.value}
