@@ -85,7 +85,7 @@ const clientFilterFailure = (error) => {
 
 export const callLoading = (loading) => {
     return {
-        type: types.LOADING,
+        type: types.CLIENT_LOADING,
         payload: loading
     }
 }

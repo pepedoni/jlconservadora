@@ -87,7 +87,7 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         formOpen: false,
         filterOpen: false
       }
-    case types.LOADING: 
+    case types.CLIENT_LOADING: 
       return {
         ...state,
         loading: action.payload
