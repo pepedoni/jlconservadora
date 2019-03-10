@@ -43,7 +43,7 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
       return {
         ...state,
         formOpen: false,
-        mode: null,
+        mode: 'list',
         filterOpen: false
       }
     case types.CLIENT_ON_ROW_CLICK:

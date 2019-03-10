@@ -68,10 +68,9 @@ class ClientForm extends Component {
     if (
       (nextProps.mode == "view" || nextProps.mode == "new") 
       && nextProps.mode != this.props.mode
-      && nextProps.mode != 'view' && this.props.mode == 'new'
     ) {
       this.setState({
-        ...this.props.company
+        ...nextProps.client
       });
     }
   }
