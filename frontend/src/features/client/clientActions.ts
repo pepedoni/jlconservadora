@@ -83,7 +83,7 @@ const clientFilterFailure = (error) => {
     }
 }
 
-const loading = (loading) => {
+export const callLoading = (loading) => {
     return {
         type: types.LOADING,
         payload: loading
@@ -92,35 +92,36 @@ const loading = (loading) => {
 
 
 export const clientSave = (client, mode) => (dispatch) => {
-    dispatch(loading(true));
+    dispatch(callLoading(true));
     if(mode == 'new') {
         request.post('/clients/insert', client).then( response =>  {
             dispatch(clientSaveSuccess(client));
-            dispatch(loading(false));
+            dispatch(callLoading(false));
         }).catch( error => {
             dispatch(clientSaveFailure({client: client, mode: mode}));
-            dispatch(loading(false));
+            dispatch(callLoading(false));
         });
     }
     else if(mode == 'edit') {
         request.put('/clients/update/' + client.id, client).then( response =>  {
             dispatch(clientSaveSuccess(client));
-            dispatch(loading(false));
+            dispatch(callLoading(false));
         }).catch( error => {
             dispatch(clientSaveFailure({client: client, mode: mode}));
-            dispatch(loading(false));
+            dispatch(callLoading(false));
         });
     }
 }
 
 export const clientOnFilter = (filter) => (dispatch) => {
-    dispatch(loading(true));
+    dispatch(callLoading(true));
 
     request.get('/clients?', filter).then( response =>  {
         dispatch(clientFilterSuccess(response));
-        dispatch(loading(false));
+        dispatch(callLoading(false));
+        
     }).catch( error => {
         dispatch(clientFilterFailure(error));
-        dispatch(loading(false));
+        dispatch(callLoading(false));
     });
 }

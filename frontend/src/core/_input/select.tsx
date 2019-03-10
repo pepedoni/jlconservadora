@@ -89,6 +89,7 @@ class JlSelect extends Component {
                 value={this.props.value}
                 onChange={(e) => this.props.onSelect(e, this.props.name)}
                 fullWidth
+                disabled={this.props.disabled}
                 SelectProps={{
                     MenuProps: {
                         className: classes.menu

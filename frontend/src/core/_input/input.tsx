@@ -89,6 +89,9 @@ class JlInput extends Component {
                               notchedOutline: classes.notchedOutline,
                           },
                       }}
+                      InputLabelProps={{
+                          shrink: true,
+                      }}
                       id={this.props.id}
                       {...this.props.extraProps}
                       label={this.props.label}

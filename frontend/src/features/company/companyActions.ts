@@ -63,7 +63,7 @@ const companySaveFailure = (company) => {
 
 export const callLoading = (loading) => {
     return {
-        type: types.LOADING,
+        type: types.COMPANY_LOADING,
         payload: loading
     }
 }

@@ -25,11 +25,6 @@
           "breadcrumb": "Cadastros /"
         },
         {
-          "title": "Colaborador",
-          "link": "/employee",
-          "breadcrumb": "Cadastros /"
-        },
-        {
           "title": "Empresa",
           "link": "/company",
           "breadcrumb": "Cadastros /"
