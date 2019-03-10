@@ -134,7 +134,7 @@ class ClientForm extends Component {
                 label="CPF/CNPJ"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.client.cnpj}
+                value={this.state.cnpj}
                 fullWidth
                 onChange={this.handleChange("cnpj")}
                 margin="normal"
@@ -147,7 +147,7 @@ class ClientForm extends Component {
                 label="Nome"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.client.name}
+                value={this.state.name}
                 fullWidth
                 onChange={this.handleChange("name")}
                 margin="normal"
