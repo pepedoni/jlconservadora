@@ -66,11 +66,12 @@ class ClientForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      (nextProps.mode == "view" || nextProps.mode == "new") &&
-      nextProps.mode != this.props.mode
+      (nextProps.mode == "view" || nextProps.mode == "new") 
+      && nextProps.mode != this.props.mode
+      && nextProps.mode != 'view' && this.props.mode == 'new'
     ) {
       this.setState({
-        ...nextProps.client
+        ...this.props.company
       });
     }
   }
