@@ -88,7 +88,7 @@ class ClientForm extends Component {
     this.setState({ city: "" });
     this.setState({ state: "" });
     this.setState({ address: "" });
-    this.setState({ address_neighborhood: "" });
+    this.setState({ address_district: "" });
   }
 
   setCepFields = async cep => {
@@ -99,7 +99,7 @@ class ClientForm extends Component {
       this.setState({ city: json.cidade });
       this.setState({ state: json.estado });
       this.setState({ address: json.logradouro });
-      this.setState({ address_neighborhood: json.bairro });
+      this.setState({ address_district: json.bairro });
       
     }
     catch(e) {
@@ -133,9 +133,9 @@ class ClientForm extends Component {
                 label="CPF/CNPJ"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.state.cnpj}
+                value={this.state.inscription}
                 fullWidth
-                onChange={this.handleChange("cnpj")}
+                onChange={this.handleChange("inscription")}
                 margin="normal"
                 variant="outlined"
               />
@@ -312,13 +312,13 @@ class ClientForm extends Component {
             </Col>
             <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
-                id="company-address_neighborhood"
+                id="company-address_district"
                 label="Bairro"
                 className={classes.textField}
-                value={this.state.address_neighborhood}
+                value={this.state.address_district}
                 disabled={true}
                 fullWidth
-                onChange={this.handleChange("address_neighborhood")}
+                onChange={this.handleChange("address_district")}
                 margin="normal"
                 variant="outlined"
               />

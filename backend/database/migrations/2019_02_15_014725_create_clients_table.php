@@ -27,6 +27,16 @@ class CreateClientsTable extends Migration
             $table->string('phone_contact', 11);
             $table->date('manage_init');
             $table->date('manage_end');
+            
+            $table->string('cep');
+            $table->string('state');
+            $table->string('city');
+            $table->string('address_district', 100)->default("");
+            $table->boolean('is_active')->default(true);
+            $table->string('inscription', 14);
+            $table->string('address', 255);
+            $table->string('address_number', 5);
+            $table->string('address_complement', 50);
             $table->timestamps();
         });
     }
