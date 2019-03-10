@@ -25,11 +25,7 @@ class EmployeeForm extends React.Component {
     super(props);
 
     this.state = {
-      validEmail: "",
-      cpf: null,
-      email: null,
-      name: null,
-      valid: false
+      ...this.props.employee
     };
   }
 
@@ -40,11 +36,37 @@ class EmployeeForm extends React.Component {
   }
 
   save = () => {
-    this.props.onSave(this.props.form.getFieldsValue());
+    this.props.onSave(this.state, this.props.mode);
+  };
+
+  renderSave() {
+    if (this.props.mode == "edit" || this.props.mode == "new") {
+      return (
+        <div className="center-actions">
+          <Button
+            shape="circle"
+            size="large"
+            type="primary"
+            icon="check"
+            onClick={this.save}
+          />
+        </div>
+      );
+    }
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      (nextProps.mode == "view" || nextProps.mode == "new") &&
+      nextProps.mode != this.props.mode
+    ) {
+      this.setState({
+        ...nextProps.employee
+      });
+    }
   };
 
   handleChange = name => event => {
-    this.props.employee[name] = event.target.value;
     this.setState({ [name]: event.target.value });
   };
 
@@ -70,7 +92,7 @@ class EmployeeForm extends React.Component {
                 label="CPF"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.employee.cpf}
+                value={this.state.cpf}
                 fullWidth
                 onChange={this.handleChange("cpf")}
                 margin="normal"
@@ -83,7 +105,7 @@ class EmployeeForm extends React.Component {
                 label="Nome"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.employee.name}
+                value={this.state.name}
                 fullWidth
                 onChange={this.handleChange("name")}
                 margin="normal"
@@ -95,8 +117,8 @@ class EmployeeForm extends React.Component {
                 id="standard-address"
                 label="Endereço"
                 className={classes.textField}
-                disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.employee.email}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.email}
                 fullWidth
                 onChange={this.handleChange("email")}
                 margin="normal"
@@ -106,15 +128,7 @@ class EmployeeForm extends React.Component {
           </Row>
         </Spin>
 
-        <div className="center-actions">
-          <Button
-            shape="circle"
-            size="large"
-            type="primary"
-            icon="check"
-            htmlType="submit"
-          />
-        </div>
+        {this.renderSave()}
       </form>
     );
   }

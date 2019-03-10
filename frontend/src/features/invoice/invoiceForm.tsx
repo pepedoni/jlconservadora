@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Row, Col, Button } from "antd";
-import { DatePicker, Spin } from "antd";
+import { Spin } from "antd";
 import { withStyles } from "@material-ui/core/styles";
 import JlInput from "core/_input/input";
+import JlDate from "core/_input/date";
 
-const RangePicker = DatePicker.RangePicker;
 
 const styles = theme => ({
   container: {
@@ -192,7 +192,7 @@ class InvoiceForm extends Component {
               />
             </Col>
             <Col className="gutter-row" md={6} sm={12} xs={12}>
-              <JlInput
+              <JlDate
                 id="standard-syndic_birthday"
                 label="Aniversario do Sindico"
                 className={classes.textField}
@@ -210,6 +210,7 @@ class InvoiceForm extends Component {
                 id="standard-cond_blocks"
                 label="Nº de Blocos"
                 className={classes.textField}
+                extraProps={{date: "true", required: true}}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.props.invoice.cond_blocks}
                 fullWidth

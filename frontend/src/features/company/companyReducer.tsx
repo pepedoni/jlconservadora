@@ -63,8 +63,8 @@ export default function(state = { formOpen: false, mode: null, company: {}, load
       company: action.payload.company,
       mode: action.payload.mode
     }
-    case types.LOADING:  
-    console.log(`[Company Reducer] Action: LOADING`);
+    case types.COMPANY_LOADING:  
+    console.log(`[Company Reducer] Action: COMPANY_LOADING`);
     return {
       ...state,
       loading: action.payload

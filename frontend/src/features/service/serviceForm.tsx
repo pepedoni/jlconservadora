@@ -26,18 +26,10 @@ class ServiceForm extends Component {
   constructor(props) {
     super(props);
 
-    if (props.service) {
-      this.state = this.props.service;
-    } else {
-      this.state = {
-        validEmail: "",
-        cpf: null,
-        address: "",
-        syndic_email: "",
-        name: "Pedro",
-        valid: false
-      };
-    }
+    this.state = {
+      ...this.props.service
+    };
+
 
     this.onSelect = this.onSelect.bind(this);
   }
@@ -49,25 +41,33 @@ class ServiceForm extends Component {
   }
 
   save = () => {
-    this.props.onSave(this.props.service, this.props.mode);
+    this.props.onSave(this.state, this.props.mode);
   };
 
   getTextItem(item) {
     return item.code + " | " + item.description + " | " + item.aliquot;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      (nextProps.mode == "view" || nextProps.mode == "new") &&
+      nextProps.mode != this.props.mode
+    ) {
+      this.setState({
+        ...nextProps.service
+      });
+    }
+  }
+
   onSelect(value, option) {
     let aliquota = parseFloat(
       option.props.children[2].replace(" ", "").replace("|", "")
     );
-    this.props.service["aliquot"] = aliquota;
-    this.props.service["list_item"] = option.key;
     this.setState({ aliquot: aliquota });
     this.setState({ list_item: option.key });
   }
 
   handleChange = name => event => {
-    this.props.service[name] = event.target.value;
     this.setState({ [name]: event.target.value });
   };
 
@@ -96,7 +96,7 @@ class ServiceForm extends Component {
                 id="standard-address"
                 label="Nome"
                 className={classes.textField}
-                value={this.props.service.name}
+                value={this.state.name}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 fullWidth
                 onChange={this.handleChange("name")}
@@ -117,7 +117,7 @@ class ServiceForm extends Component {
                 outData={["key", "aliquot"]}
                 displayedfields={["key", "description", "aliquot"]}
                 optionLabelProp="text"
-                value={this.props.service.list_item}
+                value={this.state.list_item}
               />
             </Col>
             <Col className="gutter-row" md={4} sm={12} xs={12}>
@@ -126,7 +126,7 @@ class ServiceForm extends Component {
                 label="Aliquota"
                 className={classes.textField}
                 disabled={true}
-                value={this.props.service.aliquot}
+                value={this.state.aliquot}
                 fullWidth
                 onChange={this.handleChange("aliquot")}
                 margin="normal"
@@ -140,7 +140,7 @@ class ServiceForm extends Component {
                 label="Descrição"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.service.description}
+                value={this.state.description}
                 fullWidth
                 multiline
                 onChange={this.handleChange("description")}
