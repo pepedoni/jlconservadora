@@ -14,20 +14,25 @@ class CompanyController extends Controller
             'municipal_inscription'       => 'required|string|max:255',
             'inscription'       => 'required|string|max:255',
             'name'              => 'required|string|max:255',
-            'nature_operation'  => 'required|string|min:1|max:1',
-            'taxation_regime'   => 'required|string|min:1|max:1',
-            'national_simple'   => 'required|string|min:1|max:1',
-            'cultural_promoter' => 'required|string|min:1|max:1',
+            'taxation_regime'   => 'required|integer|min:0|max:5',
+            'national_simple'   => 'required|integer|min:0|max:1',
+            'cultural_promoter' => 'required|integer|min:0|max:1',
         ]);
         
         $company = new Company([                                        
             'municipal_inscription' => $request->municipal_inscription,            
             'inscription' => $request->inscription,
-            'name' => $request->name,                           
-            'nature_operation' => $request->nature_operation,   
+            'name' => $request->name,                            
             'taxation_regime' => $request->taxation_regime,     
             'national_simple' => $request->national_simple,     
-            'cultural_promoter' => $request->cultural_promoter 
+            'cultural_promoter' => $request->cultural_promoter, 
+            'cep' => $request->cep,
+            'state' => $request->state,
+            'city' => $request->city,
+            'address_neighborhood' => $request->address_neighborhood,
+            'address' => $request->address,
+            'address_number' => $request->address_number,
+            'address_complement' =>$request->address_complement 
         ]);
             
         $company->save();

@@ -17,9 +17,6 @@ class CreateClientsTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->integer('type');
-            $table->string('address', 255);
-            $table->integer('address_number');
-            $table->string('address_complement');
             $table->integer('cond_blocks')->default(null);
             $table->integer('cond_floors')->default(null);
             $table->integer('cond_aps')->default(null);

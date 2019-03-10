@@ -11,8 +11,8 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         mode: 'new',
         filterOpen: false,
         client: {name: '', type: '', syndic_ap: '', syndic_birthday: '', syndic_email: '', home_contact: '', phone_contact: '',
-                 commerce_contact: '', manage_init: '', manage_end: '', cond_blocks: '', cond_floors: '', cond_aps: '', address: '', 
-                 address_number: '', address_complement: '' }
+                 commerce_contact: '', manage_init: '', manage_end: '', cond_blocks: '', cond_floors: '', cond_aps: '',
+                 cep: '', state: '', city: '', address: '', address_neighborhood: '', address_number: '', address_complement: ''}
       };
     case types.CLIENT_EDIT:
       console.log(`[Client Reducer] Action: CLIENT_EDIT`);
@@ -43,7 +43,7 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
       return {
         ...state,
         formOpen: false,
-        mode: null,
+        mode: 'list',
         filterOpen: false
       }
     case types.CLIENT_ON_ROW_CLICK:
@@ -98,7 +98,7 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
       return {
         ...state
       }
-    case types.LOADING: 
+    case types.CLIENT_LOADING: 
       return {
         ...state,
         loading: action.payload

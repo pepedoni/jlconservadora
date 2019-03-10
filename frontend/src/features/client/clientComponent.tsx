@@ -29,7 +29,8 @@ export default class ClientComponent extends Component {
                 <ClientForm mode={this.props.mode} 
                             onSave={this.props.clientSave} 
                             client={this.props.client} 
-                            loading={this.props.loading}/>
+                            loading={this.props.loading}
+                        callLoading={this.props.callLoading}/>
             </JlDrawer>
         </div>
       )

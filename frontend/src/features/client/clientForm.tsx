@@ -4,6 +4,8 @@ import { DatePicker, Spin } from "antd";
 import { withStyles } from "@material-ui/core/styles";
 import JlInput from "core/_input/input";
 
+import JlDate from "core/_input/date";
+
 const RangePicker = DatePicker.RangePicker;
 
 const styles = theme => ({
@@ -27,33 +29,86 @@ class ClientForm extends Component {
   constructor(props) {
     super(props);
 
-    if (props.client) {
-      this.state = this.props.client;
-    } else {
-      this.state = {
-        validEmail: "",
-        cpf: null,
-        address: "",
-        syndic_email: "",
-        name: "Pedro",
-        valid: false
-      };
-    }
+    this.state = {
+      ...this.props.client
+    };
+
+    this.setCepFields = this.setCepFields.bind(this);
   }
 
   isReadOnly(mode, readOnlyOnEdit) {
-    if (mode == "view" || (mode == "edit" && readOnlyOnEdit)) {
-      return true;
-    } else return false;
+    return (mode == "view" || (mode == "edit" && readOnlyOnEdit));
   }
 
   save = () => {
-    this.props.onSave(this.props.client, this.props.mode);
+    this.props.onSave(this.state, this.props.mode);
   };
 
+  renderSave() {
+    if (this.props.mode == "edit" || this.props.mode == "new") {
+      return (
+        <div className="center-actions">
+          <Button
+            shape="circle"
+            size="large"
+            type="primary"
+            icon="check"
+            onClick={this.save}
+          />
+        </div>
+      );
+    }
+  }
+
   handleChange = name => event => {
-    this.props.client[name] = event.target.value;
     this.setState({ [name]: event.target.value });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      (nextProps.mode == "view" || nextProps.mode == "new") 
+      && nextProps.mode != this.props.mode
+    ) {
+      this.setState({
+        ...nextProps.client
+      });
+    }
+  }
+
+  onChangeCep = name => async event => {
+    if (event.target.value.replace("-", "").replace(/_/g, "").length == 8) {
+      this.setCepFields(event.target.value.replace("-", ""));
+    } else {
+      this.clearCepFields();
+    }
+    this.setState({ [name]: event.target.value });
+  };
+
+  clearCepFields() {
+    this.setState({ city: "" });
+    this.setState({ state: "" });
+    this.setState({ address: "" });
+    this.setState({ address_neighborhood: "" });
+  }
+
+  setCepFields = async cep => {
+    this.props.callLoading(true);
+    try {
+      const response = await fetch(`http://api.postmon.com.br/v1/cep/${cep}`);
+      const json = await response.json();
+      this.setState({ city: json.cidade });
+      this.setState({ state: json.estado });
+      this.setState({ address: json.logradouro });
+      this.setState({ address_neighborhood: json.bairro });
+      
+    }
+    catch(e) {
+      this.clearCepFields();
+    }
+    finally {
+      this.props.callLoading(false);
+    }
+
   };
 
   render() {
@@ -78,7 +133,7 @@ class ClientForm extends Component {
                 label="CPF/CNPJ"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.client.cnpj}
+                value={this.state.cnpj}
                 fullWidth
                 onChange={this.handleChange("cnpj")}
                 margin="normal"
@@ -91,59 +146,22 @@ class ClientForm extends Component {
                 label="Nome"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.client.name}
+                value={this.state.name}
                 fullWidth
                 onChange={this.handleChange("name")}
                 margin="normal"
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={12} sm={18} xs={18}>
-              <JlInput
-                id="standard-address"
-                label="Endereço"
-                className={classes.textField}
-                disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.client.address}
-                fullWidth
-                onChange={this.handleChange("address")}
-                margin="normal"
-                variant="outlined"
-              />
-            </Col>
-            <Col className="gutter-row" md={6} sm={6} xs={6}>
-              <JlInput
-                id="standard-address_number"
-                label="Número"
-                className={classes.textField}
-                disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.client.address_number}
-                fullWidth
-                onChange={this.handleChange("address_number")}
-                margin="normal"
-                variant="outlined"
-              />
-            </Col>
-            <Col className="gutter-row" md={6} sm={24} xs={24}>
-              <JlInput
-                id="standard-address_complement"
-                label="Complemento"
-                className={classes.textField}
-                disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.client.address_complement}
-                fullWidth
-                onChange={this.handleChange("address_complement")}
-                margin="normal"
-                variant="outlined"
-              />
-            </Col>
+          </Row>
+          <Row gutter={8}>
             <Col className="gutter-row" span={12}>
               <JlInput
                 id="standard-phone_contact"
                 label="Celular"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.client.phone_contact}
+                value={this.state.phone_contact}
                 fullWidth
                 onChange={this.handleChange("phone_contact")}
                 margin="normal"
@@ -157,7 +175,7 @@ class ClientForm extends Component {
                 label="Telefone Comercial"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.client.commerce_contact}
+                value={this.state.commerce_contact}
                 fullWidth
                 onChange={this.handleChange("commerce_contact")}
                 margin="normal"
@@ -165,13 +183,15 @@ class ClientForm extends Component {
                 mask="(99) 9999-9999"
               />
             </Col>
+          </Row>
+          <Row gutter={8}>
             <Col className="gutter-row" md={12} sm={24} xs={24}>
               <JlInput
                 id="standard-email"
                 label="Email Sindico"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.client.syndic_email}
+                value={this.state.syndic_email}
                 fullWidth
                 onChange={this.handleChange("syndic_email")}
                 margin="normal"
@@ -184,7 +204,7 @@ class ClientForm extends Component {
                 label="Apartamento do Sindico"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.client.syndic_ap}
+                value={this.state.syndic_ap}
                 fullWidth
                 onChange={this.handleChange("syndic_ap")}
                 margin="normal"
@@ -192,26 +212,27 @@ class ClientForm extends Component {
               />
             </Col>
             <Col className="gutter-row" md={6} sm={12} xs={12}>
-              <JlInput
+              <JlDate
                 id="standard-syndic_birthday"
                 label="Aniversario do Sindico"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.client.syndic_birthday}
+                value={this.state.syndic_birthday}
                 fullWidth
                 onChange={this.handleChange("syndic_birthday")}
                 margin="normal"
                 variant="outlined"
               />
             </Col>
-
+          </Row>
+          <Row gutter={8}>
             <Col className="gutter-row" span={8}>
               <JlInput
                 id="standard-cond_blocks"
                 label="Nº de Blocos"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.client.cond_blocks}
+                value={this.state.cond_blocks}
                 fullWidth
                 onChange={this.handleChange("cond_blocks")}
                 margin="normal"
@@ -225,7 +246,7 @@ class ClientForm extends Component {
                 label="Nº de Andares"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.client.cond_floors}
+                value={this.state.cond_floors}
                 fullWidth
                 onChange={this.handleChange("cond_floors")}
                 margin="normal"
@@ -239,7 +260,7 @@ class ClientForm extends Component {
                 label="Nº de Apartamentos"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.client.cond_aps}
+                value={this.state.cond_aps}
                 fullWidth
                 onChange={this.handleChange("cond_aps")}
                 margin="normal"
@@ -247,16 +268,106 @@ class ClientForm extends Component {
               />
             </Col>
           </Row>
+          <Row gutter={8}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="company-cep"
+                name="cep"
+                label="CEP"
+                mask="99999-999"
+                className={classes.textField}
+                value={this.state.cep}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                fullWidth
+                onChange={this.onChangeCep("cep")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="company-state"
+                label="Estado"
+                className={classes.textField}
+                value={this.state.state}
+                disabled={true}
+                fullWidth
+                onChange={this.handleChange("state")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="company-city"
+                label="Cidade"
+                className={classes.textField}
+                value={this.state.city}
+                disabled={true}
+                fullWidth
+                onChange={this.handleChange("city")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="company-address_neighborhood"
+                label="Bairro"
+                className={classes.textField}
+                value={this.state.address_neighborhood}
+                disabled={true}
+                fullWidth
+                onChange={this.handleChange("address_neighborhood")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+          </Row>
+          <Row gutter={8}>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="company-city"
+                label="Logradouro"
+                className={classes.textField}
+                value={this.state.address}
+                disabled={true}
+                fullWidth
+                onChange={this.handleChange("address")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={4} sm={12} xs={12}>
+              <JlInput
+                id="company-address_number"
+                label="Número"
+                className={classes.textField}
+                value={this.state.address_number}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                fullWidth
+                extraProps={{ required: true }}
+                onChange={this.handleChange("address_number")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={8} sm={12} xs={12}>
+              <JlInput
+                id="company-address_complement"
+                label="Complemento"
+                className={classes.textField}
+                value={this.state.address_complement}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                fullWidth
+                onChange={this.handleChange("address_complement")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+          </Row>
         </Spin>
-        <div className="center-actions">
-          <Button
-            shape="circle"
-            size="large"
-            type="primary"
-            icon="check"
-            onClick={this.save}
-          />
-        </div>
+        {this.renderSave()}
       </form>
     );
   }

@@ -48,7 +48,7 @@ const employeeSaveFailure = () => {
     };
 };
 
-const loading = (loading) => {
+const callLoading = (loading) => {
     return {
         type: types.LOADING,
         payload: loading
@@ -62,15 +62,24 @@ export const onRowClick = (record) => {
     }
 }
 
-export const employeeSave = (employee) => (dispatch) => { 
-    console.log('1');
-    dispatch(loading(true));
-    console.log('2');
-    request.get('/employee').then( response =>  {
-        dispatch(employeeSaveSuccess);
-        dispatch(loading(false));
-    }).catch( error => {
-        dispatch(employeeSaveFailure);
-        dispatch(loading(false));
-    });
+export const employeeSave = (employee, mode) => (dispatch) => {
+    dispatch(callLoading(true));
+    if(mode == 'new') {
+        request.post('/employee/insert', employee).then( response =>  {
+            dispatch(employeeSaveSuccess(employee));
+            dispatch(callLoading(false));
+        }).catch( error => {
+            dispatch(employeeSaveFailure({employee: employee, mode: mode}));
+            dispatch(callLoading(false));
+        });
+    }
+    else if(mode == 'edit') {
+        request.put('/employee/update/' + employee.id, employee).then( response =>  {
+            dispatch(employeeSaveSuccess(employee));
+            dispatch(callLoading(false));
+        }).catch( error => {
+            dispatch(employeeSaveFailure({employee: employee, mode: mode}));
+            dispatch(callLoading(false));
+        });
+    }
 }

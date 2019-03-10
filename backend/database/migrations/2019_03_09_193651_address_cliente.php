@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClientColumns extends Migration
+class AddressCliente extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateClientColumns extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->string('cpf_cnpj', 14);
-            $table->string('address_cep', 8);
+        Schema::table('clients', function($table) {
+            $table->string('cep');
+            $table->string('state');
+            $table->string('city');
             $table->string('address_district', 100);
             $table->boolean('is_active')->defult(true);
+            $table->string('inscription', 14);
         });
     }
 
@@ -28,8 +30,6 @@ class CreateClientColumns extends Migration
      */
     public function down()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn(['cpf_cnpj', 'address_cep', 'address_district', 'is_active']);
-        });
+        //
     }
 }

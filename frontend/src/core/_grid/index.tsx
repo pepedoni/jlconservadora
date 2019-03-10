@@ -54,6 +54,9 @@ export default class App extends Component {
 
   }
 
+  updateRow(rowIndex, row) {
+    this.state.data[rowIndex] = row;
+  }
   
   reload = () =>  {
     if(this.state.pagination) {
@@ -81,9 +84,12 @@ export default class App extends Component {
             loading={this.state.loading}
             onChange={this.handleTableChange}
             rowKey={this.props.rowKey}
-            onRow={(record) => {
+            onRow={(record, rowIndex) => {
               return {
-                onClick: (event) => { this.props.onRowClick(record) }, 
+                onClick: (event) => { 
+                  record.rowIndex = rowIndex;
+                  this.props.onRowClick(record);
+                }, 
               };
             }}
           />

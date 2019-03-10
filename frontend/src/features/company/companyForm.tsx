@@ -27,18 +27,9 @@ class CompanyForm extends Component {
   constructor(props) {
     super(props);
 
-    if (props.company) {
-      this.state = this.props.company;
-    } else {
-      this.state = {
-        validEmail: "",
-        cpf: null,
-        address: "",
-        syndic_email: "",
-        name: "Pedro",
-        valid: false
-      };
-    }
+    this.state = {
+      ...this.props.company
+    };
 
     this.onSelect = this.onSelect.bind(this);
   }
@@ -50,21 +41,30 @@ class CompanyForm extends Component {
   }
 
   save = () => {
-    this.props.onSave(this.props.company, this.props.mode);
+    this.props.onSave(this.state, this.props.mode);
   };
 
   getTextItem(item) {
     return item.code + " | " + item.description + " | " + item.inscription;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      (nextProps.mode == "view" || nextProps.mode == "new") 
+      && nextProps.mode != this.props.mode
+    ) {
+      this.setState({
+        ...nextProps.company
+      });
+    }
+  }
+
   handleChange = name => event => {
-    this.props.company[name] = event.target.value;
     this.setState({ [name]: event.target.value });
   };
 
   onSelect(event, name) {
     if (event) {
-      this.props.company[name] = event.target.value;
       this.setState({ [name]: event.target.value });
     }
   }
@@ -72,37 +72,35 @@ class CompanyForm extends Component {
   onChangeCep = name => async event => {
     if (event.target.value.replace("-", "").replace(/_/g, "").length == 8) {
       this.setCepFields(event.target.value.replace("-", ""));
-    }
-    else {
+    } else {
       this.clearCepFields();
     }
     this.setState({ [name]: event.target.value });
   };
 
   clearCepFields() {
-    this.props.company.city = '';
-    this.props.company.state = '';
-    this.props.company.address = '';
-    this.props.company.address_neighborhood = '';
-    this.setState({ city: '' });
-    this.setState({ state: '' });
-    this.setState({ address: '' });
-    this.setState({ address_neighborhood: '' });
+    this.setState({ city: "" });
+    this.setState({ state: "" });
+    this.setState({ address: "" });
+    this.setState({ address_neighborhood: "" });
   }
 
   setCepFields = async cep => {
     this.props.callLoading(true);
-    const response = await fetch(`http://api.postmon.com.br/v1/cep/${cep}`);
-    const json = await response.json();
-    this.props.company.city = json.cidade;
-    this.props.company.state = json.estado;
-    this.props.company.address = json.logradouro;
-    this.props.company.address_neighborhood = json.bairro;
-    this.setState({ city: json.localidade });
-    this.setState({ state: json.uf });
-    this.setState({ address: json.logradouro });
-    this.setState({ address_neighborhood: json.bairro });
+    try {
+      const response = await fetch(`http://api.postmon.com.br/v1/cep/${cep}`);
+      const json = await response.json();
+      this.setState({ city: json.cidade });
+      this.setState({ state: json.estado });
+      this.setState({ address: json.logradouro });
+      this.setState({ address_neighborhood: json.bairro });
+    }
+    catch(e) {
+      this.clearCepFields();
+    }
+
     this.props.callLoading(false);
+
   };
 
   render() {
@@ -127,7 +125,8 @@ class CompanyForm extends Component {
                 label="Inscrição"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.props.company.inscription}
+                value={this.state.inscription}
+                extraProps={{required: true}}
                 fullWidth
                 onChange={this.handleChange("inscription")}
                 margin="normal"
@@ -141,7 +140,8 @@ class CompanyForm extends Component {
                 id="company-name"
                 label="Nome"
                 className={classes.textField}
-                value={this.props.company.name}
+                value={this.state.name}
+                extraProps={{required: true}}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 fullWidth
                 onChange={this.handleChange("name")}
@@ -157,7 +157,8 @@ class CompanyForm extends Component {
                 label="Inscrição Municipal"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.company.municipal_inscription}
+                value={this.state.municipal_inscription}
+                extraProps={{required: true}}
                 fullWidth
                 onChange={this.handleChange("municipal_inscription")}
                 margin="normal"
@@ -171,7 +172,7 @@ class CompanyForm extends Component {
                 label="Regime de Tributação"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.company.taxation_regime}
+                value={this.state.taxation_regime}
                 dataSource={[
                   {
                     key: 1,
@@ -211,7 +212,7 @@ class CompanyForm extends Component {
                 label="Simples Nacional"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.company.national_simple}
+                value={this.state.national_simple}
                 dataSource={[
                   { key: 0, description: "Não", label: "Não" },
                   { key: 1, description: "Sim", label: "Sim" }
@@ -229,7 +230,7 @@ class CompanyForm extends Component {
                 label="Incentivador Cultural"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.props.company.cultural_promoter}
+                value={this.state.cultural_promoter}
                 dataSource={[
                   { key: 0, description: "Não", label: "Não" },
                   { key: 1, description: "Sim", label: "Sim" }
@@ -241,6 +242,7 @@ class CompanyForm extends Component {
               />
             </Col>
           </Row>
+          
           <Row gutter={8}>
             <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
@@ -249,6 +251,7 @@ class CompanyForm extends Component {
                 label="CEP"
                 mask="99999-999"
                 className={classes.textField}
+                value={this.state.cep}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 fullWidth
                 onChange={this.onChangeCep("cep")}
@@ -261,7 +264,7 @@ class CompanyForm extends Component {
                 id="company-state"
                 label="Estado"
                 className={classes.textField}
-                value={this.props.company.state}
+                value={this.state.state}
                 disabled={true}
                 fullWidth
                 onChange={this.handleChange("state")}
@@ -274,7 +277,7 @@ class CompanyForm extends Component {
                 id="company-city"
                 label="Cidade"
                 className={classes.textField}
-                value={this.props.company.city}
+                value={this.state.city}
                 disabled={true}
                 fullWidth
                 onChange={this.handleChange("city")}
@@ -287,7 +290,7 @@ class CompanyForm extends Component {
                 id="company-address_neighborhood"
                 label="Bairro"
                 className={classes.textField}
-                value={this.props.company.address_neighborhood}
+                value={this.state.address_neighborhood}
                 disabled={true}
                 fullWidth
                 onChange={this.handleChange("address_neighborhood")}
@@ -302,7 +305,7 @@ class CompanyForm extends Component {
                 id="company-city"
                 label="Logradouro"
                 className={classes.textField}
-                value={this.props.company.address}
+                value={this.state.address}
                 disabled={true}
                 fullWidth
                 onChange={this.handleChange("address")}
@@ -315,9 +318,10 @@ class CompanyForm extends Component {
                 id="company-address_number"
                 label="Número"
                 className={classes.textField}
-                value={this.props.company.address_number}
+                value={this.state.address_number}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 fullWidth
+                extraProps={{required: true}}
                 onChange={this.handleChange("address_number")}
                 margin="normal"
                 variant="outlined"
@@ -328,7 +332,7 @@ class CompanyForm extends Component {
                 id="company-address_complement"
                 label="Complemento"
                 className={classes.textField}
-                value={this.props.company.address_complement}
+                value={this.state.address_complement}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 fullWidth
                 onChange={this.handleChange("address_complement")}
