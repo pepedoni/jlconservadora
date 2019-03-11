@@ -1,6 +1,6 @@
 import * as types from "./constants";
 
-export default function(state = { formOpen: false, mode: null, client: {}, loading: false, filterOpen: true }, action) {
+export default function(state = { formOpen: false, mode: null, client: {}, loading: false, filterOpen: true, filter: Array() }, action) {
   filterOpen: false
   switch (action.type) {
     case types.CLIENT_ADD:
@@ -97,6 +97,21 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
       console.log(`[Client Reducer] Action: CLIENT_DISTRICTS_FAILURE`);
       return {
         ...state
+      }
+    case types.CLIENT_FILTER_SUCCESS:
+      console.log(`[Client Reducer] Action: CLIENT_FILTER_SUCCESS`);
+      return {
+        ...state,
+        formOpen: false,
+        filterOpen: false,
+        filter: action.payload
+      }
+    case types.CLIENT_FILTER_FAILURE:
+      console.log(`[Client Reducer] Action: CLIENT_FILTER_FAILURE`);
+      return {
+        ...state,
+        formOpen: false,
+        filterOpen: true
       }
     case types.CLIENT_LOADING: 
       return {

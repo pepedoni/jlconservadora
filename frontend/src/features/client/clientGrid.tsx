@@ -37,11 +37,12 @@ export default class ClientGrid extends Component {
                     rowKey="id"
                     onRowClick={ this.props.onRowClick }
                     openFilter={this.props.openFilter}
+                    filter={this.props.filter}
                 />
 
                 <ClientFilter visible={this.props.filterOpen} clientCloseFilter={this.props.clientCloseFilter}
-                    clientOnFilter={this.props.clientOnFilter} filter={this.props.filter}
-                    clientFindDistricts={this.props.clientFindDistricts} clientDistricts={this.props.districts}/>
+                    clientOnFilter={this.props.clientOnFilter} clientFindDistricts={this.props.clientFindDistricts}
+                    clientDistricts={this.props.districts}/>
             </div>
         )
     }

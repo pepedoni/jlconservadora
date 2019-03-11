@@ -7,11 +7,16 @@ import GridHeader from '../_grid_header';
 export default class App extends Component {
   state = {
     pagination: {position: 'top'},
-    loading: false,
+    loading: false
   };
 
   componentDidMount() {
     this.fetch();
+  }
+
+  componentWillReceiveProps() {
+    if(this.props.filter != Array()) 
+      this.fetch();
   }
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -79,7 +84,7 @@ export default class App extends Component {
           <Table
             columns={this.props.columns}
             // rowKey={record => record.login.uuid}
-            dataSource={this.state.data}
+            dataSource={this.props.filter.length === 0 ? this.state.data : this.props.filter}
             pagination={this.state.pagination}
             loading={this.state.loading}
             onChange={this.handleTableChange}

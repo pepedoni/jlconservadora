@@ -6,7 +6,7 @@ import Filter from 'core/_filter'
 import JlAutoComplete from "core/_input/autoComplete";
 import JlInput from "core/_input/input";
 import JlSelect from "core/_input/select"
-import request from "api/request"
+// import request from "api/request"
 
 export default class ClientFilter extends Component {
 
@@ -15,7 +15,7 @@ export default class ClientFilter extends Component {
 
         this.state = {
             nome: '',
-            cpfCnpj: ''
+            inscription: ''
         }
     }
 
@@ -23,11 +23,15 @@ export default class ClientFilter extends Component {
         this.setState({ [name]: event.target.value });
     };
 
-    getDistrictData = async (teste = '') => {
-        const response =  await request.get('/clients/districts');
-        const data = await response.data;
-        return data;
-    }
+    // getDistrictData = async (teste = '') => {
+    //     const response =  await request.get('/clients/districts');
+    //     const data = await response.data;
+    //     return data;
+    // }
+
+    // componentDidUpdate () {
+    //     this.props.clientFindDistricts();
+    // }
 
     render () {
         return (
@@ -38,7 +42,7 @@ export default class ClientFilter extends Component {
                         <JlInput label='Nome' onChange={this.handleChange('nome')}/>
                     </Col>
                     <Col className="gutter-row" span={12}>
-                        <JlInput label='CPF/CNPJ' onChange={this.handleChange('cpfCnpj')}/>
+                        <JlInput label='CPF/CNPJ' onChange={this.handleChange('inscription')}/>
                     </Col>
                 </Row>
                 <Row gutter={4}>
@@ -74,7 +78,7 @@ export default class ClientFilter extends Component {
                             label="Item da Lista"
                             size="large"
                             style={{ width: "100%" }}
-                            dataSource={this.getDistrictData()}
+                            // dataSource={this.props.clientDistricts}
                             // onSelect={this.onSelect}
                             // onSearch={this.handleSearch}
                             className={"filter"}

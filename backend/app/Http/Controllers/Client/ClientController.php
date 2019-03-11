@@ -77,18 +77,34 @@ class ClientController extends Controller {
     public function getClients(Request $request) {
         $clients = Client::paginate(7);
         foreach($clients as &$client) {
-            $client['complete_address'] = $client['address'].', '.$client['address_number'];
-            if($client['address_complement'] != '')
-                $client['complete_address'] = $client['complete_address'].'/'.$client['address_complement'];
+            $client['complete_address'] = getCompleteAddress($client);
         }
+
         return $clients;
     }
 
     public function filterClients(Request $request) {
-        return Client::where('name', 'like', '%'. $request->name .'%')
+        //  var_dump(array_keys($request->all()));die;
+        $filteredClients = Client::query()->whereLike(['name', 'syndic_email'], 'Ger');
+        var_dump($filteredClients);die;
+                $filteredClients = Client::where('name', 'like', '%'. $request->name .'%')
                 ->where('syndic_email', 'like', '%' . $request->email . '%')
                 ->where('address', 'like', '%' . $request->address .'%')
-                ->where('cpf_cnpj', 'like', '%' . $request->cpfCnpj .'%')->get();
+                ->where('inscription', 'like', '%' . $request->inscription .'%')->get();
+
+        foreach($filteredClients as &$filteredClient) {
+            $filteredClient['complete_address'] = getCompleteAddress($filteredClient);
+        }
+
+        return $filteredClients;
+    }
+
+    public function getCompleteAddress($client) {
+        $completeAddress = $client['address'].', '.$client['address_number'];
+        if($client['address_complement'] != '')
+            $completeAddress = $client['complete_address'].'/'.$client['address_complement'];
+        
+        return $completeAddress;
     }
 
     public function getDistricts(Request $request) {
