@@ -72,27 +72,8 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
   );
 }
 
-function getSuggestions(value) {
-  const inputValue = deburr(value.trim()).toLowerCase();
-  const inputLength = inputValue.length;
-  let count = 0;
-
-  return inputLength === 0
-    ? []
-    : suggestions.filter(suggestion => {
-        const keep =
-          count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
-
-        if (keep) {
-          count += 1;
-        }
-
-        return keep;
-      });
-}
-
 function getSuggestionValue(suggestion) {
-  return suggestion.label;
+  return suggestion.address_district;
 }
 
 const styles = theme => ({
@@ -168,6 +149,7 @@ class AutoComplete extends React.Component {
   constructor(props) {
     super(props);
     this.renderInputComponent = this.renderInputComponent.bind(this);
+    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
   }
 
   state = {
@@ -193,7 +175,6 @@ class AutoComplete extends React.Component {
           classes: {
             input: classes.input,
             classes: {
-              root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
               disabled: classes.disabled,
               notchedOutline: classes.notchedOutline,
@@ -206,7 +187,7 @@ class AutoComplete extends React.Component {
   }  
 
   onSuggestionsFetchRequested = ({ value }) => {
-    request.get('clients/districts')
+    request.get(this.props.route + '?value')
       .then((response) =>  {
         this.setState({ suggestions: response.data })
       });
@@ -241,18 +222,14 @@ class AutoComplete extends React.Component {
           inputProps={{
             classes,
             placeholder: 'Search a country (start with a)',
-            value: this.state.single,
-            onChange: this.handleChange('single'),
+            value: this.props.value,
+            onChange: this.props.onChange,
           }}
           theme={{
             container: classes.container,
             suggestionsContainerOpen: classes.suggestionsContainerOpen,
             suggestionsList: classes.suggestionsList,
             suggestion: classes.suggestion,
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              disabled: classes.disabled,
-              notchedOutline: classes.notchedOutline,
           }}
           renderSuggestionsContainer={options => (
             <Paper {...options.containerProps} square>

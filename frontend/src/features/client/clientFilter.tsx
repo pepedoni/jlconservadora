@@ -15,7 +15,8 @@ export default class ClientFilter extends Component {
 
         this.state = {
             nome: '',
-            cpfCnpj: ''
+            cpfCnpj: '',
+            district: ''
         }
     }
 
@@ -23,11 +24,14 @@ export default class ClientFilter extends Component {
         this.setState({ [name]: event.target.value });
     };
 
-    getDistrictData = async (teste = '') => {
-        const response =  await request.get('/clients/districts');
-        const data = await response.data;
-        return data;
-    }
+    handleChangeAutoComplete = name => (event, { newValue }) => {
+
+        this.setState({
+            [name]: newValue,
+        });
+        
+    };
+    
 
     render () {
         return (
@@ -71,17 +75,18 @@ export default class ClientFilter extends Component {
                     <Col className="gutter-row" span={12}>
                         <JlAutoComplete
                             // textField={classes.textField}
-                            label="Item da Lista"
+                            label="Bairro"
                             size="large"
                             style={{ width: "100%" }}
-                            dataSource={this.getDistrictData()}
                             // onSelect={this.onSelect}
                             // onSearch={this.handleSearch}
                             className={"filter"}
                             outData={["key", "aliquot"]}
                             displayedfields={["key", "description", "aliquot"]}
+                            route="clients/districts"
                             optionLabelProp="text"
-                            // value={this.props.service.list_item}
+                            onChange={this.handleChangeAutoComplete('district')}
+                            value={this.state.district}
                         />
                     </Col>
                 </Row>
