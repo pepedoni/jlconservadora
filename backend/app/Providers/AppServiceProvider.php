@@ -17,10 +17,21 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         
-        Builder::macro('whereLike', function($attributes, string $searchTerm) { 
+        Builder::macro('whereLikeAll', function($attributes, string $searchTerm) { 
            
             foreach($attributes as $attribute) {
                 $this->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
+            }
+            
+            return $this;
+        });
+
+        Builder::macro('whereLike', function($attributes) { 
+           
+            foreach($attributes as $key => $value) {
+                if($value) {
+                    $this->orWhere($key, 'LIKE', "%{$value}%");
+                }
             }
             
             return $this;

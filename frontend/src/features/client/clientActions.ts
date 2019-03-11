@@ -133,7 +133,7 @@ export const clientOnFilter = (filter) => (dispatch) => {
     request.get('/clients/filter', { params: 
         { 
             name: filter.nome,
-            cpfCnpj: filter.cpfCnpj,
+            inscription: filter.cpfCnpj,
             address: filter.rua,
             email: filter.email
         }
