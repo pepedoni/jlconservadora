@@ -6,7 +6,7 @@ import Filter from 'core/_filter'
 import JlAutoComplete from "core/_input/autoComplete";
 import JlInput from "core/_input/input";
 import JlSelect from "core/_input/select"
-// import request from "api/request"
+import request from "api/request"
 
 export default class ClientFilter extends Component {
 
@@ -15,12 +15,8 @@ export default class ClientFilter extends Component {
 
         this.state = {
             nome: '',
-<<<<<<< HEAD
-            inscription: ''
-=======
             cpfCnpj: '',
             district: ''
->>>>>>> 62855dddde321f4f584e0e3992c36eb735d1de7d
         }
     }
 
@@ -36,6 +32,7 @@ export default class ClientFilter extends Component {
         
     };
     
+
     render () {
         return (
             <Filter visible={this.props.visible} onCloseFilter={this.props.clientCloseFilter}
@@ -45,7 +42,7 @@ export default class ClientFilter extends Component {
                         <JlInput label='Nome' onChange={this.handleChange('nome')}/>
                     </Col>
                     <Col className="gutter-row" span={12}>
-                        <JlInput label='CPF/CNPJ' onChange={this.handleChange('inscription')}/>
+                        <JlInput label='CPF/CNPJ' onChange={this.handleChange('cpfCnpj')}/>
                     </Col>
                 </Row>
                 <Row gutter={4}>
@@ -81,12 +78,6 @@ export default class ClientFilter extends Component {
                             label="Bairro"
                             size="large"
                             style={{ width: "100%" }}
-<<<<<<< HEAD
-                            // dataSource={this.props.clientDistricts}
-=======
->>>>>>> 62855dddde321f4f584e0e3992c36eb735d1de7d
-                            // onSelect={this.onSelect}
-                            // onSearch={this.handleSearch}
                             className={"filter"}
                             outData={["key", "aliquot"]}
                             displayedfields={["key", "description", "aliquot"]}

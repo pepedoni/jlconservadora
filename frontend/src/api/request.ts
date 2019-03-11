@@ -3,7 +3,7 @@ import cookies from 'js-cookie';
 import { getToken } from "../features/auth/authActions";
 
 const request = axios.create({
-  baseURL: "http://127.0.0.1:8080/api"
+  baseURL: "http://127.0.0.1:8000/api"
 });
 
 request.interceptors.request.use(config => {
