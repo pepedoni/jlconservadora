@@ -15,7 +15,12 @@ export default class ClientFilter extends Component {
 
         this.state = {
             nome: '',
+<<<<<<< HEAD
             inscription: ''
+=======
+            cpfCnpj: '',
+            district: ''
+>>>>>>> 62855dddde321f4f584e0e3992c36eb735d1de7d
         }
     }
 
@@ -23,16 +28,14 @@ export default class ClientFilter extends Component {
         this.setState({ [name]: event.target.value });
     };
 
-    // getDistrictData = async (teste = '') => {
-    //     const response =  await request.get('/clients/districts');
-    //     const data = await response.data;
-    //     return data;
-    // }
+    handleChangeAutoComplete = name => (event, { newValue }) => {
 
-    // componentDidUpdate () {
-    //     this.props.clientFindDistricts();
-    // }
-
+        this.setState({
+            [name]: newValue,
+        });
+        
+    };
+    
     render () {
         return (
             <Filter visible={this.props.visible} onCloseFilter={this.props.clientCloseFilter}
@@ -75,17 +78,22 @@ export default class ClientFilter extends Component {
                     <Col className="gutter-row" span={12}>
                         <JlAutoComplete
                             // textField={classes.textField}
-                            label="Item da Lista"
+                            label="Bairro"
                             size="large"
                             style={{ width: "100%" }}
+<<<<<<< HEAD
                             // dataSource={this.props.clientDistricts}
+=======
+>>>>>>> 62855dddde321f4f584e0e3992c36eb735d1de7d
                             // onSelect={this.onSelect}
                             // onSearch={this.handleSearch}
                             className={"filter"}
                             outData={["key", "aliquot"]}
                             displayedfields={["key", "description", "aliquot"]}
+                            route="clients/districts"
                             optionLabelProp="text"
-                            // value={this.props.service.list_item}
+                            onChange={this.handleChangeAutoComplete('district')}
+                            value={this.state.district}
                         />
                     </Col>
                 </Row>
