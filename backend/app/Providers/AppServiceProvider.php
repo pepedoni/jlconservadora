@@ -16,6 +16,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        
+        Builder::macro('whereLike', function($attributes, string $searchTerm) { 
+           
+            foreach($attributes as $attribute) {
+                $this->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
+            }
+            
+            return $this;
+        });
     }
 
     /**
@@ -25,13 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Builder::macro('whereLike', function($attributes, string $searchTerm) {
-            foreach(array_wrap($attributes) as $attribute) {
-               $this->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
-            }
-            
-            return $this;
-        });
     }
 
 

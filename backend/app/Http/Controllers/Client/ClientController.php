@@ -84,8 +84,8 @@ class ClientController extends Controller {
     }
 
     public function filterClients(Request $request) {
-        //  var_dump(array_keys($request->all()));die;
-        $filteredClients = Client::query()->whereLike(['name', 'syndic_email'], 'Ger');
+        //var_dump(array_keys($request->all()));die;
+        $filteredClients = Client::query()->whereLike(['name'], 'P')->get();
         var_dump($filteredClients);die;
                 $filteredClients = Client::where('name', 'like', '%'. $request->name .'%')
                 ->where('syndic_email', 'like', '%' . $request->email . '%')
