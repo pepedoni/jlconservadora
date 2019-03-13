@@ -17,11 +17,11 @@ class CreateClientsTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->integer('type');
-            $table->integer('cond_blocks')->default(null);
-            $table->integer('cond_floors')->default(null);
-            $table->integer('cond_aps')->default(null);
-            $table->string('syndic_ap', 5);
-            $table->date('syndic_birthday');
+            $table->integer('cond_blocks')->nullable()->default(null);
+            $table->integer('cond_floors')->nullable()->default(null);
+            $table->integer('cond_aps')->nullable()->default(null);
+            $table->string('syndic_ap', 5)->nullable()->default(null);;
+            $table->date('syndic_birthday')->nullable()->default(null);;
             $table->string('syndic_email', 50);
             $table->string('home_contact', 11);
             $table->string('phone_contact', 11);
@@ -31,12 +31,12 @@ class CreateClientsTable extends Migration
             $table->string('cep');
             $table->string('state');
             $table->string('city');
-            $table->string('address_district', 100)->default("");
+            $table->string('address_district', 100)->nullable()->default("");
             $table->boolean('is_active')->default(true);
             $table->string('inscription', 14);
             $table->string('address', 255);
             $table->string('address_number', 5);
-            $table->string('address_complement', 50);
+            $table->string('address_complement', 50)->nullable();
             $table->timestamps();
         });
     }

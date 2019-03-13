@@ -28,7 +28,7 @@ class CreateCompaniesTable extends Migration
             $table->string('address_district');
             $table->string('address');
             $table->integer('address_number');
-            $table->string('address_complement');
+            $table->string('address_complement', 50)->nullable();
             $table->unique('inscription');
             $table->timestamps();
         });

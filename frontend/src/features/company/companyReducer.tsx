@@ -1,6 +1,6 @@
 import * as types from "./constants";
 
-export default function(state = { formOpen: false, mode: null, company: {}, loading: false }, action) {
+export default function(state = { formOpen: false, mode: null, company: {}, loading: false, filter: Array() }, action) {
   switch (action.type) {
     case types.COMPANY_ADD:
       console.log(`[Company Reducer] Action: COMPANY_ADD`);

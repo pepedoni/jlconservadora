@@ -26,8 +26,7 @@ class ClientController extends Controller {
             'cond_floors' => 'required|integer|max:99',
             'cond_aps' => 'required|integer',
             'address' => 'required|string|max:255',
-            'address_number' => 'required|integer',
-            'address_complement' => 'required|string'
+            'address_number' => 'required|integer'
         ]);
         
         $client = new Client([
@@ -49,7 +48,6 @@ class ClientController extends Controller {
             'address_district' => $request->address_district,
             'address' => $request->address,
             'address_number' => $request->address_number,
-            'address_complement' =>$request->address_complement ,
             'inscription' =>$request->inscription
         ]);
             
@@ -77,7 +75,7 @@ class ClientController extends Controller {
     public function getClients(Request $request) {
         $clients = Client::paginate(7);
         foreach($clients as &$client) {
-            $client['complete_address'] = getCompleteAddress($client);
+            $client['complete_address'] = $this->getCompleteAddress($client);
         }
 
         return $clients;

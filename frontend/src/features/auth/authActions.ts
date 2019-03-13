@@ -44,6 +44,13 @@ const logoutFailure = () => {
  };
 };
 
+const user = (user) => {
+  return { 
+    type: types.LOGIN_USER,
+    payload: user
+ };
+}
+
 export const login = (user) => (dispatch) => {
   dispatch(requestLogin());
   if(typeof user === "object" && user.hasOwnProperty("email") && user.hasOwnProperty("password")) {
@@ -61,6 +68,7 @@ export const login = (user) => (dispatch) => {
           }
           request.get('/auth/user').then((response) => {
             dispatch(loginSuccess(response.data));
+            dispatch(user(response.data));
           }).catch(error => {
             dispatch(loginFailure(result.error));  
           });
@@ -93,6 +101,12 @@ export const logout = (history) => (dispatch) => {
     }
   );
 };
+
+export const getUser = () => (dispatch) => {
+  request.get('/auth/user').then((response) => {
+    dispatch(user(response.data));
+  });
+}
 
 export const TOKEN_KEY = '@jl_token';
 

@@ -278,6 +278,7 @@ class CompanyForm extends Component {
                 mask="99999-999"
                 className={classes.textField}
                 value={this.state.cep}
+                extraProps={{ required: true }}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 fullWidth
                 onChange={this.onChangeCep("cep")}
@@ -293,6 +294,7 @@ class CompanyForm extends Component {
                 value={this.state.state}
                 disabled={true}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("state")}
                 margin="normal"
                 variant="outlined"
@@ -306,6 +308,7 @@ class CompanyForm extends Component {
                 value={this.state.city}
                 disabled={true}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("city")}
                 margin="normal"
                 variant="outlined"
@@ -319,6 +322,7 @@ class CompanyForm extends Component {
                 value={this.state.address_district}
                 disabled={true}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("address_district")}
                 margin="normal"
                 variant="outlined"
@@ -334,6 +338,7 @@ class CompanyForm extends Component {
                 value={this.state.address}
                 disabled={true}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("address")}
                 margin="normal"
                 variant="outlined"

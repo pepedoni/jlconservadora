@@ -53,6 +53,9 @@ export default function(state = { user: undefined, loadingLogin: false, errorLog
     case types.LOGOUT_FAILURE:
       console.log(`[Auth Reducer] Action: LOGOUT_FAILURE`);
       return { ...state, logged: false, logginOut: false}
+    case types.LOGIN_USER:
+      console.log(`[Auth Reducer] Action: LOGOUT_FAILURE`);
+      return { ...state, user: action.payload}
     default:
       return state;
     }

@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
     formOpen: state.company.formOpen,
     mode: state.company.mode,
     company: state.company.company,
+    filter: state.company.filter,
     loading: state.company.loading
 });
 

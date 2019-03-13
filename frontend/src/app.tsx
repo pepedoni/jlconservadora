@@ -6,7 +6,6 @@ import "./main.less";
 import JLMenu from "core/_menu";
 import JLHeader from "core/_header";
 import Trigger from "core/_trigger";
-import FAB from "core/_fab";
 import MainRouter from "routes/main";
 
 const { Header, Content, Footer, Sider } = Layout;

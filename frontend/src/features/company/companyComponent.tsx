@@ -14,7 +14,7 @@ export default class CompanyComponent extends Component {
     render() {
       return (
         <div className="component">
-            <CompanyGrid onAdd={this.props.companyAdd} onRowClick= {this.props.onRowClick} />
+            <CompanyGrid onAdd={this.props.companyAdd} filter={this.props.filter} onRowClick= {this.props.onRowClick} />
             <JlDrawer   addLabel={"Empresa"}
                         isVisible={this.props.formOpen} 
                         onClose={this.props.companyCloseForm} 

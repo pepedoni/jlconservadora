@@ -29,12 +29,12 @@ const url = '/company';
 export default class CompanyGrid extends Component {
     render() {
         return (
-            <Grid onAdd={this.props.onAdd} 
+            <Grid 
                 addLabel={"Empresa"} 
                 columns={columns} 
                 url= {url} 
                 rowKey="id"
-                onRowClick={ this.props.onRowClick }
+                {...this.props}
             />
         )
     }

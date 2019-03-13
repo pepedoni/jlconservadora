@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col, Avatar, Popover, Badge, Modal } from "antd";
 import { bindActionCreators } from "redux";
-import { logout, getToken } from "features/auth/authActions";
+import { logout, getToken, getUser } from "features/auth/authActions";
 import QueueAnim from 'rc-queue-anim';
 import "./style.less";
 
@@ -49,7 +49,7 @@ class JLHeader extends Component {
       <Popover placement="bottomLeft" 
         content={
           <UserPopover 
-            userName="Pedro Moutinho" 
+            userName={(this.props.user) ? this.props.user.name : ''}
             companyName="Jl Conservadora" 
             hasNotification={true}
             logout={this.confirmLogout}
@@ -89,9 +89,12 @@ class JLHeader extends Component {
 
   render() {
 
-    if(this.props.user == undefined && getToken() == '') {
-      return <Redirect to={"/login"} />
-    }
+    if(this.props.user == undefined) {
+      if(getToken() != '') {
+        this.props.getUser();
+      }
+      else return <Redirect to={"/login"} />
+    } 
 
     return (
       <Row>
@@ -113,7 +116,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      logout
+      logout,
+      getUser
     },
     dispatch
   );

@@ -145,6 +145,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.inscription}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("inscription")}
                 margin="normal"
                 variant="outlined"
@@ -158,6 +159,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.name}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("name")}
                 margin="normal"
                 variant="outlined"
@@ -173,6 +175,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.phone_contact}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("phone_contact")}
                 margin="normal"
                 variant="outlined"
@@ -187,6 +190,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.commerce_contact}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("commerce_contact")}
                 margin="normal"
                 variant="outlined"
@@ -203,6 +207,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.syndic_email}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("syndic_email")}
                 margin="normal"
                 variant="outlined"
@@ -216,6 +221,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.syndic_ap}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("syndic_ap")}
                 margin="normal"
                 variant="outlined"
@@ -229,6 +235,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.syndic_birthday}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("syndic_birthday")}
                 margin="normal"
                 variant="outlined"
@@ -244,6 +251,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.cond_blocks}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("cond_blocks")}
                 margin="normal"
                 variant="outlined"
@@ -258,6 +266,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.cond_floors}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("cond_floors")}
                 margin="normal"
                 variant="outlined"
@@ -285,6 +294,7 @@ class ClientForm extends Component {
                 name="cep"
                 label="CEP"
                 mask="99999-999"
+                extraProps={{ required: true }}
                 className={classes.textField}
                 value={this.state.cep}
                 disabled={this.isReadOnly(this.props.mode, false)}
@@ -302,6 +312,7 @@ class ClientForm extends Component {
                 value={this.state.state}
                 disabled={true}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("state")}
                 margin="normal"
                 variant="outlined"
@@ -315,6 +326,7 @@ class ClientForm extends Component {
                 value={this.state.city}
                 disabled={true}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("city")}
                 margin="normal"
                 variant="outlined"
@@ -328,6 +340,7 @@ class ClientForm extends Component {
                 value={this.state.address_district}
                 disabled={true}
                 fullWidth
+                extraProps={{ required: true }}
                 onChange={this.handleChange("address_district")}
                 margin="normal"
                 variant="outlined"
