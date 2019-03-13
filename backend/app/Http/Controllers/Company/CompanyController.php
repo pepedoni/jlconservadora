@@ -29,7 +29,7 @@ class CompanyController extends Controller
             'cep' => $request->cep,
             'state' => $request->state,
             'city' => $request->city,
-            'address_neighborhood' => $request->address_neighborhood,
+            'address_district' => $request->address_district,
             'address' => $request->address,
             'address_number' => $request->address_number,
             'address_complement' =>$request->address_complement 

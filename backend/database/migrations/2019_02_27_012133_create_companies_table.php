@@ -25,7 +25,7 @@ class CreateCompaniesTable extends Migration
             $table->string('cep');
             $table->string('state');
             $table->string('city');
-            $table->string('address_neighborhood');
+            $table->string('address_district');
             $table->string('address');
             $table->integer('address_number');
             $table->string('address_complement');

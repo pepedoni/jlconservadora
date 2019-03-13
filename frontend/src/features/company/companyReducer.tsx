@@ -9,7 +9,7 @@ export default function(state = { formOpen: false, mode: null, company: {}, load
         formOpen: true,
         mode: 'new',
         company: {municipal_inscription: '',  inscription: '',  name: '', nature_operation: '',  taxation_regime: 5,  national_simple: 1,  cultural_promoter: 0,
-                  cep: '', state: '', city: '', address: '', address_neighborhood: '', address_number: '', address_complement: '' }
+                  cep: '', state: '', city: '', address: '', address_district: '', address_number: '', address_complement: '' }
       };
     case types.COMPANY_EDIT:
       console.log(`[Company Reducer] Action: COMPANY_EDIT`);
