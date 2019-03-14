@@ -43,6 +43,7 @@ export default class InvoiceGrid extends Component {
                     columns={columns} 
                     url= {url} 
                     rowKey="id"
+                    filter={this.props.filter}
                     onRowClick={ this.props.onRowClick }
                     openFilter={this.props.openFilter}
                 />

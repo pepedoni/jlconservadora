@@ -69,7 +69,7 @@ class JlInput extends Component {
     renderInput() {
 
         const { classes } = this.props;
-      
+          if(this.props.mask) {
           return (
             <InputMask 
               value={this.props.value} 
@@ -81,16 +81,14 @@ class JlInput extends Component {
               >
               {() => <TextField
                       className={classes.margin}
-                      InputProps={{
+                      InputProps={(this.props.InputProps) ? this.props.InputProps :
+                        {
                           classes: {
                               root: classes.cssOutlinedInput,
                               focused: classes.cssFocused,
                               disabled: classes.disabled,
                               notchedOutline: classes.notchedOutline,
                           },
-                      }}
-                      InputLabelProps={{
-                          shrink: true,
                       }}
                       id={this.props.id}
                       {...this.props.extraProps}
@@ -108,7 +106,35 @@ class JlInput extends Component {
                 }
                 </InputMask>
             );
-        
+          }
+          else {
+            return (
+                <TextField
+                        className={classes.margin}
+                        InputProps={(this.props.InputProps) ? this.props.InputProps :
+                          {
+                            classes: {
+                                root: classes.cssOutlinedInput,
+                                focused: classes.cssFocused,
+                                disabled: classes.disabled,
+                                notchedOutline: classes.notchedOutline,
+                            },
+                        }}
+                        id={this.props.id}
+                        {...this.props.extraProps}
+                        label={this.props.label}
+                        className={this.props.className}
+                        value={this.props.value}
+                        fullWidth
+                        disabled={this.props.disabled}
+                        margin={this.props.margin || "normal"}
+                        variant={this.props.variant || "outlined"}
+                        type={this.props.type}
+                        rows={this.props.rows}
+                    ></TextField>
+                  
+              );
+          }
     }
 
     renderFieldMask(value, mask) {

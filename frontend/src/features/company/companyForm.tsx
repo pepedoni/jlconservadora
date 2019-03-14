@@ -3,8 +3,7 @@ import { Row, Col, Button, Spin } from "antd";
 import { withStyles } from "@material-ui/core/styles";
 import JlInput from "core/_input/input";
 import JlSelect from "core/_input/select";
-import axios from "axios";
-import { async } from "q";
+
 
 const styles = theme => ({
   container: {

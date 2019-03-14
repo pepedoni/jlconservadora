@@ -83,7 +83,9 @@ export default class ClientFilter extends Component {
                             displayedfields={["key", "description", "aliquot"]}
                             route="clients/districts"
                             optionLabelProp="text"
+                            fieldDescription='address_district'
                             onChange={this.handleChangeAutoComplete('district')}
+                            filters={['address_district']}
                             value={this.state.district}
                         />
                     </Col>

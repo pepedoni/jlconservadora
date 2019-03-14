@@ -11,70 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import request from '../../api/request';
-
-const suggestions = [
-  { label: 'Afghanistan' },
-  { label: 'Aland Islands' },
-  { label: 'Albania' },
-  { label: 'Algeria' },
-  { label: 'American Samoa' },
-  { label: 'Andorra' },
-  { label: 'Angola' },
-  { label: 'Anguilla' },
-  { label: 'Antarctica' },
-  { label: 'Antigua and Barbuda' },
-  { label: 'Argentina' },
-  { label: 'Armenia' },
-  { label: 'Aruba' },
-  { label: 'Australia' },
-  { label: 'Austria' },
-  { label: 'Azerbaijan' },
-  { label: 'Bahamas' },
-  { label: 'Bahrain' },
-  { label: 'Bangladesh' },
-  { label: 'Barbados' },
-  { label: 'Belarus' },
-  { label: 'Belgium' },
-  { label: 'Belize' },
-  { label: 'Benin' },
-  { label: 'Bermuda' },
-  { label: 'Bhutan' },
-  { label: 'Bolivia, Plurinational State of' },
-  { label: 'Bonaire, Sint Eustatius and Saba' },
-  { label: 'Bosnia and Herzegovina' },
-  { label: 'Botswana' },
-  { label: 'Bouvet Island' },
-  { label: 'Brazil' },
-  { label: 'British Indian Ocean Territory' },
-  { label: 'Brunei Darussalam' },
-];
-
-function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion.address_district, query);
-  const parts = parse(suggestion.address_district, matches);
-
-  return (
-    <MenuItem selected={isHighlighted} component="div">
-      <div>
-        {parts.map((part, index) =>
-          part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </span>
-          ) : (
-            <strong key={String(index)} style={{ fontWeight: 300 }}>
-              {part.text}
-            </strong>
-          ),
-        )}
-      </div>
-    </MenuItem>
-  );
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.address_district;
-}
+import thunk from 'redux-thunk';
 
 const styles = theme => ({
   root: {
@@ -105,6 +42,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    width: 10000
   },
   margin: {
     margin: theme.spacing.unit,
@@ -142,6 +80,9 @@ const styles = theme => ({
       marginTop: theme.spacing.unit * 3,
     },
   },
+  full: {
+    width: 1000
+  }
 });
 
 class AutoComplete extends React.Component {
@@ -150,6 +91,8 @@ class AutoComplete extends React.Component {
     super(props);
     this.renderInputComponent = this.renderInputComponent.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
+    this.renderSuggestion = this.renderSuggestion.bind(this);
+    this.getSuggestionValue = this.getSuggestionValue.bind(this);
   }
 
   state = {
@@ -162,34 +105,43 @@ class AutoComplete extends React.Component {
     const { classes, inputRef = () => {}, ref, ...other } = inputProps;
   
     return (
-      <TextField
+      <JlInput
         fullWidth
         variant="outlined"
         label={this.props.label}
         className={this.props.className}
+        value={this.props.value}
         InputProps={{
           inputRef: node => {
             ref(node);
             inputRef(node);
           },
           classes: {
-            input: classes.input,
-            classes: {
+              root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
               disabled: classes.disabled,
               notchedOutline: classes.notchedOutline,
-            },
           },
         }}
-        {...other}
+        extraProps={{...other}}
       />
     );
   }  
 
   onSuggestionsFetchRequested = ({ value }) => {
-    request.get(this.props.route + '?value')
+    let url = this.props.route;
+    if(this.props.filters) {
+      url+='?';
+    }
+
+    this.props.filters.forEach(element => {
+      url += element + '=' + value + '&';
+    });
+
+    request.get(url)
       .then((response) =>  {
-        this.setState({ suggestions: response.data })
+        let data = (response.data.data) ? response.data.data : response.data;
+        this.setState({ suggestions: data })
       });
   }
 
@@ -203,6 +155,35 @@ class AutoComplete extends React.Component {
     });
   };
 
+  getSuggestionValue(suggestion) {
+    return suggestion[this.props.fieldDescription];
+  }
+  
+
+   renderSuggestion(suggestion, { query, isHighlighted }) {
+    const matches = match(suggestion[this.props.fieldDescription], query);
+    const parts = parse(suggestion[this.props.fieldDescription], matches);
+  
+    return (
+      <MenuItem selected={isHighlighted} component="div">
+        <div>
+          {parts.map((part, index) =>
+            part.highlight ? (
+              <span key={String(index)} style={{ fontWeight: 500 }}>
+                {part.text}
+              </span>
+            ) : (
+              <strong key={String(index)} style={{ fontWeight: 300 }}>
+                {part.text}
+              </strong>
+            ),
+          )}
+        </div>
+      </MenuItem>
+    );
+  }
+
+
   render() {
     const { classes } = this.props;
 
@@ -211,25 +192,25 @@ class AutoComplete extends React.Component {
       suggestions: this.state.suggestions,
       onSuggestionsFetchRequested: this.onSuggestionsFetchRequested,
       onSuggestionsClearRequested: this.onSuggestionsClearRequested,
-      getSuggestionValue,
-      renderSuggestion,
+      getSuggestionValue: this.getSuggestionValue,
+      renderSuggestion: this.renderSuggestion,
     };
 
     return (
-      <div className={classes.root}>
         <Autosuggest
           {...autosuggestProps}
           inputProps={{
             classes,
-            placeholder: 'Search a country (start with a)',
             value: this.props.value,
             onChange: this.props.onChange,
           }}
+          fullWidth
           theme={{
             container: classes.container,
             suggestionsContainerOpen: classes.suggestionsContainerOpen,
             suggestionsList: classes.suggestionsList,
             suggestion: classes.suggestion,
+            input: classes.full
           }}
           renderSuggestionsContainer={options => (
             <Paper {...options.containerProps} square>
@@ -237,7 +218,6 @@ class AutoComplete extends React.Component {
             </Paper>
           )}
         />
-      </div>
     );
   }
 }

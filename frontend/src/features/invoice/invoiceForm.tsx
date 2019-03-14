@@ -4,6 +4,7 @@ import { Spin } from "antd";
 import { withStyles } from "@material-ui/core/styles";
 import JlInput from "core/_input/input";
 import JlDate from "core/_input/date";
+import JlAutoComplete from "core/_input/autoComplete";
 
 const styles = theme => ({
   container: {
@@ -56,6 +57,14 @@ class InvoiceForm extends Component {
     this.setState({ [name]: event.target.value });
   };
 
+  handleChangeAutoComplete = name => (event, { newValue }) => {
+
+    this.setState({
+        [name]: newValue,
+    });
+    
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -73,14 +82,17 @@ class InvoiceForm extends Component {
         >
           <Row gutter={8}>
             <Col className="gutter-row" md={12}>
-              <JlInput
+              <JlAutoComplete
                 id="standard-provider_inscription"
                 label="Prestador"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.provider_inscription}
                 fullWidth
-                onChange={this.handleChange("provider_inscription")}
+                filters={['name']}
+                route="company"
+                fieldDescription='name'
+                onChange={this.handleChangeAutoComplete('provider_inscription')}
                 margin="normal"
                 variant="outlined"
               />

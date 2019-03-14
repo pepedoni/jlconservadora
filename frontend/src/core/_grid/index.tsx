@@ -5,10 +5,15 @@ import request from 'api/request';
 import GridHeader from '../_grid_header';
 
 export default class App extends Component {
-  state = {
-    pagination: {position: 'top'},
-    loading: false
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+      pagination: {position: 'top'},
+      loading: false
+    }
+  }
 
   componentDidMount() {
     this.fetch();

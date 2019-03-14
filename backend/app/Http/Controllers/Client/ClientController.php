@@ -97,6 +97,9 @@ class ClientController extends Controller {
     }
 
     public function getDistricts(Request $request) {
-        return Client::distinct()->get(['address_district']);
+        if($request->query('address_district')) {
+            return Client::distinct()->where('address_district', 'LIKE', '%'.$request->query('address_district').'%')->get(['address_district']);
+        }
+        else return Client::distinct()->get(['address_district']);
     }
 }
