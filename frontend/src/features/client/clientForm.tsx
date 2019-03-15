@@ -153,7 +153,7 @@ class ClientForm extends Component {
             </Col>
             <Col className="gutter-row" md={12}>
               <JlInput
-                id="standard-controlled"
+                id="standard-name"
                 label="Nome"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}

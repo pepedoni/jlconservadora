@@ -23,10 +23,11 @@ const styles = theme => ({
   },
   suggestionsContainerOpen: {
     position: 'absolute',
-    zIndex: 1,
-    marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0,
+    zIndex: 100,
+    margin: theme.spacing.unit,
+    width: '100%'
+    //left: 0,
+    //right: 0,
   },
   suggestion: {
     display: 'block',
@@ -105,12 +106,8 @@ class AutoComplete extends React.Component {
     const { classes, inputRef = () => {}, ref, ...other } = inputProps;
   
     return (
-      <JlInput
-        fullWidth
-        variant="outlined"
-        label={this.props.label}
-        className={this.props.className}
-        value={this.props.value}
+      <TextField
+        className={classes.margin}
         InputProps={{
           inputRef: node => {
             ref(node);
@@ -123,8 +120,20 @@ class AutoComplete extends React.Component {
               notchedOutline: classes.notchedOutline,
           },
         }}
-        extraProps={{...other}}
-      />
+        id={this.props.id}
+        {...this.props.extraProps}
+        label={this.props.label}
+        className={this.props.className}
+        value={this.props.value}
+        fullWidth
+        disabled={this.props.disabled}
+        margin={this.props.margin || "normal"}
+        variant={this.props.variant || "outlined"}
+        type={this.props.type}
+        {...other}
+    ></TextField>
+
+
     );
   }  
 
@@ -154,6 +163,8 @@ class AutoComplete extends React.Component {
       [name]: newValue,
     });
   };
+
+  onSelec(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method })
 
   getSuggestionValue(suggestion) {
     return suggestion[this.props.fieldDescription];
@@ -194,6 +205,7 @@ class AutoComplete extends React.Component {
       onSuggestionsClearRequested: this.onSuggestionsClearRequested,
       getSuggestionValue: this.getSuggestionValue,
       renderSuggestion: this.renderSuggestion,
+      onSuggestionSelected: (this.props.onSuggestionSelected) ? this.props.onSuggestionSelected(this.props.outData) : function() {},
     };
 
     return (
@@ -210,7 +222,7 @@ class AutoComplete extends React.Component {
             suggestionsContainerOpen: classes.suggestionsContainerOpen,
             suggestionsList: classes.suggestionsList,
             suggestion: classes.suggestion,
-            input: classes.full
+            input: classes.input
           }}
           renderSuggestionsContainer={options => (
             <Paper {...options.containerProps} square>

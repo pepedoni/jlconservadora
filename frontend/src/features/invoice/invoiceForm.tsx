@@ -30,6 +30,8 @@ class InvoiceForm extends Component {
     this.state = {
       ...this.props.invoice
     };
+
+    this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,8 +51,16 @@ class InvoiceForm extends Component {
     } else return false;
   }
 
+  onSuggestionSelected = (outData) => (event, { suggestion}) =>  {
+    for (var property in outData){
+      this.setState({
+        [property]: suggestion[outData[property]]
+      });
+    }
+  }
+
   save = () => {
-    this.props.onSave(this.props.invoice, this.props.mode);
+    this.props.onSave(this.state, this.props.mode);
   };
 
   handleChange = name => event => {
@@ -87,28 +97,39 @@ class InvoiceForm extends Component {
                 label="Prestador"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.state.provider_inscription}
+                value={this.state.provider_name}
                 fullWidth
                 filters={['name']}
                 route="company"
                 fieldDescription='name'
-                onChange={this.handleChangeAutoComplete('provider_inscription')}
+                outData={{
+                  provider_inscription: 'inscription'
+                }}
+                onSuggestionSelected={this.onSuggestionSelected}
+                onChange={this.handleChangeAutoComplete('provider_name')}
                 margin="normal"
                 variant="outlined"
               />
             </Col>
             <Col className="gutter-row" md={12}>
-              <JlInput
-                id="standard-controlled"
-                label="Cliente"
-                className={classes.textField}
-                disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.state.provider_name}
-                fullWidth
-                onChange={this.handleChange("name")}
-                margin="normal"
-                variant="outlined"
-              />
+              <JlAutoComplete
+                  id="standard-provider_inscription"
+                  label="Cliente"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, true)}
+                  value={this.state.client_name}
+                  fullWidth
+                  filters={['name']}
+                  route="clients"
+                  fieldDescription='name'
+                  outData={{
+                    client_inscription: 'inscription'
+                  }}
+                  onSuggestionSelected={this.onSuggestionSelected}
+                  onChange={this.handleChangeAutoComplete('client_name')}
+                  margin="normal"
+                  variant="outlined"
+                />
             </Col>
           </Row>
           <Row gutter={8}>

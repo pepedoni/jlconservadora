@@ -167,7 +167,7 @@ class CompanyForm extends Component {
                 className={classes.textField}
                 value={this.state.name}
                 extraProps={{required: true}}
-                disabled={this.isReadOnly(this.props.mode, true)}
+                disabled={this.isReadOnly(this.props.mode, false)}
                 fullWidth
                 onChange={this.handleChange("name")}
                 margin="normal"

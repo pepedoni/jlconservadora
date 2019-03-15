@@ -33,7 +33,7 @@ export default class InvoiceComponent extends Component {
                                 invoice={this.props.invoice} 
                                 loading={this.props.loading}/>
                             </TabPane>
-                            <TabPane tab="Produtos" key="2">
+                            <TabPane tab="Serviços" key="2">
                             </TabPane>
                             <TabPane tab="Impostos" key="3">
                             </TabPane>

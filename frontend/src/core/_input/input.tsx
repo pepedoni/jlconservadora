@@ -126,6 +126,7 @@ class JlInput extends Component {
                         className={this.props.className}
                         value={this.props.value}
                         fullWidth
+                        onChange={this.props.onChange}
                         disabled={this.props.disabled}
                         margin={this.props.margin || "normal"}
                         variant={this.props.variant || "outlined"}
