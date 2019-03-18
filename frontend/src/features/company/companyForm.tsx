@@ -31,6 +31,7 @@ class CompanyForm extends Component {
     };
 
     this.onSelect = this.onSelect.bind(this);
+    this.renderButtons = this.renderButtons.bind(this);
   }
 
   isReadOnly(mode, readOnlyOnEdit) {
@@ -106,8 +107,8 @@ class CompanyForm extends Component {
 
   };
 
-  renderButtons(mode) {
-    if(mode == 'view') {
+  renderButtons() {
+    if(this.props.mode == 'view') {
         return (<div className="center-actions">
             <Button shape="circle" type="primary" icon="form" size="large" onClick={this.props.onEdit}></Button>
             <Button shape="circle" type="primary" icon="delete" size="large" onClick={this.delete}></Button>
@@ -372,16 +373,7 @@ class CompanyForm extends Component {
             </Col>
           </Row>
         </Spin>
-        <div className="center-actions">
-          <Button
-            shape="circle"
-            size="large"
-            type="primary"
-            icon="check"
-            onClick={this.save}
-          />
-        </div>
-        {this.renderButtons(this.props.mode)}
+        {this.renderButtons()}
       </form>
     );
   }

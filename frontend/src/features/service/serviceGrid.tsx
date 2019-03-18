@@ -23,7 +23,7 @@ const columns = [
     }   
 ];
 
-const url = '/service';
+const url = '/services';
 
 export default class ServiceGrid extends Component {
     render() {

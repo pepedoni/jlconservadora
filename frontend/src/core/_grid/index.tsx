@@ -89,7 +89,7 @@ export default class App extends Component {
           <Table
             columns={this.props.columns}
             // rowKey={record => record.login.uuid}
-            dataSource={this.props.filter.length === 0 ? this.state.data : this.props.filter}
+            dataSource={this.props.filter ? this.state.data : this.props.filter}
             pagination={this.state.pagination}
             loading={this.state.loading}
             onChange={this.handleTableChange}

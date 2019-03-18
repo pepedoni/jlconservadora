@@ -71,7 +71,7 @@ const loading = (loading) => {
 export const serviceSave = (service, mode) => (dispatch) => {
     dispatch(loading(true));
     if(mode == 'new') {
-        request.post('/service/insert', service).then( response =>  {
+        request.post('/services', service).then( response =>  {
             dispatch(serviceSaveSuccess(service));
             dispatch(loading(false));
         }).catch( error => {
@@ -80,7 +80,7 @@ export const serviceSave = (service, mode) => (dispatch) => {
         });
     }
     else if(mode == 'edit') {
-        request.put('/service/update/' + service.id, service).then( response =>  {
+        request.put('/services/' + service.id, service).then( response =>  {
             dispatch(serviceSaveSuccess(service));
             dispatch(loading(false));
         }).catch( error => {

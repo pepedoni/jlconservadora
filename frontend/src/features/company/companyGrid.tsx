@@ -24,7 +24,7 @@ const columns = [
     }   
 ];
 
-const url = '/company';
+const url = '/companies';
 
 export default class CompanyGrid extends Component {
     render() {

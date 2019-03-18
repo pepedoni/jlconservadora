@@ -110,7 +110,11 @@ body {
   position: absolute;
   right: 50%;
   bottom: 1%;
-  transform: translate(-50%, -50%, -50%, -50%);
+  transform: translate(50%, 0%);
+
+  button {
+    margin: 0 4px;
+  }
 }
 
 .button-form {
@@ -120,6 +124,7 @@ body {
 .spin {
   height: 100%;
   width: 100%;
+  
 }
 
 .ant-drawer-header {
@@ -132,5 +137,5 @@ body {
 }
 
 .ant-spin-nested-loading > div > .ant-spin {
-  top: 50% !important;
+  max-height: none !important;
 }

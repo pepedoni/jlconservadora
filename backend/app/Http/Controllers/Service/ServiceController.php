@@ -40,6 +40,12 @@ class ServiceController extends Controller
         return response()->json(['data'=> $service]);
     }
 
+    public function getServicesList(Request $request) {
+        $servicesList = file_get_contents('./servicesList.json');
+        // $servicesList = json_decode($servicesList);
+        return response()->json(['data' => $servicesList]);
+    }
+
     public function getServices(Request $request) {
         $services = Service::paginate(7);
 

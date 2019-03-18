@@ -130,6 +130,7 @@ class ClientForm extends Component {
         autoComplete="off"
         className={classes.container}
         onSubmit={this.save}
+        style={{height:'100%'}}
       >
         <Spin
           spinning={this.props.loading}

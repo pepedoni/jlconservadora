@@ -71,7 +71,7 @@ export const callLoading = (loading) => {
 export const companySave = (company, mode) => (dispatch) => {
     dispatch(callLoading(true));
     if(mode == 'new') {
-        request.post('/company/insert', company).then( response =>  {
+        request.post('/companies', company).then( response =>  {
             dispatch(companySaveSuccess(company));
             dispatch(callLoading(false));
         }).catch( error => {
@@ -80,7 +80,7 @@ export const companySave = (company, mode) => (dispatch) => {
         });
     }
     else if(mode == 'edit') {
-        request.put('/company/update/' + company.id, company).then( response =>  {
+        request.put('/companies/' + company.id, company).then( response =>  {
             dispatch(companySaveSuccess(company));
             dispatch(callLoading(false));
         }).catch( error => {

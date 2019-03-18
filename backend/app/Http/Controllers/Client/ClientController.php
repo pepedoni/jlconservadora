@@ -58,17 +58,17 @@ class ClientController extends Controller {
         ], 201);
     } 
 
-    public function updateClient(Request $request, Client $client) {
+    public function updateClient(Request $request, $id) {
 
-        $client = Client::findOrFail($request->id);
+        $client = Client::findOrFail($id);
 
         $client->fill($request->all())->save();
 
         return response()->json(['data'=> $client]);
     }
 
-    public function deleteClient(Request $request, Client $client) {
-        $client = Client::findOrFail($request->id);
+    public function deleteClient(Request $request, $id) {
+        $client = Client::findOrFail($id);
         $client->delete();
     }
 
@@ -82,7 +82,6 @@ class ClientController extends Controller {
     }
 
     public function filterClients(Request $request) {
-        //var_dump(array_keys($request->all()));die;
         $filteredClients = Client::query()->whereLike($request->all())->get();
         
         return $filteredClients;

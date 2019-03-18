@@ -108,7 +108,7 @@ export const callLoading = (loading) => {
 export const clientSave = (client, mode) => (dispatch) => {
     dispatch(callLoading(true));
     if(mode == 'new') {
-        request.post('/clients/insert', client).then( response =>  {
+        request.post('/clients', client).then( response =>  {
             dispatch(clientSaveSuccess(client));
             dispatch(callLoading(false));
         }).catch( error => {
@@ -117,7 +117,7 @@ export const clientSave = (client, mode) => (dispatch) => {
         });
     }
     else if(mode == 'edit') {
-        request.put('/clients/update/' + client.id, client).then( response =>  {
+        request.put('/clients/' + client.id, client).then( response =>  {
             dispatch(clientSaveSuccess(client));
             dispatch(callLoading(false));
         }).catch( error => {
@@ -150,7 +150,7 @@ export const clientOnFilter = (filter) => (dispatch) => {
 export const onDelete = (client) => (dispatch) => {
     dispatch(callLoading(true));
 
-    request.delete('/clients/delete/' + client.id, client).then( response =>  {
+    request.delete('/clients/' + client.id, client).then( response =>  {
         dispatch(clientCloseForm());
         dispatch(callLoading(false));
     }).catch( error => {

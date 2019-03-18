@@ -30,8 +30,6 @@ class ServiceForm extends Component {
       ...this.props.service
     };
 
-
-    this.onSelect = this.onSelect.bind(this);
   }
 
   isReadOnly(mode, readOnlyOnEdit) {
@@ -59,13 +57,13 @@ class ServiceForm extends Component {
     }
   }
 
-  onSelect(value, option) {
-    let aliquota = parseFloat(
-      option.props.children[2].replace(" ", "").replace("|", "")
-    );
-    this.setState({ aliquot: aliquota });
-    this.setState({ list_item: option.key });
-  }
+  handleChangeAutoComplete = name => (event, { newValue }) => {
+
+    this.setState({
+        [name]: newValue,
+    });
+    
+  };
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -112,12 +110,12 @@ class ServiceForm extends Component {
                 style={{ width: "100%" }}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 dataSource={listaServicos}
-                onSelect={this.onSelect}
-                onSearch={this.handleSearch}
-                outData={["key", "aliquot"]}
-                displayedfields={["key", "description", "aliquot"]}
+                onChange={this.handleChangeAutoComplete('item_list')}
+                outData={["aliquot"]}
+                displayedfields={["description", "aliquot"]}
                 optionLabelProp="text"
-                value={this.state.list_item}
+                value={this.state.item_list}
+                route="services/getServicesList"
               />
             </Col>
             <Col className="gutter-row" md={4} sm={12} xs={12}>
