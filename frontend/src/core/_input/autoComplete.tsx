@@ -151,7 +151,7 @@ class AutoComplete extends React.Component {
       .then((response) =>  {
         let data = (response.data.data) ? response.data.data : response.data;
         this.setState({ suggestions: data })
-      });
+    });
   }
 
   onSuggestionsClearRequested = () => {
@@ -164,13 +164,10 @@ class AutoComplete extends React.Component {
     });
   };
 
-  onSelec(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method })
-
   getSuggestionValue(suggestion) {
     return suggestion[this.props.fieldDescription];
   }
   
-
    renderSuggestion(suggestion, { query, isHighlighted }) {
     const matches = match(suggestion[this.props.fieldDescription], query);
     const parts = parse(suggestion[this.props.fieldDescription], matches);

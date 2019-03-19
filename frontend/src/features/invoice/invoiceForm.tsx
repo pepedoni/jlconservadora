@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import JlInput from "core/_input/input";
 import JlDate from "core/_input/date";
 import JlAutoComplete from "core/_input/autoComplete";
+import JlSelect from "core/_input/select";
 
 const styles = theme => ({
   container: {
@@ -32,6 +33,7 @@ class InvoiceForm extends Component {
     };
 
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.onSelect = this.onSelect.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -74,6 +76,12 @@ class InvoiceForm extends Component {
     });
     
   };
+
+  onSelect(event, name) {
+    if (event) {
+      this.setState({ [name]: event.target.value });
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -172,6 +180,45 @@ class InvoiceForm extends Component {
                 type="number"
               />
             </Col>
+          </Row>
+          <Row gutter={8}>
+            <Col className="gutter-row" md={8} sm={8} xs={8}>
+              <JlSelect
+                id="company-iss_retain"
+                name="iss_retain"
+                label="ISS Retido"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.iss_retain}
+                dataSource={[
+                  { key: 0, description: "Não", label: "Não" },
+                  { key: 1, description: "Sim", label: "Sim" }
+                ]}
+                fullWidth
+                onSelect={this.onSelect}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={12}>
+              <JlAutoComplete
+                  id="standard-state"
+                  label="Estado"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, true)}
+                  value={this.state.client_name}
+                  fullWidth
+                  filters={['name']}
+                  externalRoute={true}
+                  route=""
+                  fieldDescription='nome'
+                  onSuggestionSelected={this.onSuggestionSelected}
+                  onChange={this.handleChangeAutoComplete('state')}
+                  margin="normal"
+                  variant="outlined"
+                />
+            </Col>
+            
           </Row>
         </Spin>
         <div className="center-actions">
