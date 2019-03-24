@@ -1,7 +1,7 @@
 import * as types from "./constants";
 
-export default function(state = { formOpen: false, mode: null, client: {}, loading: false, filterOpen: true, filter: Array() }, action) {
-  filterOpen: false
+
+export default function(state = { formOpen: false, mode: null, client: {}, loading: false, filterOpen: true, filter: Array(), errors: {}}, action) {
   switch (action.type) {
     case types.CLIENT_ADD:
       console.log(`[Client Reducer] Action: CLIENT_ADD`);
@@ -11,7 +11,7 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         mode: 'new',
         filterOpen: false,
         client: {name: '', type: '', syndic_ap: '', syndic_birthday: '', syndic_email: '', home_contact: '', phone_contact: '',
-                 commerce_contact: '', manage_init: '', manage_end: '', cond_blocks: '', cond_floors: '', cond_aps: '',
+                 home_contact: '', manage_init: '', manage_end: '', cond_blocks: '', cond_floors: '', cond_aps: '',
                  cep: '', state: '', city: '', address: '', address_district: '', address_number: '', address_complement: ''}
       };
     case types.CLIENT_EDIT:
@@ -44,7 +44,8 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         ...state,
         formOpen: false,
         mode: 'list',
-        filterOpen: false
+        filterOpen: false,
+        errors: {}
       }
     case types.CLIENT_ON_ROW_CLICK:
       console.log(`[Client Reducer] Action: CLIENT_ON_ROW_CLICK`);
@@ -62,7 +63,8 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         formOpen: true,
         client: action.payload,
         mode: 'view',
-        filterOpen: false
+        filterOpen: false,
+        errors: {}
       }
     case types.CLIENT_SAVE_FAILURE:
       console.log(`[Client Reducer] Action: CLIENT_SAVE_FAILURE`);
@@ -71,14 +73,16 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         formOpen: true,
         client: action.payload.client,
         mode: action.payload.mode,
-        filterOpen: false
+        filterOpen: false,
+        errors: action.payload.errors
       }
     case types.CLIENT_OPEN_FILTER:
       console.log(`[Client Reducer] Action: CLIENT_OPEN_FILTER`);
       return {
         ...state,
         formOpen: false,
-        filterOpen: true
+        filterOpen: true,
+        errors: {}
       }
     case types.CLIENT_CLOSE_FILTER:
       console.log(`[Client Reducer] Action: CLIENT_CLOSE_FILTER`);

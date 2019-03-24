@@ -123,6 +123,7 @@ class ClientForm extends Component {
 
   render() {
     const { classes } = this.props;
+    const { errors }  = this.props;
 
     return (
       <form
@@ -146,7 +147,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.inscription}
                 fullWidth
-                extraProps={{ required: true }}
+                extraProps={{ required: true, error: !!(errors.inscription)}}
                 onChange={this.handleChange("inscription")}
                 margin="normal"
                 variant="outlined"
@@ -160,7 +161,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.name}
                 fullWidth
-                extraProps={{ required: true }}
+                extraProps={{ required: true, error: !!(errors.name) }}
                 onChange={this.handleChange("name")}
                 margin="normal"
                 variant="outlined"
@@ -176,7 +177,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.phone_contact}
                 fullWidth
-                extraProps={{ required: true }}
+                extraProps={{ required: true, error: !!(errors.phone_contact) }}
                 onChange={this.handleChange("phone_contact")}
                 margin="normal"
                 variant="outlined"
@@ -185,14 +186,14 @@ class ClientForm extends Component {
             </Col>
             <Col className="gutter-row" span={12}>
               <JlInput
-                id="standard-commerce_contact"
-                label="Telefone Comercial"
+                id="standard-home_contact"
+                label="Telefone de Contato"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.state.commerce_contact}
+                value={this.state.home_contact}
                 fullWidth
-                extraProps={{ required: true }}
-                onChange={this.handleChange("commerce_contact")}
+                extraProps={{ required: true, error: !!(errors.home_contact) }}
+                onChange={this.handleChange("home_contact")}
                 margin="normal"
                 variant="outlined"
                 mask="(99) 9999-9999"
@@ -208,7 +209,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.syndic_email}
                 fullWidth
-                extraProps={{ required: true }}
+                extraProps={{ required: true, error: !!(errors.syndic_email) }}
                 onChange={this.handleChange("syndic_email")}
                 margin="normal"
                 variant="outlined"
@@ -222,7 +223,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.syndic_ap}
                 fullWidth
-                extraProps={{ required: true }}
+                extraProps={{ required: true, error: !!(errors.syndic_ap) }}
                 onChange={this.handleChange("syndic_ap")}
                 margin="normal"
                 variant="outlined"
@@ -236,7 +237,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.syndic_birthday}
                 fullWidth
-                extraProps={{ required: true }}
+                extraProps={{ required: true, error: !!(errors.syndic_birthday) }}
                 onChange={this.handleChange("syndic_birthday")}
                 margin="normal"
                 variant="outlined"
@@ -252,7 +253,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.cond_blocks}
                 fullWidth
-                extraProps={{ required: true }}
+                extraProps={{ required: true, error: !!(errors.cond_blocks) }}
                 onChange={this.handleChange("cond_blocks")}
                 margin="normal"
                 variant="outlined"
@@ -267,7 +268,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.cond_floors}
                 fullWidth
-                extraProps={{ required: true }}
+                extraProps={{ required: true, error: !!(errors.cond_floors) }}
                 onChange={this.handleChange("cond_floors")}
                 margin="normal"
                 variant="outlined"
@@ -282,6 +283,7 @@ class ClientForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.cond_aps}
                 fullWidth
+                extraProps={{ required: true, error: !!(errors.cond_aps) }}
                 onChange={this.handleChange("cond_aps")}
                 margin="normal"
                 variant="outlined"
@@ -295,11 +297,11 @@ class ClientForm extends Component {
                 name="cep"
                 label="CEP"
                 mask="99999-999"
-                extraProps={{ required: true }}
                 className={classes.textField}
                 value={this.state.cep}
                 disabled={this.isReadOnly(this.props.mode, false)}
                 fullWidth
+                extraProps={{ required: true, error: !!(errors.cep) }}
                 onChange={this.onChangeCep("cep")}
                 margin="normal"
                 variant="outlined"

@@ -13,7 +13,8 @@ const mapStateToProps = state => ({
     filterOpen: state.client.filterOpen,
     filter: state.client.filter,
     loading: state.client.loading,
-    districts: state.client.districts
+    districts: state.client.districts,
+    errors: state.client.errors
 });
 
 const mapDispatchToProps = dispatch =>

@@ -81,6 +81,7 @@ class JlDate extends Component {
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    {...this.props.extraProps}
                     id={this.props.id}
                     label={this.props.label}
                     className={this.props.className}

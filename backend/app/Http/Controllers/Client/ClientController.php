@@ -12,7 +12,7 @@ class ClientController extends Controller {
     public function insertClient(Request $request) {
 
         $request->phone_contact = str_replace(array("(", ")", "-", " "), "", $request->phone_contact);
-        $request->commerce_contact = str_replace(array("(", ")", "-", " "), "", $request->commerce_contact);
+        $request->home_contact = str_replace(array("(", ")", "-", " "), "", $request->home_contact);
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -36,7 +36,7 @@ class ClientController extends Controller {
             'syndic_birthday' => Carbon::parse($request->syndic_birthday),
             'syndic_email' => $request->syndic_email,
             'phone_contact' => $request->phone_contact,
-            'home_contact' => '99999999',
+            'home_contact' => $request->home_contact,
             'manage_init' => Carbon::parse($request->manage_init),
             'manage_end' => Carbon::parse($request->manage_end),
             'cond_blocks' => $request->cond_blocks,

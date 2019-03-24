@@ -78,6 +78,7 @@ class JlInput extends Component {
               disabled={this.props.disabled}
               fullWidth
               type={this.props.type}
+              helperText={this.props.helperText}
               >
               {() => <TextField
                       className={classes.margin}
@@ -102,6 +103,7 @@ class JlInput extends Component {
                       variant={this.props.variant || "outlined"}
                       type={this.props.type}
                       rows={this.props.rows}
+                      helperText={this.props.helperText}
                   ></TextField>
                 }
                 </InputMask>

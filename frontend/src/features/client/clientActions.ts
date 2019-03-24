@@ -111,8 +111,8 @@ export const clientSave = (client, mode) => (dispatch) => {
         request.post('/clients', client).then( response =>  {
             dispatch(clientSaveSuccess(client));
             dispatch(callLoading(false));
-        }).catch( error => {
-            dispatch(clientSaveFailure({client: client, mode: mode}));
+        }).catch( errors => {
+            dispatch(clientSaveFailure({client: client, mode: mode, errors: errors.response.data.errors}));
             dispatch(callLoading(false));
         });
     }
@@ -120,8 +120,8 @@ export const clientSave = (client, mode) => (dispatch) => {
         request.put('/clients/' + client.id, client).then( response =>  {
             dispatch(clientSaveSuccess(client));
             dispatch(callLoading(false));
-        }).catch( error => {
-            dispatch(clientSaveFailure({client: client, mode: mode}));
+        }).catch( errors => {
+            dispatch(clientSaveFailure({client: client, mode: mode, errors: errors.response.data.errors}));
             dispatch(callLoading(false));
         });
     }

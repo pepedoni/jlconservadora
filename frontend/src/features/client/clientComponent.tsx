@@ -29,8 +29,9 @@ export default class ClientComponent extends Component {
                             client={this.props.client} 
                             loading={this.props.loading}
                             onEdit={this.props.clientEdit} 
-                            onDelete={this.props.onDelete} 
-                        callLoading={this.props.callLoading}/>
+                            onDelete={this.props.onDelete}
+                            errors={this.props.errors} 
+                            callLoading={this.props.callLoading}/>
             </JlDrawer>
         </div>
       )
