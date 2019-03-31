@@ -1,7 +1,7 @@
 {
-  "name": "boomy-frontend",
+  "name": "jl-frontend",
   "version": "1.0.0",
-  "description": "Frontend for Boomy CRM",
+  "description": "Frontend for JL Conservadora System",
   "main": "index.ts",
   "scripts": {
     "start": "webpack-dev-server --mode development",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arthurherbert/boomy-frontend.git"
+    "url": "git@github.com:pepedoni/jlconservadora.git"
   },
-  "author": "Arthur Melo",
+  "author": "Pedro Moutinho",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/arthurherbert/boomy-frontend/issues"
+    "url": "https://github.com/pepedoni/jlconservadora/issues"
   },
-  "homepage": "https://github.com/arthurherbert/boomy-frontend#readme",
+  "homepage": "https://github.com/pepedoni/jlconservadora/blob/master/README.md",
   "devDependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",

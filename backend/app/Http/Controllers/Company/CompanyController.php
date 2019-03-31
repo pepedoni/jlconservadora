@@ -56,4 +56,8 @@ class CompanyController extends Controller
 
         return $companys;
     }
+
+    public function getCompanyByName(Request $request) {
+        return Company::distinct()->where('name', 'LIKE', $request->query('name').'%')->get();
+    }
 }

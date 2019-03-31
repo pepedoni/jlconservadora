@@ -95,6 +95,10 @@ class ClientController extends Controller {
         return $completeAddress;
     }
 
+    public function getClientByName(Request $request) {
+        return Client::distinct()->where('name', 'LIKE', $request->query('name').'%')->get();
+    }
+
     public function getDistricts(Request $request) {
         if($request->query('address_district')) {
             return Client::distinct()->where('address_district', 'LIKE', '%'.$request->query('address_district').'%')->get(['address_district']);

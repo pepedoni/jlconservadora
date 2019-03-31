@@ -108,7 +108,7 @@ class InvoiceForm extends Component {
                 value={this.state.provider_name}
                 fullWidth
                 filters={['name']}
-                route="company"
+                route="companies/getByName"
                 fieldDescription='name'
                 outData={{
                   provider_inscription: 'inscription'
@@ -128,7 +128,7 @@ class InvoiceForm extends Component {
                   value={this.state.client_name}
                   fullWidth
                   filters={['name']}
-                  route="clients"
+                  route="clients/getByName"
                   fieldDescription='name'
                   outData={{
                     client_inscription: 'inscription'
@@ -200,13 +200,31 @@ class InvoiceForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={12}>
+            <Col className="gutter-row" md={6}>
               <JlAutoComplete
                   id="standard-state"
                   label="Estado"
                   className={classes.textField}
                   disabled={this.isReadOnly(this.props.mode, true)}
-                  value={this.state.client_name}
+                  value={this.state.state}
+                  fullWidth
+                  filters={['name']}
+                  externalRoute={true}
+                  route=""
+                  fieldDescription='nome'
+                  onSuggestionSelected={this.onSuggestionSelected}
+                  onChange={this.handleChangeAutoComplete('state')}
+                  margin="normal"
+                  variant="outlined"
+                />
+            </Col>
+            <Col className="gutter-row" md={6}>
+              <JlAutoComplete
+                  id="standard-state"
+                  label="Municipio"
+                  className={classes.textField}
+                  disabled={this.isReadOnly(this.props.mode, true)}
+                  value={this.state.city}
                   fullWidth
                   filters={['name']}
                   externalRoute={true}

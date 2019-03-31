@@ -10,7 +10,7 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, load
         formOpen: true,
         mode: 'new',
         filterOpen: false,
-        invoice: {date: getData(), provider_inscription: '', provider_name: '', client_inscription: '', client_name: '', iss_retain: 0 }
+        invoice: {date: getData(), provider_inscription: '', provider_name: '', client_inscription: '', client_name: '', state: '', city: '', iss_retain: 0 }
       };
     case types.INVOICE_EDIT:
       console.log(`[Invoice Reducer] Action: INVOICE_EDIT`);
