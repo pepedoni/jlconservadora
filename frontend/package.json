@@ -59,6 +59,7 @@
     "connected-react-router": "^6.2.2",
     "history": "^4.7.2",
     "js-cookie": "^2.2.0",
+    "moment": "^2.24.0",
     "rc-queue-anim": "^1.6.11",
     "rc-texty": "^0.2.0",
     "react": "^16.5.2",
