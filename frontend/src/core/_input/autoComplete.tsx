@@ -1,17 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import JlInput from './input';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import request from '../../api/request';
-import thunk from 'redux-thunk';
 
 const styles = theme => ({
   root: {
@@ -168,7 +164,7 @@ class AutoComplete extends React.Component {
     return suggestion[this.props.fieldDescription];
   }
   
-   renderSuggestion(suggestion, { query, isHighlighted }) {
+  renderSuggestion(suggestion, { query, isHighlighted }) {
     const matches = match(suggestion[this.props.fieldDescription], query);
     const parts = parse(suggestion[this.props.fieldDescription], matches);
   
@@ -197,8 +193,8 @@ class AutoComplete extends React.Component {
 
     const autosuggestProps = {
       renderInputComponent: this.renderInputComponent,
-      suggestions: this.state.suggestions,
-      onSuggestionsFetchRequested: this.onSuggestionsFetchRequested,
+      suggestions: (this.props.suggestions) ? this.props.suggestions: this.state.suggestions,
+      onSuggestionsFetchRequested: this.props.onSuggestionsFetchRequested ? this.props.onSuggestionsFetchRequested : this.onSuggestionsFetchRequested,
       onSuggestionsClearRequested: this.onSuggestionsClearRequested,
       getSuggestionValue: this.getSuggestionValue,
       renderSuggestion: this.renderSuggestion,

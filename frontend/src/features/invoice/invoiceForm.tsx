@@ -6,6 +6,7 @@ import JlInput from "core/_input/input";
 import JlDate from "core/_input/date";
 import JlAutoComplete from "core/_input/autoComplete";
 import JlSelect from "core/_input/select";
+import states from './states';
 
 const styles = theme => ({
   container: {
@@ -27,6 +28,9 @@ const styles = theme => ({
 class InvoiceForm extends Component {
   constructor(props) {
     super(props);
+    
+    this.filteredCities = [];
+    this.cities = [];
 
     this.state = {
       ...this.props.invoice
@@ -34,6 +38,9 @@ class InvoiceForm extends Component {
 
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
     this.onSelect = this.onSelect.bind(this);
+    this.onSelectState = this.onSelectState.bind(this);
+
+    this.onSelectState({target: {value: 31}}, 'state');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,6 +68,20 @@ class InvoiceForm extends Component {
     }
   }
 
+  onSuggestionsFetchMunicipio = (event) => {
+
+    if(this.filteredCities.length > 0) {
+      this.filteredCities = this.filteredCities.filter( (e) => {
+          return e.nome.toUpperCase().indexOf(event.value.toUpperCase()) != -1;
+      });
+    }
+    else {
+      this.filteredCities = this.cities.filter( (e) => {
+          return e.nome.toUpperCase().indexOf(event.value.toUpperCase()) != -1;
+      });
+    }
+  };
+
   save = () => {
     this.props.onSave(this.state, this.props.mode);
   };
@@ -75,6 +96,31 @@ class InvoiceForm extends Component {
         [name]: newValue,
     });
     
+  };
+
+  async onSelectState(event, name)  {
+    
+    let url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/";
+
+    let { value } = event.target; 
+
+    this.setState({ [name]: value });
+
+    if(value) {
+      url += value + '/municipios';
+      this.filteredCities = [];
+      let cities = await fetch(url).then((response) => {
+        return response.json().then(function(json) {
+          return json;
+        });
+      });
+      this.cities = await cities;
+      this.setState({...this.state, city: ''});
+    }
+    else {
+      this.cities = [];
+      this.filteredCities = [];
+    }
   };
 
   onSelect(event, name) {
@@ -200,25 +246,22 @@ class InvoiceForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={6}>
-              <JlAutoComplete
-                  id="standard-state"
-                  label="Estado"
-                  className={classes.textField}
-                  disabled={this.isReadOnly(this.props.mode, true)}
-                  value={this.state.state}
-                  fullWidth
-                  filters={['name']}
-                  externalRoute={true}
-                  route=""
-                  fieldDescription='nome'
-                  onSuggestionSelected={this.onSuggestionSelected}
-                  onChange={this.handleChangeAutoComplete('state')}
-                  margin="normal"
-                  variant="outlined"
-                />
+            <Col className="gutter-row" md={8} sm={8} xs={8}>
+              <JlSelect
+                id="company-iss_retain"
+                name="state"
+                label="Estado"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.state}
+                dataSource={states}
+                fullWidth
+                onSelect={this.onSelectState}
+                margin="normal"
+                variant="outlined"
+              />
             </Col>
-            <Col className="gutter-row" md={6}>
+            <Col className="gutter-row" md={8}>
               <JlAutoComplete
                   id="standard-state"
                   label="Municipio"
@@ -227,11 +270,11 @@ class InvoiceForm extends Component {
                   value={this.state.city}
                   fullWidth
                   filters={['name']}
-                  externalRoute={true}
-                  route=""
                   fieldDescription='nome'
+                  suggestions={this.filteredCities}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchMunicipio}
                   onSuggestionSelected={this.onSuggestionSelected}
-                  onChange={this.handleChangeAutoComplete('state')}
+                  onChange={this.handleChangeAutoComplete('city')}
                   margin="normal"
                   variant="outlined"
                 />
