@@ -52,7 +52,7 @@ class BirthdaysMonth extends Component {
     render() {
         return (
             <Card>
-                <Card title="Próximos Aniversarios" bordered={false}></Card>
+                <Card title="Próximos Aniversários" bordered={false}></Card>
                 { this.aniversariantes.map(aniversariante => this.getAniversariante(aniversariante)) }
             </Card>
         )
