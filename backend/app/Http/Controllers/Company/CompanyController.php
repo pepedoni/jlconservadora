@@ -60,4 +60,9 @@ class CompanyController extends Controller
     public function getCompanyByName(Request $request) {
         return Company::distinct()->where('name', 'LIKE', $request->query('name').'%')->get();
     }
+
+    public function deleteCompany(Request $request, $id) {
+        $company = Company::findOrFail($id);
+        $company->delete();
+    }
 }

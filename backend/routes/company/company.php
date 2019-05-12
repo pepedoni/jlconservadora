@@ -7,5 +7,6 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::get('/getByName', 'CompanyController@getCompanyByName');
         Route::post('', 'CompanyController@insertCompany');
         Route::put('/{id}', 'CompanyController@updateCompany');
+        Route::delete('/{id}',  'CompanyController@deleteCompany');
     });
 });

@@ -111,6 +111,7 @@ export const clientSave = (client, mode) => (dispatch) => {
         request.post('/clients', client).then( response =>  {
             dispatch(clientSaveSuccess(client));
             dispatch(callLoading(false));
+            dispatch(clientCloseForm());
         }).catch( errors => {
             dispatch(clientSaveFailure({client: client, mode: mode, errors: errors.response.data.errors}));
             dispatch(callLoading(false));

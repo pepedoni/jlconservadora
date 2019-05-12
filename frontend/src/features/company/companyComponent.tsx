@@ -24,7 +24,7 @@ export default class CompanyComponent extends Component {
                         mode={this.props.mode} 
                         onSave={this.props.companySave} 
                         onEdit={this.props.companyEdit} 
-                        onDelete={this.props.companyDelete} 
+                        onDelete={this.props.onDelete} 
                         company={this.props.company}
                         loading={this.props.loading}
                         callLoading={this.props.callLoading}/>

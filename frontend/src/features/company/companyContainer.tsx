@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { companyAdd, companyEdit, companyView, companySave, companyDelete, companyCloseForm, onRowClick, callLoading } from './companyActions';
+import { companyAdd, companyEdit, companyView, companySave, companyDelete, companyCloseForm, onRowClick, callLoading, onDelete } from './companyActions';
 
 import Company from "./companyComponent";
 // import {withRouter} from "react-router-dom";
@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-        companyAdd, companyEdit, companyView, companySave, companyDelete, companyCloseForm, onRowClick, callLoading
+        companyAdd, companyEdit, companyView, companySave, companyDelete, companyCloseForm, onRowClick, callLoading, onDelete
     },
     dispatch
 );

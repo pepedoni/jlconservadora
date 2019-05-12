@@ -42,8 +42,8 @@ class AuthController extends Controller
 
         $user->save();
 
-        $avatar = Avatar::create($user->name)->getImageObject()->encode('png');
-        Storage::put('avatars/'.$user->id.'/avatar.png', (string) $avatar);
+        // $avatar = Avatar::create($user->name)->getImageObject()->encode('png');
+        // Storage::put('avatars/'.$user->id.'/avatar.png', (string) $avatar);
 
         //$user->notify(new SignupActivate($user));
 
@@ -95,11 +95,11 @@ class AuthController extends Controller
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
-
+               
         $credentials = request(['email', 'password']);
         $credentials['active'] = 1;
         $credentials['deleted_at'] = null;
-
+        // var_dump($credentials);die;
         if(!Auth::attempt($credentials))
             return response()->json([
                 'message' => __('auth.login_failed')

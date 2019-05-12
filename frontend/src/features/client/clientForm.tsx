@@ -151,6 +151,7 @@ class ClientForm extends Component {
                 onChange={this.handleChange("inscription")}
                 margin="normal"
                 variant="outlined"
+                mask="999.999.999-99"
               />
             </Col>
             <Col className="gutter-row" md={12}>
@@ -196,7 +197,7 @@ class ClientForm extends Component {
                 onChange={this.handleChange("home_contact")}
                 margin="normal"
                 variant="outlined"
-                mask="(99) 9999-9999"
+                mask="(99) 99999-9999"
               />
             </Col>
           </Row>
