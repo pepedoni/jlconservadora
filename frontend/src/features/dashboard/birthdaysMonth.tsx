@@ -16,7 +16,7 @@ class BirthdaysMonth extends Component {
         var date = new Date();
 
         this.ano = date.getFullYear();
-        this.aniversariantes = [{date: "15/05", name: "Pedro"}, {date: "21/05", name: "João"}, {date: "25/05", name: "Germano"}];
+        this.aniversariantes = [{date: "15/05", name: "Pedro"}, {date: "21/05", name: "João"}, {date: "10/01", name: "Germano"}];
 
     }
 
@@ -59,7 +59,7 @@ class BirthdaysMonth extends Component {
         var data2 = moment(new Date());
         //tirando a diferenca da data2 - data1 em dias
         var diff  = data2.diff(data1, 'days');
-        
+        if(diff > 0) diff -= 365;
         return Math.abs(diff) + 1;
     }
 
