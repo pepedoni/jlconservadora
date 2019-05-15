@@ -2,9 +2,10 @@ import { Card } from 'antd';
 import React, { Component } from 'react'
 
 import { bindActionCreators } from "redux";
-import { Row, Col, Button } from "antd";
+import { Row, Col, List, Button } from "antd";
 import { connect } from "react-redux";
 import moment from 'moment';
+import './dashboard.css';
 
 class BirthdaysMonth extends Component {
 
@@ -15,23 +16,37 @@ class BirthdaysMonth extends Component {
         var date = new Date();
 
         this.ano = date.getFullYear();
-        this.aniversariantes = [{date: "15/05", name: "Pedro"}, {date: "21/05", name: "João"}];
+        this.aniversariantes = [{date: "15/05", name: "Pedro"}, {date: "21/05", name: "João"}, {date: "25/05", name: "Germano"}];
 
     }
 
     getAniversariante(aniversariante) {
 
         let aniversario = aniversariante.date + "/" + this.ano;
+        let dias = this.calculaDiferencaDatas(aniversario);
+
+        if(dias == 1) {
+            return (
+                <div>
+                    <div className="inline">
+                        <b>{aniversariante.name}</b>
+                    </div>
+                    <div className="inline right">
+                        <b>Hoje!</b>
+                    </div>
+                </div>
+            )
+        }
 
         return (
-            <Row gutter={16} style={{ paddingLeft: '30px'}}>
-                <Col className="gutter-row" md={20} span={8}>
+            <div>
+                <div className="inline">
                     {aniversariante.name}
-                </Col>
-                <Col className="gutter-row" md={4} span={8}>
+                </div>
+                <div className="inline right">
                     {this.calculaDiferencaDatas(aniversario) + "  dias"}
-                </Col>
-            </Row>
+                </div>
+            </div>
         );
     }
 
@@ -51,10 +66,18 @@ class BirthdaysMonth extends Component {
 
     render() {
         return (
-            <Card>
-                <Card title="Próximos Aniversários" bordered={false}></Card>
-                { this.aniversariantes.map(aniversariante => this.getAniversariante(aniversariante)) }
-            </Card>
+            <div>
+                <Card title="Próximos Aniversários" bordered={true}>                
+                    <List
+                        size="small"
+                        dataSource={this.aniversariantes}
+                        useWindow={false}
+                        itemLayout="vertical"
+                        renderItem={item => <List.Item>{this.getAniversariante(item)}</List.Item>}
+                    />
+                </Card>
+
+            </div>
         )
       }
 
