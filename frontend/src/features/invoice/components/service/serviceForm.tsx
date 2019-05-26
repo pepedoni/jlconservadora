@@ -29,6 +29,8 @@ class ServiceForm extends Component {
       ...this.props.service
     };
 
+    this.handleChangeAutoComplete = this.handleChangeAutoComplete.bind(this);
+
   }
 
   isReadOnly(mode, readOnlyOnEdit) {
@@ -63,6 +65,14 @@ class ServiceForm extends Component {
     });
     
   };
+
+  onSuggestionSelected = (outData) => (event, { suggestion}) =>  {
+    for (var property in outData){
+      this.setState({
+        [property]: suggestion[outData[property]]
+      });
+    }
+  }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -117,10 +127,11 @@ class ServiceForm extends Component {
                     className={classes.textField}
                     disabled={this.isReadOnly(this.props.mode, true)}
                     value={this.state.name}
+                    valueField="name"
                     fullWidth
                     filters={['name']}
                     route="services/getByName"
-                    fieldDescription='name'
+                    displayedFields={['name', 'list_item']}
                     outData={{
                         aliquot:      'aliquot',
                         description:  'description',
@@ -138,7 +149,7 @@ class ServiceForm extends Component {
                   label="Item da Lista"
                   className={classes.textField}
                   disabled={true}
-                  value={this.state.item_list}
+                  value={this.state.list_item}
                   fullWidth
                   onChange={this.handleChange("list_item")}
                   margin="normal"
@@ -167,10 +178,11 @@ class ServiceForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.description}
                 fullWidth
-                multiline
+                extraProps={{multiline: true}}
                 onChange={this.handleChange("description")}
                 margin="normal"
                 variant="outlined"
+                type="text"
                 rows={3}
               />
             </Col>

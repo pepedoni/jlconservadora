@@ -63,7 +63,7 @@ const serviceSaveFailure = (service) => {
 
 const loading = (loading) => {
     return {
-        type: types.LOADING,
+        type: types.INVOICE_SERVICE_LOADING,
         payload: loading
     }
 }
@@ -71,7 +71,7 @@ const loading = (loading) => {
 export const serviceSave = (service, mode) => (dispatch) => {
     dispatch(loading(true));
     if(mode == 'new') {
-        request.post('/services', service).then( response =>  {
+        request.post('/invoice/services', service).then( response =>  {
             dispatch(serviceSaveSuccess(service));
             dispatch(loading(false));
         }).catch( error => {
@@ -80,7 +80,7 @@ export const serviceSave = (service, mode) => (dispatch) => {
         });
     }
     else if(mode == 'edit') {
-        request.put('/services/' + service.id, service).then( response =>  {
+        request.put('/invoice/services' + service.id, service).then( response =>  {
             dispatch(serviceSaveSuccess(service));
             dispatch(loading(false));
         }).catch( error => {

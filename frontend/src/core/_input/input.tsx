@@ -79,6 +79,7 @@ class JlInput extends Component {
               fullWidth
               type={this.props.type}
               helperText={this.props.helperText}
+              rows={this.props.rows}
               >
               {() => <TextField
                       className={classes.margin}

@@ -7,5 +7,8 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::post('insert', 'InvoiceController@insertInvoice');
         Route::put('update/{id}', 'InvoiceController@updateInvoice');
         Route::delete('delete/{id}', 'InvoiceController@deleteInvoice');
+        
+        Route::resource('services', 'InvoiceServicesController');
     });
+
 });

@@ -14,7 +14,7 @@ export default class ServiceComponent extends Component {
     render() {
       return (
         <div className="component">
-            <ServiceGrid onAdd={this.props.serviceAdd} onRowClick= {this.props.onRowClick} />
+            <ServiceGrid onAdd={this.props.serviceAdd} onRowClick= {this.props.onRowClick} url="invoice/services" />
             <JlDrawer isVisible={this.props.formOpen} 
                         onClose={this.props.serviceCloseForm} 
                         onEdit={this.props.serviceEdit} 

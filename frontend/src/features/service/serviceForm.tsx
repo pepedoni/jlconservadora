@@ -159,7 +159,7 @@ class ServiceForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.description}
                 fullWidth
-                multiline
+                extraProps={{multiline: true}}
                 onChange={this.handleChange("description")}
                 margin="normal"
                 variant="outlined"

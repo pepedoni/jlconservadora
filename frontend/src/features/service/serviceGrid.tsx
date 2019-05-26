@@ -31,7 +31,7 @@ export default class ServiceGrid extends Component {
             <Grid onAdd={this.props.onAdd} 
                 addLabel={"Serviço"} 
                 columns={columns} 
-                url= {url} 
+                url= {(this.props.url) ? this.props.url : url} 
                 rowKey="id"
                 onRowClick={ this.props.onRowClick }
             />

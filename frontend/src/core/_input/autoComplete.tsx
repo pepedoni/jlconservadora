@@ -161,34 +161,23 @@ class AutoComplete extends React.Component {
   };
 
   getSuggestionValue(suggestion) {
-    let suggestionText = '';
-    if(this.props.displayFields && this.props.displayFields > 0) {
-        this.props.displayFields.foreach((field) => {
-          suggestionText += suggestion[field] + ' | ';
-        });
-        suggestionText = suggestionText.substring(0,(suggestionText.length - 1));
-    }
-    return suggestionText;
+    return suggestion[this.props.valueField];
   }
   
+  
   renderSuggestion(suggestion, { query, isHighlighted }) {
-    const matches = match(suggestion[this.props.fieldDescription], query);
-    const parts = parse(suggestion[this.props.fieldDescription], matches);
+    let suggestionText = '';
+    if(this.props.displayedFields && this.props.displayedFields.length > 0) {
+        this.props.displayedFields.forEach((field) => {
+          suggestionText += suggestion[field] + ' | ';
+        });
+        suggestionText = suggestionText.substring(0,(suggestionText.length - 2));
+    }
   
     return (
       <MenuItem selected={isHighlighted} component="div">
         <div>
-          {parts.map((part, index) =>
-            part.highlight ? (
-              <span key={String(index)} style={{ fontWeight: 500 }}>
-                {part.text}
-              </span>
-            ) : (
-              <strong key={String(index)} style={{ fontWeight: 300 }}>
-                {part.text}
-              </strong>
-            ),
-          )}
+          {suggestionText}
         </div>
       </MenuItem>
     );
