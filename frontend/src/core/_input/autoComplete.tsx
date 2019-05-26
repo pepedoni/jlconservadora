@@ -137,11 +137,11 @@ class AutoComplete extends React.Component {
     let url = this.props.route;
     if(this.props.filters) {
       url+='?';
-    }
 
-    this.props.filters.forEach(element => {
-      url += element + '=' + value + '&';
-    });
+      this.props.filters.forEach(element => {
+        url += element + '=' + value + '&';
+      });
+    }
 
     request.get(url)
       .then((response) =>  {
@@ -161,7 +161,14 @@ class AutoComplete extends React.Component {
   };
 
   getSuggestionValue(suggestion) {
-    return suggestion[this.props.fieldDescription];
+    let suggestionText = '';
+    if(this.props.displayFields && this.props.displayFields > 0) {
+        this.props.displayFields.foreach((field) => {
+          suggestionText += suggestion[field] + ' | ';
+        });
+        suggestionText = suggestionText.substring(0,(suggestionText.length - 1));
+    }
+    return suggestionText;
   }
   
   renderSuggestion(suggestion, { query, isHighlighted }) {

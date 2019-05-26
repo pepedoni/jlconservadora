@@ -3,7 +3,6 @@ import { Row, Col, Icon, Button, Spin } from "antd";
 import { withStyles } from "@material-ui/core/styles";
 import JlInput from "core/_input/input";
 import JlAutoComplete from "core/_input/autoComplete";
-import listaServicos from "./listaServicos";
 
 const styles = theme => ({
   container: {
@@ -112,24 +111,33 @@ class ServiceForm extends Component {
         >
           <Row gutter={8}>
             <Col className="gutter-row" md={12}>
-              <JlInput
-                id="standard-address"
-                label="Nome"
-                className={classes.textField}
-                value={this.state.name}
-                disabled={this.isReadOnly(this.props.mode, true)}
-                fullWidth
-                onChange={this.handleChange("name")}
-                margin="normal"
-                variant="outlined"
-              />
+                <JlAutoComplete
+                    id="standard-provider_inscription"
+                    label="Nome do Serviço"
+                    className={classes.textField}
+                    disabled={this.isReadOnly(this.props.mode, true)}
+                    value={this.state.name}
+                    fullWidth
+                    filters={['name']}
+                    route="services/getByName"
+                    fieldDescription='name'
+                    outData={{
+                        aliquot:      'aliquot',
+                        description:  'description',
+                        list_item:    'list_item'
+                    }}
+                    onSuggestionSelected={this.onSuggestionSelected}
+                    onChange={this.handleChangeAutoComplete('name')}
+                    margin="normal"
+                    variant="outlined"
+                />
             </Col>
             <Col className="gutter-row" md={8}>
               <JlInput
                   id="standard-aliquot"
                   label="Item da Lista"
                   className={classes.textField}
-                  disabled={this.isReadOnly(this.props.mode, true)}
+                  disabled={true}
                   value={this.state.item_list}
                   fullWidth
                   onChange={this.handleChange("list_item")}
@@ -142,7 +150,7 @@ class ServiceForm extends Component {
                 id="standard-aliquot"
                 label="Aliquota"
                 className={classes.textField}
-                disabled={this.isReadOnly(this.props.mode, false)}
+                disabled={true}
                 value={this.state.aliquot}
                 fullWidth
                 onChange={this.handleChange("aliquot")}
@@ -154,7 +162,7 @@ class ServiceForm extends Component {
             <Col className="gutter-row" md={24} sm={24} xs={24}>
               <JlInput
                 id="standard-description"
-                label="Descrição para Emissão"
+                label="Descrição"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.description}

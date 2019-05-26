@@ -8,7 +8,7 @@ export default function(state = { formOpen: false, mode: null, service: {}, load
         ...state,
         formOpen: true,
         mode: 'new',
-        service: {name: '', item_list: '', aliquot: '', description: '' }
+        service: {name: '', list_item: '', aliquot: '', description: '' }
       };
     case types.SERVICE_EDIT:
       console.log(`[Service Reducer] Action: SERVICE_EDIT`);

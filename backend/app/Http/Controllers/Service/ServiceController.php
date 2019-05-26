@@ -41,8 +41,8 @@ class ServiceController extends Controller
     }
 
     public function getServicesList(Request $request) {
-        $servicesList = file_get_contents('./servicesList.json');
-        // $servicesList = json_decode($servicesList);
+        $servicesList = file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'servicesList.json');
+        $servicesList = json_decode($servicesList);
         return response()->json(['data' => $servicesList]);
     }
 
@@ -50,5 +50,10 @@ class ServiceController extends Controller
         $services = Service::paginate(7);
 
         return $services;
+    }
+
+    
+    public function getServiceByName(Request $request) {
+        return Service::distinct()->where('name', 'LIKE', $request->query('name').'%')->get();
     }
 }

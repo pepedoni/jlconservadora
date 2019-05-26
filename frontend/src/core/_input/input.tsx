@@ -104,7 +104,8 @@ class JlInput extends Component {
                       type={this.props.type}
                       rows={this.props.rows}
                       helperText={this.props.helperText}
-                  ></TextField>
+                  >
+                  </TextField>
                 }
                 </InputMask>
             );

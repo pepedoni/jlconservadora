@@ -5,6 +5,7 @@ import { Tabs } from 'antd'
 import InvoiceForm from './invoiceForm'
 import ServicesForm from './servicesForm'
 import InvoiceGrid from './invoiceGrid'
+import ServiceContainer from './components/service/serviceContainer'
 const TabPane = Tabs.TabPane;
 
 export default class InvoiceComponent extends Component {
@@ -35,7 +36,7 @@ export default class InvoiceComponent extends Component {
                                 loading={this.props.loading}/>
                             </TabPane>
                             <TabPane tab="Serviços" key="2">
-                              <ServicesForm mode={this.props.mode} 
+                              <ServiceContainer mode={this.props.mode} 
                                 onSave={this.props.invoiceSave} 
                                 invoice={this.props.invoice} 
                                 loading={this.props.loading}/>

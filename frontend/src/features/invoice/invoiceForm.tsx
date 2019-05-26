@@ -155,7 +155,7 @@ class InvoiceForm extends Component {
                 fullWidth
                 filters={['name']}
                 route="companies/getByName"
-                fieldDescription='name'
+                displayedfields={["name"]}
                 outData={{
                   provider_inscription: 'inscription'
                 }}
@@ -175,7 +175,7 @@ class InvoiceForm extends Component {
                   fullWidth
                   filters={['name']}
                   route="clients/getByName"
-                  fieldDescription='name'
+                  displayedfields={["name"]}
                   outData={{
                     client_inscription: 'inscription'
                   }}
@@ -270,7 +270,7 @@ class InvoiceForm extends Component {
                   value={this.state.city}
                   fullWidth
                   filters={['name']}
-                  fieldDescription='nome'
+                  displayedfields={["nome"]}
                   suggestions={this.filteredCities}
                   onSuggestionsFetchRequested={this.onSuggestionsFetchMunicipio}
                   onSuggestionSelected={this.onSuggestionSelected}
