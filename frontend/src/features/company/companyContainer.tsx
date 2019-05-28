@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import { companyAdd, companyEdit, companyView, companySave, companyDelete, companyCloseForm, onRowClick, callLoading, onDelete } from './companyActions';
 
 import Company from "./companyComponent";
-// import {withRouter} from "react-router-dom";
 
 const mapStateToProps = state => ({
     formOpen: state.company.formOpen,

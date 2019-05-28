@@ -29,7 +29,7 @@ export default function(state = { formOpen: false, mode: null, company: {}, load
       console.log(`[Company Reducer] Action: COMPANY_DELETE`);
       return {
         ...state,
-        formOpen: true,
+        formOpen: false,
         mode: 'delete'
       };
     case types.COMPANY_CLOSEFORM:

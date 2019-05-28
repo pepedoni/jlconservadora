@@ -74,7 +74,6 @@ export const companySave = (company, mode) => (dispatch) => {
         request.post('/companies', company).then( response =>  {
             dispatch(companySaveSuccess(company));
             dispatch(callLoading(false));
-            dispatch(companyCloseForm());
         }).catch( error => {
             dispatch(companySaveFailure({company: company, mode: mode}));
             dispatch(callLoading(false));
@@ -95,7 +94,7 @@ export const onDelete = (company) => (dispatch) => {
     dispatch(callLoading(true));
 
     request.delete('/companies/' + company.id, company).then( response =>  {
-        dispatch(companyCloseForm());
+        dispatch(companyDelete());
         dispatch(callLoading(false));
     }).catch( error => {
         dispatch(callLoading(false));
