@@ -11,7 +11,7 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         mode: 'new',
         filterOpen: false,
         client: {name: '', type: '', syndic_ap: '', syndic_birthday: '', syndic_email: '', home_contact: '', phone_contact: '',
-                 home_contact: '', manage_init: '', manage_end: '', cond_blocks: '', cond_floors: '', cond_aps: '',
+                 home_contact: '', manage_init: '', inscription: '', manage_end: '', cond_blocks: '', cond_floors: '', cond_aps: '',
                  cep: '', state: '', city: '', address: '', address_district: '', address_number: '', address_complement: ''}
       };
     case types.CLIENT_EDIT:
