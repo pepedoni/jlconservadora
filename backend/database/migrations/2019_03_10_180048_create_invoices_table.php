@@ -21,27 +21,23 @@ class CreateInvoicesTable extends Migration
             $table->string('provider_inscription_municipal', 15);
             $table->string('provider_social_name', 115);
 
-                        
+            
             $table->string('client_inscription', 14);;
             $table->string('client_name', 115);
             
-            $table->string('number', 10);
+            $table->string('number', 10)->nullable();
             $table->double('value');
-
-            $table->double('dedution_value');
-            $table->double('pis_value');
-            $table->double('cofins_value');
-            $table->double('inss_value');
-            $table->double('ir_value');
-            $table->double('iss_value');
-            $table->double('other_retain_value');
-            $table->double('base_calculation');
-
+            
+            $table->double('dedution_value')->default(0.00);
+            $table->double('other_retain_value')->default(0.00);
+            $table->double('base_calculation')->default(0.00);
+            
             $table->integer('iss_retain');
-
+            
+            $table->date('provision_date');
             $table->string('provision_state');
             $table->string('provision_city_ibge', 7);
-            $table->string('privision_city_name', 50);
+            $table->string('provision_city_name', 50);
             
             $table->timestamps();
         });

@@ -145,6 +145,7 @@ class ServiceForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.aliquot}
                 fullWidth
+                endAdornment="%"
                 onChange={this.handleChange("aliquot")}
                 margin="normal"
                 variant="outlined"

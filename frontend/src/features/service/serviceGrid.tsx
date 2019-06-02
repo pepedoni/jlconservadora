@@ -34,7 +34,7 @@ export default class ServiceGrid extends Component {
                 url= {(this.props.url) ? this.props.url : url} 
                 rowKey="id"
                 onRowClick={ this.props.onRowClick }
-                filter={[]}
+                filters={(this.props.filters ? this.props.filters : {})}
             />
         )
     }

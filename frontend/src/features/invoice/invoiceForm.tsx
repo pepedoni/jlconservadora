@@ -49,7 +49,7 @@ class InvoiceForm extends Component {
       nextProps.mode != this.props.mode
     ) {
       this.setState({
-        ...nextProps.company
+        ...nextProps.invoice
       });
     }
   }
@@ -91,12 +91,40 @@ class InvoiceForm extends Component {
   };
 
   handleChangeAutoComplete = name => (event, { newValue }) => {
-
-    this.setState({
-        [name]: newValue,
-    });
+    if(newValue !== undefined) {
+      this.setState({
+        [name]: newValue
+      });
+    }
+    else {
+      this.setState({
+        [name]: newValue
+      });
+    }
     
   };
+
+  renderButtons(mode) {
+    if(mode == 'view') {
+        return (<div className="center-actions">
+            <Button shape="circle" type="primary" icon="form" size="large" onClick={this.props.onEdit}></Button>
+            <Button shape="circle" type="primary" icon="delete" size="large" onClick={this.delete}></Button>
+        </div>);
+    }
+    else if(this.props.mode == "edit" || this.props.mode == "new") {
+      return (
+        <div className="center-actions">
+          <Button
+            shape="circle"
+            size="large"
+            type="primary"
+            icon="check"
+            onClick={this.save}
+          />
+        </div>
+      );
+    } 
+  }
 
   async onSelectState(event, name)  {
     
@@ -151,17 +179,19 @@ class InvoiceForm extends Component {
                 label="Prestador"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
-                value={this.state.provider_name}
+                value={this.state.provider_social_name}
                 fullWidth
                 filters={['name']}
                 route="companies/getByName"
                 valueField="name"
                 displayedFields={["name"]}
                 outData={{
-                  provider_inscription: 'inscription'
+                  provider_inscription: 'inscription',
+                  provider_inscription_municipal: 'municipal_inscription',
+                  provider_social_name: 'name'
                 }}
                 onSuggestionSelected={this.onSuggestionSelected}
-                onChange={this.handleChangeAutoComplete('provider_name')}
+                onChange={this.handleChangeAutoComplete('provider_social_name')}
                 margin="normal"
                 variant="outlined"
               />
@@ -179,7 +209,8 @@ class InvoiceForm extends Component {
                   valueField="name"
                   displayedFields={["name"]}
                   outData={{
-                    client_inscription: 'inscription'
+                    client_inscription: 'inscription',
+                    client_name: 'name'
                   }}
                   onSuggestionSelected={this.onSuggestionSelected}
                   onChange={this.handleChangeAutoComplete('client_name')}
@@ -207,9 +238,9 @@ class InvoiceForm extends Component {
                 label="Data"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.state.date}
+                value={this.state.provision_date}
                 fullWidth
-                onChange={this.handleChange("date")}
+                onChange={this.handleChange("provision_date")}
                 margin="normal"
                 variant="outlined"
               />
@@ -256,7 +287,7 @@ class InvoiceForm extends Component {
                 label="Estado"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
-                value={this.state.state}
+                value={this.state.provision_state}
                 dataSource={states}
                 fullWidth
                 onSelect={this.onSelectState}
@@ -270,14 +301,18 @@ class InvoiceForm extends Component {
                   label="Municipio"
                   className={classes.textField}
                   disabled={this.isReadOnly(this.props.mode, true)}
-                  value={this.state.city}
+                  value={this.state.provision_city_name}
                   fullWidth
                   filters={['name']}
                   displayedFields={["nome"]}
                   suggestions={this.filteredCities}
+                  outData={{
+                    provision_city_name: "nome", 
+                    provision_city_ibge: "id"
+                  }}
                   onSuggestionsFetchRequested={this.onSuggestionsFetchMunicipio}
                   onSuggestionSelected={this.onSuggestionSelected}
-                  onChange={this.handleChangeAutoComplete('city')}
+                  onChange={this.handleChangeAutoComplete('provision_city_name')}
                   margin="normal"
                   variant="outlined"
                 />
@@ -285,15 +320,7 @@ class InvoiceForm extends Component {
             
           </Row>
         </Spin>
-        <div className="center-actions">
-          <Button
-            shape="circle"
-            size="large"
-            type="primary"
-            icon="check"
-            onClick={this.save}
-          />
-        </div>
+        {this.renderButtons(this.props.mode)}
       </form>
     );
   }

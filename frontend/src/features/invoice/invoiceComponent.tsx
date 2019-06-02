@@ -21,7 +21,7 @@ export default class InvoiceComponent extends Component {
               openFilter={this.props.invoiceOpenFilter} filterOpen={this.props.filterOpen}
               invoiceCloseFilter={this.props.invoiceCloseFilter} invoiceOnFilter={this.props.invoiceOnFilter}
               filter={this.props.filter} />
-            <JlDrawer isVisible={this.props.formOpen} 
+            <JlDrawer   isVisible={this.props.formOpen} 
                         onClose={this.props.invoiceCloseForm} 
                         onEdit={this.props.invoiceEdit} 
                         onDelete={this.props.invoiceDelete} 
@@ -35,13 +35,13 @@ export default class InvoiceComponent extends Component {
                                 invoice={this.props.invoice} 
                                 loading={this.props.loading}/>
                             </TabPane>
-                            <TabPane tab="Serviços" key="2">
+                            <TabPane tab="Serviços" disabled={!this.props.tabsAtivas} key="2">
                               <ServiceContainer mode={this.props.mode} 
                                 onSave={this.props.invoiceSave} 
                                 invoice={this.props.invoice} 
                                 loading={this.props.loading}/>
                             </TabPane>
-                            <TabPane tab="Impostos" key="3">
+                            <TabPane tab="Impostos" disabled={!this.props.tabsAtivas} key="3">
                             </TabPane>
                           </Tabs>
             </JlDrawer>

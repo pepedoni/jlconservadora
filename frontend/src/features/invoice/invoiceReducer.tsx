@@ -1,7 +1,7 @@
 import * as types from "./constants";
 import { getData } from "core/_util/dateUtil";
 
-export default function(state = { formOpen: false, mode: null, invoice: {}, loading: false, filterOpen: false, filter: Array() }, action) {
+export default function(state = { formOpen: false, mode: null, invoice: {}, tabsAtivas: true, loading: false, filterOpen: false, filter: Array() }, action) {
   switch (action.type) {
     case types.INVOICE_ADD:
       console.log(`[Invoice Reducer] Action: INVOICE_ADD`);
@@ -10,7 +10,9 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, load
         formOpen: true,
         mode: 'new',
         filterOpen: false,
-        invoice: {date: getData(), provider_inscription: '', provider_name: '', client_inscription: '', client_name: '', state: '31', city: '', iss_retain: 0, value: 0.00 }
+        tabsAtivas: false,
+        invoice: {provision_date: getData(), provider_inscription: '', provider_name: '', client_inscription: '', client_name: '', provider_inscription_municipal: '',
+        provision_state: '31', provision_city_name: '', provision_city_ibge: '', provider_social_name: '', iss_retain: 0, value: 0.00 }
       };
     case types.INVOICE_EDIT:
       console.log(`[Invoice Reducer] Action: INVOICE_EDIT`);
@@ -18,6 +20,7 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, load
         ...state,
         formOpen: true,
         mode: 'edit',
+        tabsAtivas: false,
         filterOpen: false
       };
     case types.INVOICE_VIEW:
@@ -26,6 +29,7 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, load
         ...state,
         formOpen: true,
         mode: 'view',
+        tabsAtivas: true,
         filterOpen: false
       };
     case types.INVOICE_DELETE:
@@ -34,6 +38,7 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, load
         ...state,
         formOpen: true,
         mode: 'delete',
+        tabsAtivas: true,
         filterOpen: false
       };
     case types.INVOICE_CLOSEFORM:
@@ -51,6 +56,7 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, load
         formOpen: true,
         invoice: action.payload,
         mode: 'view',
+        tabsAtivas: true,
         filterOpen: false
       }
     case types.INVOICE_SAVE_SUCCESS:
@@ -60,6 +66,7 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, load
         formOpen: true,
         invoice: action.payload,
         mode: 'view',
+        tabsAtivas: true,
         filterOpen: false
       }
     case types.INVOICE_SAVE_FAILURE:
@@ -69,6 +76,7 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, load
         formOpen: true,
         invoice: action.payload.invoice,
         mode: action.payload.mode,
+        tabsAtivas: false,
         filterOpen: false
       }
     case types.INVOICE_OPEN_FILTER:

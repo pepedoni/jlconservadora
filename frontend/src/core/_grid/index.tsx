@@ -26,6 +26,9 @@ export default class App extends Component {
 
   handleTableChange = (pagination, filters, sorter) => {
     const pager = { ...this.state.pagination };
+    if(this.props.filters) {
+      filters = Object.assign(filters, this.props.filters);
+    }
     pager.current = pagination.current;
     pager.position =  'top';
     this.setState({
@@ -42,7 +45,11 @@ export default class App extends Component {
     });
   }
 
-  fetch = (params = {}) => {
+  fetch = (params) => {
+
+    if(!params) {
+      params = {};
+    }
     console.log('params:', params);
     this.setState({ loading: true });
     
@@ -55,14 +62,15 @@ export default class App extends Component {
       }
     }
 
-    request.get(url).then(result => {
+    
+
+    request.get(url, { params: params }).then(result => {
       const pagination = { ...this.state.pagination };
       // Read total count from server
       // pagination.total = data.totalCount;
       pagination.total = result.data.total;
       pagination.nextPage = result.data.next_page_url; 
       pagination.pageSize = result.data.per_page;
-      this.setState({...this.state, pagination});
       this.setState({
         loading: false,
         data: result.data.data,

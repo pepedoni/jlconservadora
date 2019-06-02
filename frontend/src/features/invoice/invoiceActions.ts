@@ -94,7 +94,7 @@ const loading = (loading) => {
 export const invoiceSave = (invoice, mode) => (dispatch) => {
     dispatch(loading(true));
     if(mode == 'new') {
-        request.post('/invoices/insert', invoice).then( response =>  {
+        request.post('/invoice', invoice).then( response =>  {
             dispatch(invoiceSaveSuccess(invoice));
             dispatch(loading(false));
         }).catch( error => {
@@ -103,7 +103,7 @@ export const invoiceSave = (invoice, mode) => (dispatch) => {
         });
     }
     else if(mode == 'edit') {
-        request.put('/invoices/update/' + invoice.id, invoice).then( response =>  {
+        request.put('/invoice' + invoice.id, invoice).then( response =>  {
             dispatch(invoiceSaveSuccess(invoice));
             dispatch(loading(false));
         }).catch( error => {

@@ -21,7 +21,7 @@ const columns = [
     {
         title: 'Data',
         sorter: true,
-        dataIndex: 'date',
+        dataIndex: 'provision_date_grid',
         width: '25%'
     }, 
     {

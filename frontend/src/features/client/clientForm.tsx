@@ -198,7 +198,7 @@ class ClientForm extends Component {
                 onChange={this.handleChange("home_contact")}
                 margin="normal"
                 variant="outlined"
-                mask="(99) 99999-9999"
+                mask="(99) 9999-9999"
               />
             </Col>
           </Row>

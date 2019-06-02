@@ -90,13 +90,13 @@ class AutoComplete extends React.Component {
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
     this.renderSuggestion = this.renderSuggestion.bind(this);
     this.getSuggestionValue = this.getSuggestionValue.bind(this);
-  }
 
-  state = {
-    single: '',
-    popper: '',
-    suggestions: [],
-  };
+    this.state = {
+      single: '',
+      popper: '',
+      suggestions: []
+    };
+  }
 
   renderInputComponent(inputProps) {
     const { classes, inputRef = () => {}, ref, ...other } = inputProps;
@@ -189,7 +189,7 @@ class AutoComplete extends React.Component {
 
     const autosuggestProps = {
       renderInputComponent: this.renderInputComponent,
-      suggestions: (this.props.suggestions) ? this.props.suggestions: this.state.suggestions,
+      suggestions: (this.props.suggestions) ? this.props.suggestions : this.state.suggestions,
       onSuggestionsFetchRequested: this.props.onSuggestionsFetchRequested ? this.props.onSuggestionsFetchRequested : this.onSuggestionsFetchRequested,
       onSuggestionsClearRequested: this.onSuggestionsClearRequested,
       getSuggestionValue: this.getSuggestionValue,

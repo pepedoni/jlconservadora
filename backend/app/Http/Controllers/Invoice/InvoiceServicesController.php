@@ -37,7 +37,14 @@ class InvoiceServicesController extends Controller {
     }
 
     public function index(Request $request) {
-        $invoice = InvoiceServices::paginate(7);
-        return $invoice;
+        $invoice_id = $request->get('invoice_id');
+        
+        if($invoice_id) {
+            $invoices = InvoiceServices::where('invoice_id', '=', $invoice_id)->get();
+        }
+        else $invoices = invoicesServices::paginate(7);
+        
+        return $invoices;
+
     }
 }

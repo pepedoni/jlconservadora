@@ -13,7 +13,8 @@ const mapStateToProps = state => ({
     invoice: state.invoice.invoice,
     filterOpen: state.invoice.filterOpen,
     filter: state.invoice.filter,
-    loading: state.invoice.loading
+    loading: state.invoice.loading,
+    tabsAtivas: state.invoice.tabsAtivas
 });
 
 const mapDispatchToProps = dispatch =>

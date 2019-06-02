@@ -9,7 +9,8 @@ const mapStateToProps = state => ({
     formOpen: state.invoiceService.formOpen,
     mode: state.invoiceService.mode,
     service: state.invoiceService.service,
-    loading: state.invoiceService.loading
+    loading: state.invoiceService.loading,
+    invoice_id: state.invoice.invoice.id
 });
 
 const mapDispatchToProps = dispatch =>

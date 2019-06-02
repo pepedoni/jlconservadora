@@ -30,9 +30,6 @@ class CreateInvoiceServicesTable extends Migration
 
             $table->double('aliquot_inss');
             $table->double('value_inss');
-
-            $table->double('aliquot_inss');
-            $table->double('value_inss');
             
             $table->double('aliquot_pis');
             $table->double('value_pis');
