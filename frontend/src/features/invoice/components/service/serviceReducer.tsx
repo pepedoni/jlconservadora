@@ -8,7 +8,8 @@ export default function(state = { formOpen: false, mode: null, service: {}, load
         ...state,
         formOpen: true,
         mode: 'new',
-        service: {name: '', item_list: '', aliquot: '', description: '' }
+        service: {name: "", list_item: '', value: "0.00", aliquot_iss: "0.00", value_iss: "0.00", aliquot_pis: "0.00", value_pis: "0.00", aliquot_cofins: "0.00", value_cofins: "0.00",
+                  aliquot_inss: "0.00", value_inss: "0.00", aliquot_csll: "0.00", value_csll: "0.00", description: '' }
       };
     case types.INVOICE_SERVICE_EDIT:
       console.log(`[Invoice Service Reducer] Action: INVOICE_SERVICE_EDIT`);

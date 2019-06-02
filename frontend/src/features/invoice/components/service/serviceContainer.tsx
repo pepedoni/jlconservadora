@@ -6,10 +6,10 @@ import Service from "./serviceComponent";
 // import {withRouter} from "react-router-dom";
 
 const mapStateToProps = state => ({
-    formOpen: state.service.formOpen,
-    mode: state.service.mode,
-    service: state.service.service,
-    loading: state.service.loading
+    formOpen: state.invoiceService.formOpen,
+    mode: state.invoiceService.mode,
+    service: state.invoiceService.service,
+    loading: state.invoiceService.loading
 });
 
 const mapDispatchToProps = dispatch =>

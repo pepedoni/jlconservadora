@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import blue from '@material-ui/core/colors/blue';
@@ -105,6 +108,8 @@ class JlInput extends Component {
                       type={this.props.type}
                       rows={this.props.rows}
                       helperText={this.props.helperText}
+                      startAdornment={this.props.startAdornment ? <InputAdornment position="start">{this.props.startAdornment}</InputAdornment>  : ''}
+                      endAdornment={this.props.endAdornment ? <InputAdornment position="end">{this.props.endAdornment}</InputAdornment>  : ''}
                   >
                   </TextField>
                 }
@@ -123,6 +128,8 @@ class JlInput extends Component {
                                 disabled: classes.disabled,
                                 notchedOutline: classes.notchedOutline,
                             },
+                            startAdornment: <InputAdornment position="start">{this.props.startAdornment ? this.props.startAdornment : ''}</InputAdornment>,
+                            endAdornment:   <InputAdornment position="end"> {this.props.endAdornment ? this.props.endAdornment : ''}</InputAdornment>,
                         }}
                         id={this.props.id}
                         {...this.props.extraProps}
@@ -136,6 +143,7 @@ class JlInput extends Component {
                         variant={this.props.variant || "outlined"}
                         type={this.props.type}
                         rows={this.props.rows}
+                        helperText={this.props.helperText}
                     ></TextField>
                   
               );

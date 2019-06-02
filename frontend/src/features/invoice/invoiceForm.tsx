@@ -220,6 +220,7 @@ class InvoiceForm extends Component {
                 label="Valor"
                 className={classes.textField}
                 disabled={this.isReadOnly(this.props.mode, false)}
+                startAdornment="R$"
                 value={this.state.value}
                 fullWidth
                 onChange={this.handleChange("value")}
