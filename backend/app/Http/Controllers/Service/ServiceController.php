@@ -47,7 +47,10 @@ class ServiceController extends Controller
     }
 
     public function getServices(Request $request) {
-        $services = Service::paginate(7);
+        
+        $pageSize = $request->get('pageSize') ? $request->get('pageSize') : 10;
+        
+        $services = Service::paginate($pageSize);
 
         return $services;
     }

@@ -52,7 +52,10 @@ class CompanyController extends Controller
     }
 
     public function getCompanies(Request $request) {
-        $companys = Company::paginate(7);
+
+        $pageSize = $request->get('pageSize') ? $request->get('pageSize') : 10;
+
+        $companys = Company::paginate($pageSize);
 
         return $companys;
     }

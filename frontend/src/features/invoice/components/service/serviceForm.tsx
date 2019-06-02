@@ -159,10 +159,10 @@ class ServiceForm extends Component {
             <Col className="gutter-row" md={4} sm={12} xs={12}>
               <JlInput
                 id="standard-aliquot"
-                label="Aliquota"
+                label="Aliquota ISS"
                 className={classes.textField}
                 disabled={true}
-                value={this.state.aliquot}
+                value={this.state.aliquot_iss}
                 fullWidth
                 onChange={this.handleChange("aliquot")}
                 margin="normal"

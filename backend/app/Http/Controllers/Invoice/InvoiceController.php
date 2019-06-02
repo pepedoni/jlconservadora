@@ -38,7 +38,10 @@ class InvoiceController extends Controller {
     }
 
     public function getInvoices(Request $request) {
-        $invoice = Invoice::paginate(7);
+        $pageSize = $request->get('pageSize') ? $request->get('pageSize') : 10;
+        
+        $invoice = Invoice::paginate($pageSize);
+
         return $invoice;
     }
 }

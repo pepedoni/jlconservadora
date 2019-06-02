@@ -25,6 +25,24 @@ class CreateInvoiceServicesTable extends Migration
             $table->foreign('invoice_id')->references('id')->on('invoices');
             $table->foreign('service_id')->references('id')->on('services');
 
+            $table->double('aliquot_iss');
+            $table->double('value_iss');
+
+            $table->double('aliquot_inss');
+            $table->double('value_inss');
+
+            $table->double('aliquot_inss');
+            $table->double('value_inss');
+            
+            $table->double('aliquot_pis');
+            $table->double('value_pis');
+
+            $table->double('aliquot_cofins');
+            $table->double('value_cofins');
+
+            $table->double('aliquot_csll');
+            $table->double('value_csll');
+
             $table->timestamps();
         });
     }

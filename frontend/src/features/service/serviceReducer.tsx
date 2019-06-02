@@ -62,8 +62,8 @@ export default function(state = { formOpen: false, mode: null, service: {}, load
       service: action.payload.service,
       mode: action.payload.mode
     }
-    case types.LOADING:  
-    console.log(`[Service Reducer] Action: LOADING`);
+    case types.SERVICE_LOADING:  
+    console.log(`[Service Reducer] Action: SERVICE_LOADING`);
     return {
       ...state,
       loading: action.payload

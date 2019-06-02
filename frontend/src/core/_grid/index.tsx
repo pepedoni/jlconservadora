@@ -10,7 +10,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       
-      pagination: {position: 'top'},
+      pagination: {position: 'top', showSizeChanger: true, pageSizeOptions: ['5', '10', '15', '20']},
       loading: false
     }
   }
@@ -35,6 +35,7 @@ export default class App extends Component {
       results: pagination.pageSize,
       url: pagination.nextPage,
       page: pagination.current,
+      pageSize: pagination.pageSize,
       sortField: sorter.field,
       sortOrder: sorter.order,
       ...filters,
@@ -45,7 +46,14 @@ export default class App extends Component {
     console.log('params:', params);
     this.setState({ loading: true });
     
-    let url = (params.page) ? this.props.url + '?page=' + params.page : this.props.url;
+    let url =  this.props.url;
+
+    if(params.page) {
+      url += '?page=' + params.page;
+      if(params.pageSize) {
+        url += '&pageSize=' + params.pageSize;
+      }
+    }
 
     request.get(url).then(result => {
       const pagination = { ...this.state.pagination };

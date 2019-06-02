@@ -73,7 +73,11 @@ class ClientController extends Controller {
     }
 
     public function getClients(Request $request) {
-        $clients = Client::paginate(7);
+
+        $pageSize = $request->get('pageSize') ? $request->get('pageSize') : 10;
+        
+        $clients = Client::paginate($pageSize);
+        
         foreach($clients as &$client) {
             $client['complete_address'] = $this->getCompleteAddress($client);
         }

@@ -33,7 +33,11 @@ class EmployeeController extends Controller {
     } 
 
     public function getEmployees(Request $request) {
-        $employee = Employee::paginate(2);
+        
+        $pageSize = $request->get('pageSize') ? $request->get('pageSize') : 10;
+
+        $employee = Employee::paginate($pageSize);
+        
         return $employee;
     }
 }
