@@ -20,8 +20,8 @@ const styles = theme => ({
   suggestionsContainerOpen: {
     position: 'absolute',
     zIndex: 100,
-    margin: theme.spacing.unit,
-    width: '100%'
+    width: '100%',
+    margin: '-5px 0 0 8px'
     //left: 0,
     //right: 0,
   },
