@@ -28,7 +28,8 @@ const columns = [
         title: 'Valor',
         sorter: true,
         width: '25%',
-        dataIndex: 'value'
+        dataIndex: 'value',
+        align: 'right'
     }   
 ];
 

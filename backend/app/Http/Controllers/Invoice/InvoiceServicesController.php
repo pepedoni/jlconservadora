@@ -41,11 +41,17 @@ class InvoiceServicesController extends Controller {
         $pageSize = $request->get('pageSize') ? $request->get('pageSize') : 10;
         
         if($invoice_id) {
-            $invoices = InvoiceServices::where('invoice_id', '=', $invoice_id)->paginate($pageSize);
+            $invoice_services = InvoiceServices::where('invoice_id', '=', $invoice_id)->paginate($pageSize);
         }
-        else $invoices = invoicesServices::paginate($pageSize);
+        else $invoice_services = invoicesServices::paginate($pageSize);
+
+        foreach($invoice_services as &$invoice_service) {
+            $service = $invoice_service->service;
+            $invoice_service["name"] = $service["name"];
+            $invoice_service["list_item"] = $service["list_item"];
+        }
         
-        return $invoices;
+        return $invoice_services;
 
     }
 }

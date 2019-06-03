@@ -23,4 +23,38 @@ class Invoice extends Model
 
     protected $guarded = ['id', 'created_at', 'update_at'];
     protected $table = 'invoices';
+    protected $casts = ['value' => 'float'];
+
+    /**
+	 * Cast an attribute to a native PHP type.
+	 *
+	 * @param  string  $key
+	 * @param  mixed   $value
+	 * @return mixed
+	 */
+	protected function castAttribute($key, $value)
+	{
+		switch ($this->getCastType($key))
+		{
+			case 'int':
+			case 'integer':
+				return (int) $value;
+			case 'real':
+			case 'float':
+            case 'double':
+                return number_format((float) $value, 2, '.', '');
+			case 'string':
+				return (string) $value;
+			case 'bool':
+			case 'boolean':
+				return (bool) $value;
+			case 'object':
+				return json_decode($value);
+			case 'array':
+			case 'json':
+				return json_decode($value, true);
+			default:
+				return $value;
+		}
+	}
 }

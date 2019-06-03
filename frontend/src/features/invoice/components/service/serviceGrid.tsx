@@ -19,7 +19,12 @@ const columns = [
     },
     {
         title: 'Aliquota',
-        dataIndex: 'aliquot',
+        dataIndex: 'aliquot_iss',
+    },
+    {
+        title: 'Valor', 
+        dataIndex: 'value',
+        align: 'right'
     }   
 ];
 
