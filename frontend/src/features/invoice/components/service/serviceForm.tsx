@@ -42,6 +42,8 @@ class ServiceForm extends Component {
   }
 
   save = () => {
+    let invoiceService = this.state;
+    invoiceService.invoice_id = this.props.invoice_id;
     this.props.onSave(this.state, this.props.mode);
   };
 
@@ -163,7 +165,8 @@ class ServiceForm extends Component {
                     outData={{
                         aliquot_iss:      'aliquot',
                         description:  'description',
-                        list_item:    'list_item'
+                        list_item:    'list_item',
+                        service_id:   'id'  
                     }}
                     onSuggestionSelected={this.onSuggestionSelected}
                     onChange={this.handleChangeAutoComplete('name')}

@@ -51,6 +51,7 @@ class InvoiceForm extends Component {
       this.setState({
         ...nextProps.invoice
       });
+      
     }
   }
 

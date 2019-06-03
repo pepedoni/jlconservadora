@@ -50,7 +50,6 @@ export default class App extends Component {
     if(!params) {
       params = {};
     }
-    console.log('params:', params);
     this.setState({ loading: true });
     
     let url =  this.props.url;
@@ -105,7 +104,7 @@ export default class App extends Component {
           <Table
             columns={this.props.columns}
             // rowKey={record => record.login.uuid}
-            dataSource={this.props.filter ? this.state.data : this.props.filter}
+            dataSource={(this.props.filter === undefined || !! this.props.filter) ? this.state.data : this.props.filter}
             pagination={this.state.pagination}
             loading={this.state.loading}
             onChange={this.handleTableChange}

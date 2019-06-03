@@ -38,11 +38,12 @@ class InvoiceServicesController extends Controller {
 
     public function index(Request $request) {
         $invoice_id = $request->get('invoice_id');
+        $pageSize = $request->get('pageSize') ? $request->get('pageSize') : 10;
         
         if($invoice_id) {
-            $invoices = InvoiceServices::where('invoice_id', '=', $invoice_id)->get();
+            $invoices = InvoiceServices::where('invoice_id', '=', $invoice_id)->paginate($pageSize);
         }
-        else $invoices = invoicesServices::paginate(7);
+        else $invoices = invoicesServices::paginate($pageSize);
         
         return $invoices;
 

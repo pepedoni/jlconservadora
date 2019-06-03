@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import JlDrawer from "core/_drawer/"
 
 import ServiceForm from './serviceForm'
-import ServiceGrid from '../../../service/serviceGrid'
+import ServiceGrid from './serviceGrid'
 
 export default class ServiceComponent extends Component {
 
@@ -25,7 +25,8 @@ export default class ServiceComponent extends Component {
                         mode={this.props.mode} 
                         onSave={this.props.serviceSave} 
                         service={this.props.service}
-                        loading={this.props.loading}/>
+                        loading={this.props.loading}
+                        invoice_id={this.props.invoice_id}/>
             </JlDrawer>
         </div>
       )
