@@ -33,6 +33,17 @@ const columns = [
     }   
 ];
 
+// rowSelection object indicates the need for row selection
+const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: record => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
 const url = '/invoice';
 
 export default class InvoiceGrid extends Component {
@@ -47,6 +58,8 @@ export default class InvoiceGrid extends Component {
                     filter={this.props.filter}
                     onRowClick={ this.props.onRowClick }
                     openFilter={this.props.openFilter}
+                    otherProps={{rowSelection: rowSelection}}
+                    rowSelection={rowSelection}
                 />
 
                 <InvoiceFilter visible={this.props.filterOpen} invoiceCloseFilter={this.props.invoiceCloseFilter}

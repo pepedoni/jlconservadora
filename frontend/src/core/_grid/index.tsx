@@ -109,6 +109,7 @@ export default class App extends Component {
             loading={this.state.loading}
             onChange={this.handleTableChange}
             rowKey={this.props.rowKey}
+            {...this.props.otherProps}
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => { 
