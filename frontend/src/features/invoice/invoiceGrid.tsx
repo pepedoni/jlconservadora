@@ -5,13 +5,6 @@ import InvoiceFilter from './invoiceFilter'
 
 const columns = [
     {
-        title: 'Número',
-        dataIndex: 'number',
-        sorter: true,
-        // render: name => `${name.first} ${name.last}`,
-        width: '10%',
-    },
-    {
         title: 'Destinatário',
         dataIndex: 'client_name',
         // render: (address, data) => `${address}, ${data.address_number}/${da}`,
@@ -30,24 +23,59 @@ const columns = [
         width: '25%',
         dataIndex: 'value',
         align: 'right'
-    }   
+    },  
+    {
+        title: 'Número',
+        dataIndex: 'number',
+        sorter: true,
+        // render: name => `${name.first} ${name.last}`,
+        width: '10%',
+    } 
 ];
-
-// rowSelection object indicates the need for row selection
-const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: record => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      name: record.name,
-    }),
-  };
 
 const url = '/invoice';
 
 export default class InvoiceGrid extends Component {
+
+    constructor(props) {
+
+        super(props);
+    
+        this.state = {
+
+           otherButtons: [
+                {
+                    icon: "arrow-up",
+                    text: 'Transmitir Notas',
+                    visible: false,
+                    onClick: () => console.log(this.state.selectedRows)
+                }
+           ],
+           selectedRows: []
+        };
+
+    }
+
     render() {
+
+        const rowSelection = {
+            onChange: (selectedRowKeys, selectedRows) => {
+                
+                let otherButtons = this.state.otherButtons;
+
+                if(selectedRows.length > 0) {
+                    otherButtons[0].visible = true;
+                }
+                else {
+                    otherButtons[0].visible = false;
+                }
+
+                this.setState({...this.state, otherButtons: otherButtons, selectedRows});
+
+            }
+        };
+    
+
         return (
             <div>
                 <Grid onAdd={this.props.onAdd} 
@@ -59,7 +87,7 @@ export default class InvoiceGrid extends Component {
                     onRowClick={ this.props.onRowClick }
                     openFilter={this.props.openFilter}
                     otherProps={{rowSelection: rowSelection}}
-                    rowSelection={rowSelection}
+                    otherButtons={this.state.otherButtons}
                 />
 
                 <InvoiceFilter visible={this.props.filterOpen} invoiceCloseFilter={this.props.invoiceCloseFilter}

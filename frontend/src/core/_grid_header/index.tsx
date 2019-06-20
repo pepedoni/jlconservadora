@@ -4,6 +4,23 @@ import { Button, Input } from "antd"
 import './style.less';
 
 export default class GridHeader extends Component {
+
+    renderButton(button) {
+        if(button.visible !== false) {
+            return (
+                <Button
+                    icon={button.icon}
+                    placeholder={button.placeholder}
+                    onClick={button.onClick}
+                    type={button.type}
+                >
+                    {button.text}
+                </Button>
+            );
+        }
+
+    }
+
     render() {
         return (
             <div className="grid-header">
@@ -14,6 +31,9 @@ export default class GridHeader extends Component {
                     />
                 </div>
                 <div className="buttons">
+                    {
+                        this.props.otherButtons.map((button) => this.renderButton(button))
+                    }
                     <Button 
                         icon="filter"
                         onClick={this.props.onClickFilter}

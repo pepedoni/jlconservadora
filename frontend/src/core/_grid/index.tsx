@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Card, Pagination } from 'antd';
+import { Table, Card, Button, Pagination } from 'antd';
 
 import request from 'api/request';
 import GridHeader from '../_grid_header';
@@ -20,7 +20,7 @@ export default class App extends Component {
   }
 
   componentWillReceiveProps() {
-    if(this.props.filter != Array()) 
+    if(this.props.filter != Array() && this.props.filter.length != 0) 
       this.fetch();
   }
 
@@ -99,6 +99,7 @@ export default class App extends Component {
           onAdd={this.props.onAdd}
           onClickFilter={this.props.openFilter}
           onReload={this.reload}
+          otherButtons={(this.props.otherButtons) ? this.props.otherButtons : []}
           />
         <Card>
           <Table
@@ -118,7 +119,8 @@ export default class App extends Component {
                 }, 
               };
             }}
-          />
+          >
+          </Table>
         </Card>
       </div>
     );
