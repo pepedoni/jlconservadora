@@ -16,7 +16,16 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.fetch();
+    let params = {};
+    let filters = {};
+    if(this.props.filters) {
+      filters = Object.assign(filters, this.props.filters);
+      
+      params = {
+        ...filters
+      };
+    }
+    this.fetch(params);
   }
 
   componentWillReceiveProps() {
