@@ -20,7 +20,9 @@ export default class App extends Component {
   }
 
   componentWillReceiveProps() {
-    if(this.props.filter != Array() && this.props.filter.length != 0) 
+    if(this.props.filter != Array() 
+      && this.props.filter 
+      && this.props.filter.length != 0) 
       this.fetch();
   }
 

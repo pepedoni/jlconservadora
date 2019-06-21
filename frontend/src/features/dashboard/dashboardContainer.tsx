@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import BirthdaysMonth from './birthdaysMonth';
+import { bindActionCreators } from "redux"
+import { connect } from "react-redux"
+import BirthdaysMonth from './birthdaysMonth'
+import RandomCard from './randomCard'
 import { Row, Col } from "antd";
 
 class Dashboard extends Component {
     render() {
         return (
-          <div>
-            <Row gutter={8}>
-              <Col className="gutter-row" md={8}>
+          <div className="top-dashboard">
+            <Row className="row-dashboard" gutter={8}>
+              <Col className="gutter-row ant-card-body-dashboard" md={8}>
                 <BirthdaysMonth></BirthdaysMonth>
-              </Col>
+              </Col>    
             </Row>
           </div>
         )

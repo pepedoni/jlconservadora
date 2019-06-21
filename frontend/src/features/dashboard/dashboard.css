@@ -5,3 +5,15 @@
 .right {
     float: right !important;
 }
+
+.top-dashboard {
+    height: 35%;
+}
+
+.top-dashboard > .row-dashboard {
+    height: 100%;
+}
+
+.ant-card-body-dashboard {
+    height: 99%;
+}

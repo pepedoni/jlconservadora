@@ -66,8 +66,8 @@ class BirthdaysMonth extends Component {
 
     render() {
         return (
-            <div>
-                <Card title="Próximos Aniversários" bordered={true}>                
+            <div className="ant-card-body-dashboard">
+                <Card title="Próximos Aniversários" className="ant-card-body-dashboard" bordered={true}>                
                     <List
                         size="small"
                         dataSource={this.aniversariantes}
