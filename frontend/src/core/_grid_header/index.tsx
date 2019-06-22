@@ -32,7 +32,7 @@ export default class GridHeader extends Component {
                 </div>
                 <div className="buttons">
                     {
-                        this.props.otherButtons.map((button) => this.renderButton(button))
+                        this.props.otherButtons.map((button, key) => this.renderButton(button))
                     }
                     <Button 
                         icon="filter"

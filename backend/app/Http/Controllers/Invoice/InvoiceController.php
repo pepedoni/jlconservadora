@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Invoice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Invoice\InvoiceBeloHorizonte;
 use Illuminate\Http\Request;
 use App\Invoice;
 use Carbon\Carbon;
@@ -74,5 +75,14 @@ class InvoiceController extends Controller {
         }
 
         return $invoices;
+    }
+
+    public function transmitInvoice(Request $request) {
+        $invoices = $request->all();
+
+        foreach($invoices as $invoice) {
+            $invoicesBeloHorizonte = new InvoiceBeloHorizonte($invoices);
+            var_dump($invoice["id"]);
+        }
     }
 }

@@ -90,6 +90,17 @@ const loading = (loading) => {
     }
 }
 
+const invoiceTransmitSuccess = () => {
+    return {
+        type: types.INVOICE_TRANSMIT_SUCCESS
+    }
+}
+
+const invoiceTransmitFailure = () => {
+    return {
+        type: types.INVOICE_TRANSMIT_FAILURE
+    }
+}
 
 export const invoiceSave = (invoice, mode) => (dispatch) => {
     dispatch(loading(true));
@@ -116,11 +127,24 @@ export const invoiceSave = (invoice, mode) => (dispatch) => {
 export const invoiceOnFilter = (filter) => (dispatch) => {
     dispatch(loading(true));
 
-    request.get('/invoices?', filter).then( response =>  {
+    request.get('/invoice?', filter).then( response =>  {
         dispatch(invoiceFilterSuccess(response));
         dispatch(loading(false));
     }).catch( error => {
         dispatch(invoiceFilterFailure(error));
         dispatch(loading(false));
     });
+}
+
+export const transmitInvoice = (invoices) => (dispatch) => {
+    dispatch(loading(true));
+
+    request.post('/invoice/transmitInvoice', invoices).then( response => {
+        dispatch(invoiceTransmitSuccess());
+        dispatch(loading(false));
+    }).catch( error => {
+        dispatch(invoiceTransmitFailure());
+        dispatch(loading(false));
+    });
+
 }

@@ -42,17 +42,18 @@ export default class InvoiceGrid extends Component {
         super(props);
     
         this.state = {
-
-           otherButtons: [
-                {
-                    icon: "arrow-up",
-                    text: 'Transmitir Notas',
-                    visible: false,
-                    onClick: () => console.log(this.state.selectedRows)
-                }
-           ],
-           selectedRows: []
+            selectedRows: [],
+            otherButtons: []
         };
+
+        this.state.otherButtons = [
+            {
+                icon: "arrow-up",
+                text: 'Transmitir Notas',
+                visible: false,
+                onClick: () => this.props.transmitInvoice(this.state.selectedRows)
+            }
+        ];
 
     }
 

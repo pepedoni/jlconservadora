@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { invoiceAdd, invoiceEdit, invoiceView, invoiceSave, invoiceDelete, 
     invoiceCloseForm, onRowClick, invoiceOpenFilter, invoiceCloseFilter,
-    invoiceOnFilter } from './invoiceActions';
+    invoiceOnFilter, transmitInvoice } from './invoiceActions';
 
 import Invoice from "./invoiceComponent";
 // import {withRouter} from "react-router-dom";
@@ -21,8 +21,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
         invoiceAdd, invoiceEdit, invoiceView, invoiceSave, invoiceDelete,
-            invoiceCloseForm, onRowClick, invoiceOpenFilter, invoiceCloseFilter,
-            invoiceOnFilter
+        invoiceCloseForm, onRowClick, invoiceOpenFilter, invoiceCloseFilter,
+        invoiceOnFilter, transmitInvoice
     },
     dispatch
 );

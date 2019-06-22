@@ -20,7 +20,7 @@ export default class InvoiceComponent extends Component {
             <InvoiceGrid onAdd={this.props.invoiceAdd} onRowClick= {this.props.onRowClick}
               openFilter={this.props.invoiceOpenFilter} filterOpen={this.props.filterOpen}
               invoiceCloseFilter={this.props.invoiceCloseFilter} invoiceOnFilter={this.props.invoiceOnFilter}
-              filter={this.props.filter} />
+              filter={this.props.filter} transmitInvoice={this.props.transmitInvoice}/>
             <JlDrawer   isVisible={this.props.formOpen} 
                         onClose={this.props.invoiceCloseForm} 
                         onEdit={this.props.invoiceEdit} 
