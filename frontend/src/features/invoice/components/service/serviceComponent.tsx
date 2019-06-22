@@ -24,6 +24,7 @@ export default class ServiceComponent extends Component {
                 <ServiceForm 
                         mode={this.props.mode} 
                         onSave={this.props.serviceSave} 
+                        onEdit={this.props.serviceEdit} 
                         service={this.props.service}
                         loading={this.props.loading}
                         invoice_id={this.props.invoice_id}/>

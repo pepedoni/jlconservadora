@@ -22,7 +22,7 @@ class InvoiceServicesController extends Controller {
         ], 201);
     } 
 
-    public function updateInvoice(Request $request, Invoice $invoice) {
+    public function update(Request $request) {
 
         $invoice = InvoiceServices::findOrFail($request->id);
 

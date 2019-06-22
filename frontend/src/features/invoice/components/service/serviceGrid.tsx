@@ -8,23 +8,25 @@ const columns = [
         dataIndex: 'name',
         // sorter: true,
         // render: name => `${name.first} ${name.last}`,
-        // width: '50%',
+         width: '50%',
     },
     {
         title: 'Item da Lista',
         dataIndex: 'list_item',
         // render: (address, data) => `${address}, ${data.address_number}/${da}`,
         // sorter: true,
-        // width: '20%',
+        width: '20%',
     },
     {
         title: 'Aliquota',
         dataIndex: 'aliquot_iss',
+        width: '10%'
     },
     {
         title: 'Valor', 
         dataIndex: 'value',
-        align: 'right'
+        align: 'right',
+        width: '20%'
     }   
 ];
 

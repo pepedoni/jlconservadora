@@ -80,7 +80,7 @@ export const serviceSave = (service, mode) => (dispatch) => {
         });
     }
     else if(mode == 'edit') {
-        request.put('/invoice/services' + service.id, service).then( response =>  {
+        request.put('/invoice/services/' + service.id, service).then( response =>  {
             dispatch(serviceSaveSuccess(service));
             dispatch(loading(false));
         }).catch( error => {
