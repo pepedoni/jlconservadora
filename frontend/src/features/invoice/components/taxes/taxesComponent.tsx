@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TaxesGrid from './TaxesGrid';
+import TaxesGrid from './taxesGrid';
 
 export default class TaxesComponent extends Component {
 
