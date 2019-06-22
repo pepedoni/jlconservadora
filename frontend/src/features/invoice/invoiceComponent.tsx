@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import JlDrawer from "core/_drawer/"
 import { Tabs } from 'antd'
 import InvoiceForm from './invoiceForm'
-import ServicesForm from './servicesForm'
 import InvoiceGrid from './invoiceGrid'
+import TaxesContainer from './components/taxes/taxesContainer'
 import ServiceContainer from './components/service/serviceContainer'
 const TabPane = Tabs.TabPane;
 
@@ -42,6 +42,7 @@ export default class InvoiceComponent extends Component {
                                 loading={this.props.loading}/>
                             </TabPane>
                             <TabPane tab="Impostos" disabled={!this.props.tabsAtivas} key="3">
+                              <TaxesContainer />
                             </TabPane>
                           </Tabs>
             </JlDrawer>

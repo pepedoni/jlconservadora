@@ -72,20 +72,44 @@ export default class App extends Component {
       }
     }
 
-    
+    const pagination = { ...this.state.pagination };
 
     request.get(url, { params: params }).then(result => {
-      const pagination = { ...this.state.pagination };
-      // Read total count from server
-      // pagination.total = data.totalCount;
-      pagination.total = result.data.total;
-      pagination.nextPage = result.data.next_page_url; 
-      pagination.pageSize = result.data.per_page;
-      this.setState({
-        loading: false,
-        data: result.data.data,
-        pagination,
-      });
+
+      if(result.data) {
+        if(result.data.data) {
+          // Read total count from server
+          // pagination.total = data.totalCount;
+          pagination.total = result.data.total;
+          pagination.nextPage = result.data.next_page_url; 
+          pagination.pageSize = result.data.per_page;
+          this.setState({
+            loading: false,
+            data: result.data.data,
+            pagination,
+          });
+        }
+        else {
+          this.setState({
+            loading: false,
+            data: result.data,
+            pagination,
+          });
+        }
+      }
+      else {
+        this.setState({
+          loading: false,
+          data: result.data,
+          pagination,
+        });
+      }
+    }).catch( error => {
+        this.setState({
+          loading: false,
+          data: [],
+          pagination,
+        });
     });
 
   }

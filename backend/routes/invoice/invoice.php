@@ -9,7 +9,7 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::put('/{id}', 'InvoiceController@update');
         Route::delete('/{id}', 'InvoiceController@remove');
         Route::post('/transmitInvoice', 'InvoiceController@transmitInvoice');
-
+        Route::get('/taxes', "InvoiceController@taxes");
         Route::resource('/services', 'InvoiceServicesController');
     });
 

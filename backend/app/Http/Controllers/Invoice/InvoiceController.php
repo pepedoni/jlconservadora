@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Invoice\InvoiceBeloHorizonte;
 use Illuminate\Http\Request;
 use App\Invoice;
+use App\InvoiceServices;
 use Carbon\Carbon;
 
 class InvoiceController extends Controller {
@@ -75,6 +76,60 @@ class InvoiceController extends Controller {
         }
 
         return $invoices;
+    }
+
+    public function taxes(Request $request) {
+        $invoice_id = $request->get('invoice_id');
+        
+        $invoiceServices = InvoiceServices::where('invoice_id', '=', $invoice_id)->get();
+        
+        $value_iss      = 0;
+        $value_pis      = 0;
+        $value_cofins   = 0;
+        $value_csll     = 0;
+        $value_ir       = 0;
+        $value_inss     = 0;
+
+        foreach($invoiceServices as $invoiceService) {
+            $value_iss      += $invoiceService["value_iss"];
+            $value_pis      += $invoiceService["value_pis"];
+            $value_cofins   += $invoiceService["value_cofins"];
+            $value_csll     += $invoiceService["value_csll"];
+            $value_ir       += $invoiceService["value_ir"];
+            $value_inss     += $invoiceService["value_inss"];
+            
+        }
+
+        $impostos = array(
+     
+            array(
+                "name" => "ISS",
+                "value" => $value_iss
+            ),
+            array(
+                "name" => "PIS",
+                "value" => $value_pis
+            ),
+            array(
+                "name" => "COFINS",
+                "value" => $value_cofins
+            ),
+            array(
+                "name" => "CSLL",
+                "value" => $value_csll
+            ),
+            array(
+                "name" => "IR",
+                "value" => $value_ir
+            ),
+            array(
+                "name" => "INSS",
+                "value" => $value_inss
+            ),
+
+        );
+
+        return $impostos;
     }
 
     public function transmitInvoice(Request $request) {
