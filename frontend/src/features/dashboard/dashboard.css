@@ -17,3 +17,20 @@
 .ant-card-body-dashboard {
     height: 99%;
 }
+
+.ant-card.ant-card-body-dashboard.ant-card-bordered{
+    display: grid;
+    overflow: auto;
+}
+
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+  
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    border-radius: 10px;
+    background: rgb(214, 201, 201); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
