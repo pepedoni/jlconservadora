@@ -14,6 +14,11 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
+  textFieldReadOnly: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    backgroundColor: '#b9b7b74f'
+  },
   dense: {
     marginTop: 16
   },
@@ -115,7 +120,7 @@ class ServiceForm extends Component {
               <JlInput
                 id="standard-address"
                 label="Nome"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 value={this.state.name}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 fullWidth
@@ -128,7 +133,7 @@ class ServiceForm extends Component {
               <JlInput
                   id="standard-aliquot"
                   label="Item da Lista"
-                  className={classes.textField}
+                  className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                   disabled={this.isReadOnly(this.props.mode, true)}
                   value={this.state.item_list}
                   fullWidth
@@ -156,7 +161,7 @@ class ServiceForm extends Component {
               <JlInput
                 id="standard-description"
                 label="Descrição para Emissão"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.description}
                 fullWidth

@@ -15,7 +15,12 @@ const styles = theme => ({
   },
   textField: {
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing.unit,
+  },
+  textFieldReadOnly: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    backgroundColor: '#b9b7b74f'
   },
   dense: {
     marginTop: 16
@@ -28,7 +33,6 @@ const styles = theme => ({
 class ClientForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       ...this.props.client
     };
@@ -144,7 +148,7 @@ class ClientForm extends Component {
               <JlInput
                 id="standard-address"
                 label="CPF/CNPJ"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.inscription}
                 fullWidth
@@ -159,7 +163,7 @@ class ClientForm extends Component {
               <JlInput
                 id="standard-name"
                 label="Nome"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.name}
                 fullWidth
@@ -311,7 +315,7 @@ class ClientForm extends Component {
               <JlInput
                 id="company-state"
                 label="Estado"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 value={this.state.state}
                 disabled={true}
                 fullWidth
@@ -325,7 +329,7 @@ class ClientForm extends Component {
               <JlInput
                 id="company-city"
                 label="Cidade"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 value={this.state.city}
                 disabled={true}
                 fullWidth
@@ -339,7 +343,7 @@ class ClientForm extends Component {
               <JlInput
                 id="company-address_district"
                 label="Bairro"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 value={this.state.address_district}
                 disabled={true}
                 fullWidth
@@ -355,7 +359,7 @@ class ClientForm extends Component {
               <JlInput
                 id="company-city"
                 label="Logradouro"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 value={this.state.address}
                 disabled={true}
                 fullWidth

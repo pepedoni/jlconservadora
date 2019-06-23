@@ -12,6 +12,11 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
+  textFieldReadOnly: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    backgroundColor: '#b9b7b74f'
+  },
   dense: {
     marginTop: 16
   },
@@ -90,7 +95,7 @@ class EmployeeForm extends React.Component {
               <JlInput
                 id="standard-cpf"
                 label="CPF"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.cpf}
                 fullWidth
@@ -103,7 +108,7 @@ class EmployeeForm extends React.Component {
               <JlInput
                 id="standard-controlled"
                 label="Nome"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.name}
                 fullWidth

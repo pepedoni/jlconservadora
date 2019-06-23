@@ -17,6 +17,11 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
+  textFieldReadOnly: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    backgroundColor: '#b9b7b74f'
+  },
   dense: {
     marginTop: 16
   },
@@ -178,7 +183,7 @@ class InvoiceForm extends Component {
               <JlAutoComplete
                 id="standard-provider_inscription"
                 label="Prestador"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 disabled={this.isReadOnly(this.props.mode, true)}
                 value={this.state.provider_social_name}
                 fullWidth
@@ -201,7 +206,7 @@ class InvoiceForm extends Component {
               <JlAutoComplete
                   id="standard-provider_inscription"
                   label="Cliente"
-                  className={classes.textField}
+                  className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                   disabled={this.isReadOnly(this.props.mode, true)}
                   value={this.state.client_name}
                   fullWidth
@@ -225,7 +230,7 @@ class InvoiceForm extends Component {
               <JlInput
                 id="standard-number"
                 label="Número"
-                className={classes.textField}
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                 disabled={true}
                 value={this.state.number}
                 fullWidth
@@ -300,7 +305,7 @@ class InvoiceForm extends Component {
               <JlAutoComplete
                   id="standard-state"
                   label="Municipio"
-                  className={classes.textField}
+                  className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                   disabled={this.isReadOnly(this.props.mode, true)}
                   value={this.state.provision_city_name}
                   fullWidth
