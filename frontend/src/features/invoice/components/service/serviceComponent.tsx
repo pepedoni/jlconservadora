@@ -27,7 +27,8 @@ export default class ServiceComponent extends Component {
                         onEdit={this.props.serviceEdit} 
                         service={this.props.service}
                         loading={this.props.loading}
-                        invoice_id={this.props.invoice_id}/>
+                        invoice_id={this.props.invoice_id}
+                        view={this.props.serviceView}/>
             </JlDrawer>
         </div>
       )

@@ -73,9 +73,9 @@ class ServiceForm extends Component {
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
-
-  handleSearch() {
-    console.log("teste");
+  
+  delete = () => {
+    this.props.onDelete(this.state);
   }
 
   renderButtons() {
@@ -88,6 +88,13 @@ class ServiceForm extends Component {
     else if(this.props.mode == "edit" || this.props.mode == "new") {
       return (
         <div className="center-actions">
+          <Button
+            shape="circle"
+            size="large"
+            type="primary"
+            icon="close"
+            onClick={this.props.view}
+          />
           <Button
             shape="circle"
             size="large"
@@ -135,7 +142,7 @@ class ServiceForm extends Component {
                   label="Item da Lista"
                   className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
                   disabled={this.isReadOnly(this.props.mode, true)}
-                  value={this.state.item_list}
+                  value={this.state.list_item}
                   fullWidth
                   onChange={this.handleChange("list_item")}
                   margin="normal"

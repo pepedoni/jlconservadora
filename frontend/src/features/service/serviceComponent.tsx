@@ -17,15 +17,16 @@ export default class ServiceComponent extends Component {
             <ServiceGrid onAdd={this.props.serviceAdd} onRowClick= {this.props.onRowClick} />
             <JlDrawer isVisible={this.props.formOpen} 
                         onClose={this.props.serviceCloseForm} 
-                        onEdit={this.props.serviceEdit} 
-                        onDelete={this.props.serviceDelete} 
                         mode={this.props.mode}
                         title="Serviço">
                 <ServiceForm 
                         mode={this.props.mode} 
+                        onEdit={this.props.serviceEdit}
                         onSave={this.props.serviceSave} 
+                        onDelete={this.props.serviceDelete} 
                         service={this.props.service}
-                        loading={this.props.loading}/>
+                        loading={this.props.loading}
+                        view={this.props.serviceView}/>
             </JlDrawer>
         </div>
       )

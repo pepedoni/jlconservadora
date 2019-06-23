@@ -119,7 +119,15 @@ class InvoiceForm extends Component {
     }
     else if(this.props.mode == "edit" || this.props.mode == "new") {
       return (
+        
         <div className="center-actions">
+          <Button
+            shape="circle"
+            size="large"
+            type="primary"
+            icon="close"
+            onClick={this.props.view}
+          />
           <Button
             shape="circle"
             size="large"

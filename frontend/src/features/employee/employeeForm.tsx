@@ -52,6 +52,13 @@ class EmployeeForm extends React.Component {
             shape="circle"
             size="large"
             type="primary"
+            icon="close"
+            onClick={this.props.view}
+          />
+          <Button
+            shape="circle"
+            size="large"
+            type="primary"
             icon="check"
             onClick={this.save}
           />

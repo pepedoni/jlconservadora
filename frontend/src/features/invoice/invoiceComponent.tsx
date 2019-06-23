@@ -33,7 +33,8 @@ export default class InvoiceComponent extends Component {
                                 onSave={this.props.invoiceSave} 
                                 onEdit={this.props.invoiceEdit} 
                                 invoice={this.props.invoice} 
-                                loading={this.props.loading}/>
+                                loading={this.props.loading}
+                                view={this.props.invoiceView}/>
                             </TabPane>
                             <TabPane tab="Serviços" disabled={!this.props.tabsAtivas} key="2">
                               <ServiceContainer mode={this.props.mode} 

@@ -25,7 +25,8 @@ export default class EmployeeComponent extends Component {
                   mode={this.props.mode} 
                   onSave={this.props.employeeSave}
                   employee={this.props.employee}
-                  loading={this.props.loading}>
+                  loading={this.props.loading}
+                  view={this.props.employeeView}>
             </EmployeeForm>
         </JlDrawer>
       </div>

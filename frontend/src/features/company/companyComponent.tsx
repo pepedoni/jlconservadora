@@ -27,7 +27,8 @@ export default class CompanyComponent extends Component {
                         onDelete={this.props.onDelete} 
                         company={this.props.company}
                         loading={this.props.loading}
-                        callLoading={this.props.callLoading}/>
+                        callLoading={this.props.callLoading}
+                        view={this.props.companyView}/>
             </JlDrawer>
         </div>
       )
