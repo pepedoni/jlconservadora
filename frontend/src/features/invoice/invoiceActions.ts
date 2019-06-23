@@ -114,7 +114,7 @@ export const invoiceSave = (invoice, mode) => (dispatch) => {
         });
     }
     else if(mode == 'edit') {
-        request.put('/invoice' + invoice.id, invoice).then( response =>  {
+        request.put('/invoice/' + invoice.id, invoice).then( response =>  {
             dispatch(invoiceSaveSuccess(invoice));
             dispatch(loading(false));
         }).catch( error => {
