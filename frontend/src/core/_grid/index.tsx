@@ -143,6 +143,7 @@ export default class App extends Component {
             dataSource={(this.props.filter === undefined || !! this.props.filter) ? this.state.data : this.props.filter}
             pagination={this.state.pagination}
             loading={this.state.loading}
+            rowClassName={(this.props.rowClassName) ? this.props.rowClassName : ''}
             onChange={this.handleTableChange}
             rowKey={this.props.rowKey}
             {...this.props.otherProps}

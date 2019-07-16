@@ -1,6 +1,6 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
+    "name": "jlconservadora/system",
+    "description": "JL Conservadora - Backend",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
@@ -11,7 +11,8 @@
         "laravel/passport": "^6.0",
         "laravel/tinker": "^1.0",
         "laravolt/avatar": "^2.0",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "nfephp-org/sped-common": "*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

@@ -22,12 +22,6 @@ export const invoiceView = () => {
     }
 }
 
-export const invoiceDelete= () => {
-    return {
-        type: types.INVOICE_DELETE
-    }
-}
-
 export const invoiceCloseForm = () => {
     return { 
         type: types.INVOICE_CLOSEFORM
@@ -106,6 +100,7 @@ export const invoiceSave = (invoice, mode) => (dispatch) => {
     dispatch(loading(true));
     if(mode == 'new') {
         request.post('/invoice', invoice).then( response =>  {
+            invoice.id = response.data.id;
             dispatch(invoiceSaveSuccess(invoice));
             dispatch(loading(false));
         }).catch( error => {
@@ -147,4 +142,15 @@ export const transmitInvoice = (invoices) => (dispatch) => {
         dispatch(loading(false));
     });
 
+}
+
+export const invoiceDelete = (invoice) => (dispatch) => {
+    dispatch(loading(true));
+
+    request.delete('/invoice/' + invoice.id, invoice).then( response =>  {
+        dispatch(invoiceCloseForm());
+        dispatch(loading(false));
+    }).catch( error => {
+        dispatch(loading(false));
+    });
 }

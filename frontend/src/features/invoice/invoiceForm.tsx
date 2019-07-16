@@ -110,6 +110,10 @@ class InvoiceForm extends Component {
     
   };
 
+  delete = () => {
+    this.props.onDelete(this.state);
+  };
+
   renderButtons(mode) {
     if(mode == 'view') {
         return (<div className="center-actions">
@@ -200,6 +204,7 @@ class InvoiceForm extends Component {
                 valueField="name"
                 displayedFields={["name"]}
                 outData={{
+                  provider_id: 'id',
                   provider_inscription: 'inscription',
                   provider_inscription_municipal: 'municipal_inscription',
                   provider_social_name: 'name'

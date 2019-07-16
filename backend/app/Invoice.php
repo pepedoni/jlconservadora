@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     protected $fillable = [
+		'provider_id',
         'provider_inscription',  
         'provider_inscription_municipal',
         'provider_social_name',
@@ -18,7 +19,8 @@ class Invoice extends Model
         'provision_state',
         'provision_city_ibge',
         'provision_city_name',              
-        'iss_retain'                
+		'iss_retain',
+		'state'                
     ];
 
     protected $guarded = ['id', 'created_at', 'update_at'];

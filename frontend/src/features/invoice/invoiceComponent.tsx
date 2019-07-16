@@ -23,7 +23,6 @@ export default class InvoiceComponent extends Component {
               filter={this.props.filter} transmitInvoice={this.props.transmitInvoice}/>
             <JlDrawer   isVisible={this.props.formOpen} 
                         onClose={this.props.invoiceCloseForm} 
-                        onDelete={this.props.invoiceDelete} 
                         mode={this.props.mode}
                         title="Nota Fiscal"
                         loading={this.props.loading}>
@@ -32,6 +31,7 @@ export default class InvoiceComponent extends Component {
                                 <InvoiceForm mode={this.props.mode} 
                                 onSave={this.props.invoiceSave} 
                                 onEdit={this.props.invoiceEdit} 
+                                onDelete={this.props.invoiceDelete} 
                                 invoice={this.props.invoice} 
                                 loading={this.props.loading}
                                 view={this.props.invoiceView}/>

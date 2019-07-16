@@ -9,18 +9,18 @@ const columns = [
         dataIndex: 'client_name',
         // render: (address, data) => `${address}, ${data.address_number}/${da}`,
         sorter: true,
-        width: '40%',
+        width: '30%',
     },
     {
         title: 'Data',
         sorter: true,
         dataIndex: 'provision_date_grid',
-        width: '25%'
+        width: '20%'
     }, 
     {
         title: 'Valor',
         sorter: true,
-        width: '25%',
+        width: '20%',
         dataIndex: 'value',
         align: 'right'
     },  
@@ -30,6 +30,12 @@ const columns = [
         sorter: true,
         // render: name => `${name.first} ${name.last}`,
         width: '10%',
+    },
+    {
+        title: 'Status',
+        dataIndex: 'description_state',
+        sorter: true,
+        width: '20%'
     } 
 ];
 
@@ -55,6 +61,22 @@ export default class InvoiceGrid extends Component {
             }
         ];
 
+    }
+
+    getColorLineByState(invoice) {
+
+        switch(invoice.state) {
+
+            case 0:
+                return 'invoice-pendent';
+            case 1:
+                return 'invoice-transmited';
+            case 2: 
+                return 'invoice-accepted';
+            default:
+                return 'invoice-pendent';
+                
+        }
     }
 
     render() {
@@ -87,6 +109,7 @@ export default class InvoiceGrid extends Component {
                     filter={this.props.filter}
                     onRowClick={ this.props.onRowClick }
                     openFilter={this.props.openFilter}
+                    rowClassName={(record) => this.getColorLineByState(record)}
                     otherProps={{rowSelection: rowSelection}}
                     otherButtons={this.state.otherButtons}
                 />

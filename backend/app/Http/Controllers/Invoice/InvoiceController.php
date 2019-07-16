@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Invoice;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Invoice\InvoiceBeloHorizonte;
+use App\Http\Controllers\Invoice\BeloHorizonte\LotBeloHorizonte;
 use Illuminate\Http\Request;
 use App\Invoice;
 use App\InvoiceServices;
+use App\Lot;
 use Carbon\Carbon;
+use NFePHP\Common\Certificate;
 
 class InvoiceController extends Controller {
 
@@ -16,6 +18,7 @@ class InvoiceController extends Controller {
         $request->provider_inscription = str_replace(array(".", "/", "-"), "", $request->provider_inscription);
 
         $request->validate([
+            'provider_id'                       => 'required',
             'provider_inscription'              => 'required',
             'provider_inscription_municipal'    => 'required',
             'client_inscription'                => 'required',
@@ -30,6 +33,7 @@ class InvoiceController extends Controller {
         ]);
         
         $invoice = new Invoice([
+            'provider_id'                       => $request->provider_id,
             'provider_inscription'              => $request->provider_inscription,
             'provider_inscription_municipal'    => $request->provider_inscription_municipal,
             'provider_social_name'              => $request->provider_social_name,
@@ -47,7 +51,7 @@ class InvoiceController extends Controller {
         $invoice->save();
 
         return response()->json([
-            'message' => __('invoice.insert_ok')
+            "id" => $invoice["id"]
         ], 201);
     } 
 
@@ -62,6 +66,12 @@ class InvoiceController extends Controller {
 
     public function remove(Request $request, Invoice $invoice) {
         $invoice = Invoice::findOrFail($request->id);
+        $invoiceServices = InvoiceServices::where('invoice_id', '=', $request->id)->get();
+
+        foreach($invoiceServices as $invoiceService) {
+            $invoiceService->delete();
+        }
+
         $invoice->delete();
     }
 
@@ -73,6 +83,8 @@ class InvoiceController extends Controller {
         foreach($invoices as &$invoice) {
             $date = new \DateTime($invoice["provision_date"]);
             $invoice["provision_date_grid"] = $date->format('d/m/Y');
+            $invoice["description_state"]   = ($invoice["state"] == '0')  ? 'Pendente' 
+                                                : (($invoice["state"] == '1') ? 'Transmitida' : 'Aceita');
         }
 
         return $invoices;
@@ -133,11 +145,60 @@ class InvoiceController extends Controller {
     }
 
     public function transmitInvoice(Request $request) {
+        
         $invoices = $request->all();
+        $certificate_file = file_get_contents('../app/Http/Controllers/Invoice/teknisa.pfx');
+        $certificate = Certificate::readPfx($certificate_file, 'teknisa@12');
+
+        $i = 0;
+        $transmitLots = array();
+        $consultLots  = array();
 
         foreach($invoices as $invoice) {
-            $invoicesBeloHorizonte = new InvoiceBeloHorizonte($invoices);
-            var_dump($invoice["id"]);
+            if($invoice["state"] == 0) {
+                if(empty($transmitLots[$i])) {
+                    $transmitLots[$i][] = $invoice;
+                }
+                else if(count($transmitLots[$i]) < 50) {
+                    $transmitLots[$i][] = $invoice;
+                }
+                else {
+                    $i++;
+                }
+            }
+            else if($invoice["state"] == 1) {
+                $consultLots[] = $invoice["lot_rps"];
+            }
         }
+
+        foreach($transmitLots as $invoice_lot) {
+
+            $provider_inscription = $invoice_lot[0]["provider_inscription"];
+            $provider_inscription_municipal = $invoice_lot[0]["provider_inscription_municipal"];
+            $provider_id = $invoice_lot[0]["provider_id"];
+
+            $lot = new Lot([
+                'provider_inscription'              => $provider_inscription,
+                'provider_inscription_municipal'    => $provider_inscription_municipal,
+                'provider_id'                       => $provider_id,
+                'state'                             => '0'
+            ]);
+
+            $lot->save();
+            $loteRps = new LotBeloHorizonte($invoice_lot, $certificate, $lot);
+            $loteRps->transmitLotRps();
+
+        }
+
+        foreach($consultLots as $consultLot) {
+
+            $lot = Lot::where('id', '=', $consultLot);
+            $invoices = Invoice::where('lot_rps', '=', $consultLot);
+            $loteRps = new LotBeloHorizonte(array(), $certificate, $lot);
+            $loteRps->consultLotRps();
+
+        }
+
+        
     }
 }
