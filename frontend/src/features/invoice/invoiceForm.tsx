@@ -228,6 +228,7 @@ class InvoiceForm extends Component {
                   valueField="name"
                   displayedFields={["name"]}
                   outData={{
+                    client_id: 'id',
                     client_inscription: 'inscription',
                     client_name: 'name'
                   }}

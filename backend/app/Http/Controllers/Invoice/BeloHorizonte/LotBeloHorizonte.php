@@ -9,12 +9,17 @@ class LotBeloHorizonte extends LotCity
 {
     protected $cod_city_ibge  = '3106200';
     protected $cod_city_siafi = '4123'; 
-
+    protected $xmlLoteRps     = '';
     protected $id_lote = '1';
 
+    /**
+     * Enviar Lote Rps 
+     */
+
     protected function genHeaderEnviarLoteRps() {
-        $this->xmlLoteRps = '<EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/nfse.xsd">
-			<LoteRps Id="LOTE_'.$this->lot["company_id"].'_'.$this->lot["id"].'" xmlns="http://www.abrasf.org.br/nfse.xsd" versao="1.00">
+        $this->xmlLoteRps = '
+        <EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/nfse.xsd">
+			<LoteRps Id="LOTE_'.$this->lot["provider_id"].'_'.$this->lot["id"].'" xmlns="http://www.abrasf.org.br/nfse.xsd" versao="1.00">
 				<NumeroLote>'.str_pad($this->lot["id"], 15, "0", STR_PAD_LEFT).'</NumeroLote>
 				<Cnpj>'.$this->lot["provider_inscription"].'</Cnpj>
 				<InscricaoMunicipal>'.$this->lot["provider_inscription_municipal"].'</InscricaoMunicipal>
@@ -22,7 +27,12 @@ class LotBeloHorizonte extends LotCity
 				<ListaRps>';
     }
 
-
+    protected function getFooterEnviarLoteRps() {   
+        $this->xmlLoteRps .= '
+                </ListaRps>
+            </LoteRps>
+        </EnviarLoteRpsEnvio>';
+    }
 
     protected function genXmlEnviarLoteRps() {
         
@@ -30,9 +40,12 @@ class LotBeloHorizonte extends LotCity
 
         foreach($this->invoices as $invoice) {
             $invoiceBeloHorizonte = new InvoiceBeloHorizonte($invoice);
-            $invoiceBeloHorizonte->getRps();
+            $this->xmlLoteRps .= $invoiceBeloHorizonte->getRps();
 
         }
+
+        $this->getFooterEnviarLoteRps();
+        var_dump($this->xmlLoteRps);
     }
 
     protected function createEnviarLoteRps() {
@@ -44,6 +57,10 @@ class LotBeloHorizonte extends LotCity
         $this->genXmlEnviarLoteRps();
         $this->signXmlEnviarLoteRps(array("InfRps", "LoteRps"));
     }
+
+    /**
+     * Fim Enviar Lote Rps 
+     */
 
     public function consultLotRps() {
 
