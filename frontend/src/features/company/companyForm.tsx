@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-import { Row, Col, Button, Spin } from "antd";
-import { withStyles } from "@material-ui/core/styles";
-import JlInput from "core/_input/input";
-import JlSelect from "core/_input/select";
-
+import React, { Component } from "react"
+import { Row, Col, Button, Spin } from "antd"
+import { withStyles } from "@material-ui/core/styles"
+import JlInput from "core/_input/input"
+import JlSelect from "core/_input/select"
+import 'react-dropzone-uploader/dist/styles.css'
+import Dropzone from 'react-dropzone-uploader'
+import { getDroppedOrSelectedFiles } from 'html5-file-selector'
 
 const styles = theme => ({
   container: {
@@ -45,6 +47,14 @@ class CompanyForm extends Component {
     } else return false;
   }
 
+  async getCertifyFile(certify) {
+    if(certify) {
+      var file = await certify.arrayBuffer();
+      let base64String = btoa(String.fromCharCode(...new Uint8Array(file)));
+      this.setState({...this.state, certify_data: base64String, certify_name: certify.name })
+    }
+  }
+
   save = () => {
     this.props.onSave(this.state, this.props.mode);
   };
@@ -68,9 +78,17 @@ class CompanyForm extends Component {
     }
   }
 
+  certificadoOnChange(files) {
+    console.log(files);
+  };
+
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
+
+  handleChangeCertify = ({ meta, file }, status) => { 
+    if(status == 'done') this.getCertifyFile(file);
+  }
 
   onSelect(event, name) {
     if (event) {
@@ -382,6 +400,43 @@ class CompanyForm extends Component {
                 margin="normal"
                 variant="outlined"
               />
+            </Col>
+          </Row>
+          <Row gutter={8}>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              {this.props.mode == 'edit' ? 
+                <Dropzone
+                    onChangeStatus={this.handleChangeCertify}
+                    inputContent="Coloque aqui seu certificado"
+                    accept=".p12, .pfx"
+                    maxFiles={1}
+                />
+                :
+                <JlInput
+                  id="company-certify_name"
+                  label="Certificado"
+                  className={classes.textField}
+                  value={this.state.certify_name}
+                  disabled={true}
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                />
+              }
+            </Col>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                  id="company-address_complement"
+                  label="Senha do Certificado"
+                  className={classes.textField}
+                  value={this.state.certify_password}
+                  disabled={this.isReadOnly(this.props.mode, false)}
+                  fullWidth
+                  type="password"
+                  onChange={this.handleChange("certify_passwod")}
+                  margin="normal"
+                  variant="outlined"
+                />
             </Col>
           </Row>
         </Spin>

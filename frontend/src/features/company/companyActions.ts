@@ -1,5 +1,7 @@
-import * as types from "./constants";
-import request from "api/request";
+import * as types from "./constants"
+import request from "api/request"
+import FormData from 'form-data'
+
 /**
  * COMPANY
  */
@@ -70,6 +72,7 @@ export const callLoading = (loading) => {
 
 export const companySave = (company, mode) => (dispatch) => {
     dispatch(callLoading(true));
+
     if(mode == 'new') {
         request.post('/companies', company).then( response =>  {
             dispatch(companySaveSuccess(company));

@@ -85,6 +85,10 @@ class ClientForm extends Component {
     this.setState({ [name]: event.target.value });
   };
 
+  certificadoOnChange(files) {
+    console.log(files);
+  };
+
   componentWillReceiveProps(nextProps) {
     if (
       (nextProps.mode == "view" || nextProps.mode == "new") 
