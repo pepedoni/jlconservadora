@@ -45,7 +45,7 @@ class CompanyController extends Controller
     public function updateCompany(Request $request, $id) {
 
         $company = Company::findOrFail($id);
-
+    
         $company->fill($request->all())->save();
 
         return response()->json(['data'=> $company]);
