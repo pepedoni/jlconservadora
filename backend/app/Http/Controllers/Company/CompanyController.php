@@ -32,7 +32,9 @@ class CompanyController extends Controller
             'address_district' => $request->address_district,
             'address' => $request->address,
             'address_number' => $request->address_number,
-            'address_complement' =>$request->address_complement 
+            'address_complement' => $request->address_complement,
+            'certify_data' => $request->certify_data,
+            'certify_password' => $request->certify_password
         ]);
             
         $company->save();

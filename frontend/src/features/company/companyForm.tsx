@@ -433,7 +433,7 @@ class CompanyForm extends Component {
                   disabled={this.isReadOnly(this.props.mode, false)}
                   fullWidth
                   type="password"
-                  onChange={this.handleChange("certify_passwod")}
+                  onChange={this.handleChange("certify_password")}
                   margin="normal"
                   variant="outlined"
                 />

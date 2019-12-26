@@ -9,6 +9,7 @@ use App\Invoice;
 use App\InvoiceServices;
 use App\Lot;
 use Carbon\Carbon;
+use App\Company;
 use NFePHP\Common\Certificate;
 
 class InvoiceController extends Controller {
@@ -149,13 +150,56 @@ class InvoiceController extends Controller {
     public function transmitInvoice(Request $request) {
         
         $invoices = $request->all();
-        $certificate_file = file_get_contents('../app/Http/Controllers/Invoice/teknisa.pfx');
-        $certificate = Certificate::readPfx($certificate_file, 'teknisa@12');
+
+        if(empty($invoices)) throw new \Excepetion("Nenhuma nota fiscal selecionada.");
+
+        $provider_id = $invoices[0]["provider_id"];     
+
+        $company = Company::where('id', '=', $provider_id)->get();
+        
+        if(!isset($company[0])) throw new \Exception("Empresa da nota fiscal não encontrada.");
+
+        $company = $company[0];
+
+        $certificate = array(
+            "file" => ($company["certify_data"]) ? base64_decode($company["certify_data"]) : '',
+            "password" => $company["certify_password"]
+        );
+
+        $certificate = Certificate::readPfx($certificate["file"], $certificate["password"]);
 
         $i = 0;
         $transmitLots = array();
         $consultLots  = array();
 
+        $this->separeteNotesByState($invoices, $transmitLots, $consultLots); 
+
+        $succesInvoices = $this->sendInvoice($transmitLots, $certificate);
+
+        foreach($succesInvoices as $invoice) {
+            addLotToConsult($invoice, $consultLots);
+        }
+
+        foreach($consultLots as $consultLot) {
+
+            $lot = Lot::where('id', '=', $consultLot);
+            $invoices = Invoice::where('lot_rps', '=', $consultLot);
+            $loteRps = new LotBeloHorizonte(array(), $certificate, $lot);
+            $loteRps->consultLotRps();
+
+        }
+        
+    }
+
+    private function addLotToConsult($invoice, &$consultLots) {
+        $lotRps = $invoice["lot_rps"];
+        if(!isset($consultLots[$lotRps])) {
+            $consultLots[$loteRps] = $lotRps;
+        }
+    }
+
+    protected function separeteNotesByState($invoices, &$transmitLots, &$consultLots) {
+        $i = 0;
         foreach($invoices as $invoice) {
             if($invoice["state"] == 0) {
                 if(empty($transmitLots[$i])) {
@@ -169,10 +213,13 @@ class InvoiceController extends Controller {
                 }
             }
             else if($invoice["state"] == 1) {
-                $consultLots[] = $invoice["lot_rps"];
+                addLotToConsult($invoice, $consultLots);
             }
         }
+    }
 
+    protected function sendInvoice($transmitLots, $certificate) {
+        $succesInvoices = array();
         foreach($transmitLots as $invoice_lot) {
 
             $provider_inscription = $invoice_lot[0]["provider_inscription"];
@@ -189,18 +236,8 @@ class InvoiceController extends Controller {
             $lot->save();
             $loteRps = new LotBeloHorizonte($invoice_lot, $certificate, $lot);
             $loteRps->transmitLotRps();
-
+            $succesInvoices[] = $invoice_lot;
         }
-
-        foreach($consultLots as $consultLot) {
-
-            $lot = Lot::where('id', '=', $consultLot);
-            $invoices = Invoice::where('lot_rps', '=', $consultLot);
-            $loteRps = new LotBeloHorizonte(array(), $certificate, $lot);
-            $loteRps->consultLotRps();
-
-        }
-
-        
+        return $succesInvoices;
     }
 }

@@ -38,19 +38,19 @@ class InvoiceBeloHorizonte extends InvoiceCity
                             <Status>'.''.'</Status>
                             <Servico>
                                 <Valores>
-                                    <ValorServicos>'.''.'</ValorServicos>
-                                    <ValorDeducoes>'.''.'</ValorDeducoes>
-                                    <ValorPis>'.''.'</ValorPis>
-                                    <ValorCofins>'.''.'</ValorCofins>
-                                    <ValorInss>'.''.'</ValorInss>
-                                    <ValorIr>'.''.'</ValorIr>
-                                    <ValorCsll>'.''.'</ValorCsll>
-                                    <IssRetido>'.''.'</IssRetido>
-                                    <ValorIss>'.''.'</ValorIss>
-                                    <ValorIssRetido>'.''.'</ValorIssRetido>
+                                    <ValorServicos>'.$this->service["value"].'</ValorServicos>
+                                    <ValorDeducoes>'.$this->valueDeductions.'</ValorDeducoes>
+                                    <ValorPis>'.$this->valuePis.'</ValorPis>
+                                    <ValorCofins>'.$this->valueCofins.'</ValorCofins>
+                                    <ValorInss>'.$this->valueInss.'</ValorInss>
+                                    <ValorIr>'.$this->valueIr.'</ValorIr>
+                                    <ValorCsll>'.$this->valueCsll.'</ValorCsll>
+                                    <IssRetido>'.$this->service["iss_retain"].'</IssRetido>
+                                    <ValorIss>'.$this->formatNumber($this->service["value_iss"]).'</ValorIss>
+                                    <ValorIssRetido>'.$this->formatNumber($this->invoice["iss_retain"] == 1 ? $this->service["value_iss"] : 0).'</ValorIssRetido>
                                     <OutrasRetencoes>'.''.'</OutrasRetencoes>
-                                    <BaseCalculo>'.''.'</BaseCalculo>
-                                    <Aliquota>'.''.'</Aliquota>
+                                    <BaseCalculo>'.$this->service["value"].'</BaseCalculo>
+                                    <Aliquota>'.$this->formatNumber($this->service["aliquot_iss"]).'</Aliquota>
                                     <ValorLiquidoNfse>'.''.'</ValorLiquidoNfse>
                                     <DescontoIncondicionado>'.''.'</DescontoIncondicionado>
                                     <DescontoCondicionado>'.''.'</DescontoCondicionado>
@@ -58,7 +58,7 @@ class InvoiceBeloHorizonte extends InvoiceCity
                                 <ItemListaServico>'.''.'</ItemListaServico>
                                 <CodigoCnae>'.''.'</CodigoCnae>
                                 <CodigoTributacaoMunicipio>'.''.'</CodigoTributacaoMunicipio>
-                                <Discriminacao>'.$this->discrimnation.'</Discriminacao>
+                                <Discriminacao>'.substr($this->service["description"], 0, 2000).'</Discriminacao>
                                 <CodigoMunicipio>'.$this->invoice["provision_city_ibge"].'</CodigoMunicipio>
                             </Servico>
                             <Prestador>
@@ -98,7 +98,7 @@ class InvoiceBeloHorizonte extends InvoiceCity
                             </Tomador>
                         </InfRps>
                     </Rps>';
-
+        var_dump($xmlRps);die;
         return $xmlRps;
     }
 }
