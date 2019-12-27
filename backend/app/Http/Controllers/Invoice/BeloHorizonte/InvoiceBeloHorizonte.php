@@ -6,6 +6,9 @@ use App\Http\Controllers\Invoice\InvoiceCity;
 
 class InvoiceBeloHorizonte extends InvoiceCity
 {
+    protected $cod_city_ibge  = '3106200';
+    protected $cod_city_siafi = '4123'; 
+
     public function getRps() {
 
         $client_inscription = str_replace(array(".", "/", "-"), "", $this->invoice["client_inscription"]);
@@ -20,22 +23,23 @@ class InvoiceBeloHorizonte extends InvoiceCity
         else {
             $client_phone = str_replace(array("(", ")", "-"), "", $this->client["phone_contact"]);
         }
-        $date = new \DateTime();
 
+        $date = new \DateTime();
+            
         $xmlRps =  '
                     <Rps xmlns="http://www.abrasf.org.br/nfse.xsd">
-                        <InfRps Id="'.''.'">
+                        <InfRps Id="'.$this->idRps.'">
                             <IdentificacaoRps>
-                                <Numero>'.''.'</Numero>
+                                <Numero>'.str_pad($this->number, 0, 15).'</Numero>
                                 <Serie>'.''.'</Serie>
-                                <Tipo>'.''.'</Tipo>
+                                <Tipo>1</Tipo>
                             </IdentificacaoRps>
                             <DataEmissao>'.$date->format('Y-m-d').'T'.$date->format('h:i:s').'</DataEmissao>
-                            <NaturezaOperacao>'.$this->company['nature_operation'].'</NaturezaOperacao>
+                            <NaturezaOperacao>'.$this->getNatureOperation().'</NaturezaOperacao>
                             <RegimeEspecialTributacao>'.$this->company['taxation_regime'].'</RegimeEspecialTributacao>
                             <OptanteSimplesNacional>'.$this->company['national_simple'].'</OptanteSimplesNacional>
                             <IncentivadorCultural>'.$this->company['national_simple'].'</IncentivadorCultural>
-                            <Status>'.''.'</Status>
+                            <Status>1</Status>
                             <Servico>
                                 <Valores>
                                     <ValorServicos>'.$this->service["value"].'</ValorServicos>
@@ -48,14 +52,14 @@ class InvoiceBeloHorizonte extends InvoiceCity
                                     <IssRetido>'.$this->service["iss_retain"].'</IssRetido>
                                     <ValorIss>'.$this->formatNumber($this->service["value_iss"]).'</ValorIss>
                                     <ValorIssRetido>'.$this->formatNumber($this->invoice["iss_retain"] == 1 ? $this->service["value_iss"] : 0).'</ValorIssRetido>
-                                    <OutrasRetencoes>'.''.'</OutrasRetencoes>
+                                    <OutrasRetencoes>'.$this->formatNumber(0).'</OutrasRetencoes>
                                     <BaseCalculo>'.$this->service["value"].'</BaseCalculo>
                                     <Aliquota>'.$this->formatNumber($this->service["aliquot_iss"]).'</Aliquota>
-                                    <ValorLiquidoNfse>'.''.'</ValorLiquidoNfse>
+                                    <ValorLiquidoNfse>'.$this->liquidValue.'</ValorLiquidoNfse>
                                     <DescontoIncondicionado>'.''.'</DescontoIncondicionado>
                                     <DescontoCondicionado>'.''.'</DescontoCondicionado>
                                 </Valores>
-                                <ItemListaServico>'.''.'</ItemListaServico>
+                                <ItemListaServico>'.$this->system_service["list_item"].'</ItemListaServico>
                                 <CodigoCnae>'.''.'</CodigoCnae>
                                 <CodigoTributacaoMunicipio>'.''.'</CodigoTributacaoMunicipio>
                                 <Discriminacao>'.substr($this->service["description"], 0, 2000).'</Discriminacao>
@@ -98,7 +102,12 @@ class InvoiceBeloHorizonte extends InvoiceCity
                             </Tomador>
                         </InfRps>
                     </Rps>';
-        var_dump($xmlRps);die;
+
         return $xmlRps;
     }
-}
+
+    private function getNatureOperation() {
+        if($this->invoice["provision_city_ibge"] == $this->cod_city_ibge) return 1;
+        else return 2;
+    }
+} 
