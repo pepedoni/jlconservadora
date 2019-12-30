@@ -123,7 +123,7 @@ class ServiceForm extends Component {
           wrapperClassName="spin"
         >
           <Row gutter={8}>
-            <Col className="gutter-row" md={12}>
+            <Col className="gutter-row" md={8}>
               <JlInput
                 id="standard-address"
                 label="Nome"
@@ -159,6 +159,20 @@ class ServiceForm extends Component {
                 fullWidth
                 endAdornment="%"
                 onChange={this.handleChange("aliquot")}
+                margin="normal"
+                variant="outlined"
+                type="float"
+              />
+            </Col>
+            <Col className="gutter-row" md={4} sm={12} xs={12}>
+              <JlInput
+                id="taxation_code"
+                label="Código de Tributação"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.taxation_code}
+                fullWidth
+                onChange={this.handleChange("taxation_code")}
                 margin="normal"
                 variant="outlined"
                 type="float"

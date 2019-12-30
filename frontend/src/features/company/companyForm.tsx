@@ -207,7 +207,7 @@ class CompanyForm extends Component {
             </Col>
           </Row>
           <Row gutter={8}>
-            <Col className="gutter-row" md={12} sm={12} xs={12}>
+            <Col className="gutter-row" md={8} sm={8} xs={8}>
               <JlInput
                 id="company-municipal_inscription"
                 label="Inscrição Municipal"
@@ -221,7 +221,7 @@ class CompanyForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={12} sm={12} xs={12}>
+            <Col className="gutter-row" md={8} sm={8} xs={8}>
               <JlSelect
                 id="company-taxation_regime"
                 name="taxation_regime"
@@ -255,6 +255,20 @@ class CompanyForm extends Component {
                 ]}
                 fullWidth
                 onSelect={this.onSelect}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={8} sm={8} xs={8}>
+              <JlInput
+                id="company-cnae"
+                label="CNAE"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.cnae}
+                extraProps={{required: true}}
+                fullWidth
+                onChange={this.handleChange("cnae")}
                 margin="normal"
                 variant="outlined"
               />

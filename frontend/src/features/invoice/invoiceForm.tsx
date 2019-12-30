@@ -240,7 +240,19 @@ class InvoiceForm extends Component {
             </Col>
           </Row>
           <Row gutter={8}>
-            <Col className="gutter-row" md={8}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="series"
+                label="Série"
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
+                disabled={true}
+                value={this.state.series}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
                 id="standard-number"
                 label="Número"
@@ -252,7 +264,7 @@ class InvoiceForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={8} sm={12} xs={12}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlDate
                 id="standard-date"
                 label="Data"
@@ -265,7 +277,7 @@ class InvoiceForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={8} sm={12} xs={12}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
                 id="standard-date"
                 label="Valor"

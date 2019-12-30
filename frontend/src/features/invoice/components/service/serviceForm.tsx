@@ -157,7 +157,7 @@ class ServiceForm extends Component {
           wrapperClassName="spin"
         >
           <Row gutter={8}>
-            <Col className="gutter-row" md={8}>
+            <Col className="gutter-row" md={6}>
                 <JlAutoComplete
                     id="standard-provider_inscription"
                     label="Nome do Serviço"
@@ -173,7 +173,8 @@ class ServiceForm extends Component {
                         aliquot_iss:      'aliquot',
                         description:  'description',
                         list_item:    'list_item',
-                        service_id:   'id'  
+                        service_id:   'id',
+                        taxation_code: 'taxation_code' 
                     }}
                     onSuggestionSelected={this.onSuggestionSelected}
                     onChange={this.handleChangeAutoComplete('name')}
@@ -181,7 +182,7 @@ class ServiceForm extends Component {
                     variant="outlined"
                 />
             </Col>
-            <Col className="gutter-row" md={8}>
+            <Col className="gutter-row" md={6}>
               <JlInput
                   id="standard-aliquot"
                   label="Item da Lista"
@@ -194,7 +195,7 @@ class ServiceForm extends Component {
                   variant="outlined"
                 />
             </Col>
-            <Col className="gutter-row" md={8}>
+            <Col className="gutter-row" md={6}>
               <JlInput
                 id="standard-aliquot"
                 label="Valor do Serviço"
@@ -204,6 +205,20 @@ class ServiceForm extends Component {
                 value={this.state.value}
                 fullWidth
                 onChange={this.handleChangeValue("value")}
+                margin="normal"
+                variant="outlined"
+                type="number"
+              />
+            </Col>
+            <Col className="gutter-row" md={6}>
+              <JlInput
+                id="taxation_code"
+                label="Código de Tributação"
+                className={classes.textField}
+                disabled={true}
+                value={this.state.taxation_code}
+                fullWidth
+                onChange={this.handleChangeValue("taxation_code")}
                 margin="normal"
                 variant="outlined"
                 type="number"
@@ -357,6 +372,38 @@ class ServiceForm extends Component {
                 margin="normal"
                 variant="outlined"
                 type="number"
+              />
+            </Col>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="standard-conditioned-discount"
+                label="Desconto Condicionado"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.conditioned_discount}
+                fullWidth
+                onChange={this.handleChange("conditioned_discount")}
+                margin="normal"
+                variant="outlined"
+                type="text"
+                rows={3}
+                startAdornment="R$"
+              />
+            </Col>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="standard-unconditioned-discount"
+                label="Desconto Incondicionado"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.unconditioned_discount}
+                fullWidth
+                onChange={this.handleChange("unconditioned_discount")}
+                margin="normal"
+                variant="outlined"
+                type="text"
+                rows={3}
+                startAdornment="R$"
               />
             </Col>
             <Col className="gutter-row" md={24} sm={24} xs={24}>

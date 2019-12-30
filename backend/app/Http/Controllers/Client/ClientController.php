@@ -48,7 +48,9 @@ class ClientController extends Controller {
             'address_district' => $request->address_district,
             'address' => $request->address,
             'address_number' => $request->address_number,
-            'inscription' =>$request->inscription
+            'inscription' => $request->inscription,
+            'client_email' => $request->client_email,
+            'city_ibge_code' => $request->city_ibge_code
         ]);
             
         $client->save();
