@@ -135,6 +135,7 @@ export default class App extends Component {
           onClickFilter={this.props.openFilter}
           onReload={this.reload}
           otherButtons={(this.props.otherButtons) ? this.props.otherButtons : []}
+          renderAdd={this.props.renderAdd === undefined ? true : this.props.renderAdd}
           />
         <Card>
           <Table

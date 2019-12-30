@@ -30,7 +30,8 @@ class InvoiceController extends Controller {
             'provision_state'                   => 'required',
             'provision_city_ibge'               => 'required',
             'provision_city_name'               => 'required',
-            'iss_retain'                        => 'required'
+            'iss_retain'                        => 'required',
+            'taxation_code'                     => 'required'
         ]);
         
         $invoice = new Invoice([
@@ -47,7 +48,10 @@ class InvoiceController extends Controller {
             'provision_state'                   => $request->provision_state,
             'provision_city_ibge'               => $request->provision_city_ibge,
             'provision_city_name'               => $request->provision_city_name,
-            'iss_retain'                        => $request->iss_retain
+            'iss_retain'                        => $request->iss_retain,
+            'taxation_code'                     => $request->taxation_code,
+            'conditioned_discount'              => $request->conditioned_discount,
+            'unconditioned_discount'            => $request->unconditioned_discount
         ]);
             
         $invoice->save();

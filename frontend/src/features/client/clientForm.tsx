@@ -114,6 +114,7 @@ class ClientForm extends Component {
     this.setState({ state: "" });
     this.setState({ address: "" });
     this.setState({ address_district: "" });
+    this.setState({ city_ibge_code: "" });
   }
 
   setCepFields = async cep => {
@@ -125,7 +126,7 @@ class ClientForm extends Component {
       this.setState({ state: json.estado });
       this.setState({ address: json.logradouro });
       this.setState({ address_district: json.bairro });
-
+      this.setState({ city_ibge_code: json.cidade_info.codigo_ibge });
     }
     catch(e) {
       this.clearCepFields();
@@ -232,7 +233,23 @@ class ClientForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={6} sm={12} xs={12}>
+            <Col className="gutter-row" md={12} sm={24} xs={24}>
+              <JlInput
+                id="standard-email"
+                label="Email Cliente"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.client_email}
+                fullWidth
+                extraProps={{ required: false, error: !!(errors.client_email) }}
+                onChange={this.handleChange("client_email")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+          </Row>
+          <Row>
+          <Col className="gutter-row" md={12} sm={24} xs={24}>
               <JlInput
                 id="standard-email"
                 label="Apartamento do Sindico"
@@ -246,7 +263,7 @@ class ClientForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={6} sm={12} xs={12}>
+            <Col className="gutter-row" md={12} sm={24} xs={24}>
               <JlDate
                 id="standard-syndic_birthday"
                 label="Aniversario do Sindico"
@@ -352,6 +369,22 @@ class ClientForm extends Component {
             </Col>
             <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
+                id="city_ibge_code"
+                label="Código IBGE"
+                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
+                value={this.state.city_ibge_code}
+                disabled={true}
+                fullWidth
+                extraProps={{ required: true }}
+                onChange={this.handleChange("city_ibge_code")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+          </Row>
+          <Row gutter={8}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
                 id="company-address_district"
                 label="Bairro"
                 className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
@@ -364,9 +397,7 @@ class ClientForm extends Component {
                 variant="outlined"
               />
             </Col>
-          </Row>
-          <Row gutter={8}>
-            <Col className="gutter-row" md={12} sm={12} xs={12}>
+            <Col className="gutter-row" md={9} sm={9} xs={9}>
               <JlInput
                 id="company-city"
                 label="Logradouro"
@@ -379,7 +410,7 @@ class ClientForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={4} sm={12} xs={12}>
+            <Col className="gutter-row" md={3} sm={9} xs={9}>
               <JlInput
                 id="company-address_number"
                 label="Número"
@@ -393,7 +424,7 @@ class ClientForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={8} sm={12} xs={12}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
                 id="company-address_complement"
                 label="Complemento"

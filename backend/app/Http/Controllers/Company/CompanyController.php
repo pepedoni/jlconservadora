@@ -11,12 +11,13 @@ class CompanyController extends Controller
 {
     public function insertCompany(Request $request) {
         $request->validate([
-            'municipal_inscription'       => 'required|string|max:255',
-            'inscription'       => 'required|string|max:255',
-            'name'              => 'required|string|max:255',
-            'taxation_regime'   => 'required|integer|min:0|max:5',
-            'national_simple'   => 'required|integer|min:0|max:1',
-            'cultural_promoter' => 'required|integer|min:0|max:1',
+            'municipal_inscription'  => 'required|string|max:255',
+            'inscription'            => 'required|string|max:255',
+            'name'                   => 'required|string|max:255',
+            'taxation_regime'        => 'required|integer|min:0|max:5',
+            'national_simple'        => 'required|integer|min:0|max:1',
+            'cultural_promoter'      => 'required|integer|min:0|max:1',
+            'cnae'                   => 'required|string|max:10'
         ]);
         
         $company = new Company([                                        
@@ -32,7 +33,8 @@ class CompanyController extends Controller
             'address_district' => $request->address_district,
             'address' => $request->address,
             'address_number' => $request->address_number,
-            'address_complement' =>$request->address_complement 
+            'address_complement' =>$request->address_complement,
+            'cnae' =>$request->cnae  
         ]);
             
         $company->save();
