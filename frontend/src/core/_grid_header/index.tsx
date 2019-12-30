@@ -18,7 +18,20 @@ export default class GridHeader extends Component {
                 </Button>
             );
         }
+    }
 
+    renderAddButton(renderButton) {
+        if(renderButton) {
+            return (
+                <Button 
+                    type="primary" 
+                    icon="solution"
+                    onClick={this.props.onAdd}
+                >
+                    { this.props.addLabel }
+                </Button>
+            )
+        }
     }
 
     render() {
@@ -40,13 +53,9 @@ export default class GridHeader extends Component {
                     >
                         Filtros
                     </Button>
-                    <Button 
-                        type="primary" 
-                        icon="solution"
-                        onClick={this.props.onAdd}
-                    >
-                        { this.props.addLabel }
-                    </Button>
+
+                    {this.renderAddButton(this.props.renderAdd)}
+                    
                     <Button 
                         icon="reload"
                         onClick={this.props.onReload}

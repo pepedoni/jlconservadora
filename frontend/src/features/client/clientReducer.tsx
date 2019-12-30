@@ -12,7 +12,8 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         filterOpen: false,
         client: {name: '', type: '', syndic_ap: '', syndic_birthday: '', syndic_email: '', home_contact: '', phone_contact: '',
                  home_contact: '', manage_init: '', inscription: '', manage_end: '', cond_blocks: '', cond_floors: '', cond_aps: '',
-                 cep: '', state: '', city: '', address: '', address_district: '', address_number: '', address_complement: ''}
+                 cep: '', state: '', city: '', address: '', address_district: '', address_number: '', address_complement: '', 
+                 client_email: '', city_ibge_code: ''}
       };
     case types.CLIENT_EDIT:
       console.log(`[Client Reducer] Action: CLIENT_EDIT`);
