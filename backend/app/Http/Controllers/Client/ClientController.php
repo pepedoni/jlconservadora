@@ -48,7 +48,9 @@ class ClientController extends Controller {
             'address_district' => $request->address_district,
             'address' => $request->address,
             'address_number' => $request->address_number,
-            'inscription' =>$request->inscription
+            'inscription' => $request->inscription,
+            'client_email' => $request->client_email,
+            'city_ibge_code' => $request->city_ibge_code
         ]);
             
         $client->save();
@@ -62,7 +64,11 @@ class ClientController extends Controller {
 
         $client = Client::findOrFail($id);
 
-        $client->fill($request->all())->save();
+        $client->fill($request->all());
+        $client->phone_contact = str_replace(array("(", ")", "-", " "), "", $client->phone_contact);
+        $client->home_contact = str_replace(array("(", ")", "-", " "), "", $client->home_contact);
+
+        $client->save();
 
         return response()->json(['data'=> $client]);
     }

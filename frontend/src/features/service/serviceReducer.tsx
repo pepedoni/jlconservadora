@@ -8,7 +8,7 @@ export default function(state = { formOpen: false, mode: null, service: {}, load
         ...state,
         formOpen: true,
         mode: 'new',
-        service: {name: '', list_item: '', aliquot: '', description: '' }
+        service: {name: '', list_item: '', aliquot: '', description: '', taxation_code: '' }
       };
     case types.SERVICE_EDIT:
       console.log(`[Service Reducer] Action: SERVICE_EDIT`);
@@ -28,7 +28,7 @@ export default function(state = { formOpen: false, mode: null, service: {}, load
       console.log(`[Service Reducer] Action: SERVICE_DELETE`);
       return {
         ...state,
-        formOpen: true,
+        formOpen: false,
         mode: 'delete'
       };
     case types.SERVICE_CLOSEFORM:

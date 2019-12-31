@@ -5,17 +5,21 @@ namespace App\Http\Controllers\Invoice;
 use NFePHP\Common\Certificate;
 use App\Lot;
 use App\Newcode;
+use App\Company;
 
 abstract class LotCity {
 
     protected $cod_city_ibge  = '';
     protected $cod_city_siafi = '';
     protected $xml = '';
+    protected $certificate = '';
+    protected $password = '';
+    protected $certificate_data = '';
 
-    public function __construct($invoices, Certificate $certificate, Lot $lot) {
+    public function __construct($invoices, Lot $lot) {
         $this->invoices = $invoices;
         $this->provider_id = $invoices[0]["provider_id"];
-        $this->certificate = $certificate;
+        $this->getCertificate();
         $this->lot = $lot;
         $this->idLotRps = $this->genNumberLoteRps();
     }
@@ -114,6 +118,30 @@ abstract class LotCity {
     }
 
 
+    private function getCertificate() {
+        
+        $company = Company::where('id', '=', $this->provider_id)->get();
+        
+        if(!isset($company[0])) throw new \Exception("Empresa da nota fiscal não encontrada.");
+
+        $company = $company[0];
+
+        $certificate = array(
+            "file" => ($company["certify_data"]) ? base64_decode($company["certify_data"]) : '',
+            "password" => $company["certify_password"]
+        );
+
+        if(!$certificate["file"]) throw new \Exception("Certificado não encontrado.");
+
+        $this->certificate_data = $certificate["file"];
+
+        $this->password = $certificate["password"];
+
+        $certificate = Certificate::readPfx($certificate["file"], $certificate["password"]);
+
+        $this->certificate = $certificate;
+    } 
+
     private function genNumberLoteRps(){
         $key = "LOTE_".$this->provider_id;
         $newCode = Newcode::where('key', '=', $key)->get();
@@ -140,6 +168,16 @@ abstract class LotCity {
 
     public function getCodCitySiafi() {
         return $this->cod_city_siafi;
+    }
+
+    protected function removerTagsVazias(\DOMDocument $xml) {
+        $xpath = new \DOMXPath($xml);
+        foreach($xpath->query('//*[not(node())]') as $node) {
+            if (!$node->hasAttributes()) {
+                $node->parentNode->removeChild($node);
+            }
+        }
+        return $xml;
     }
 
 }

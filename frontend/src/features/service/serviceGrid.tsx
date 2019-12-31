@@ -6,20 +6,25 @@ const columns = [
     {
         title: 'Nome',
         dataIndex: 'name',
+        width: '35%'
+    },
+    {
+        title: "Código de Tributação",
+        dataIndex: 'taxation_code',
         // sorter: true,
-        // render: name => `${name.first} ${name.last}`,
-        // width: '50%',
+        width: '35%'
     },
     {
         title: 'Item da Lista',
         dataIndex: 'list_item',
         // render: (address, data) => `${address}, ${data.address_number}/${da}`,
         // sorter: true,
-        // width: '20%',
+        width: '20%'
     },
     {
         title: 'Aliquota',
         dataIndex: 'aliquot',
+        width: '10%'
     }   
 ];
 

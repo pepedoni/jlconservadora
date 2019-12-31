@@ -36,6 +36,9 @@ const styles = theme => ({
         borderBottomColor: '#000',
         color: '#595959'
     },
+    disabledEdit: {
+      backgroundColor: '#b9b7b74f',
+    },
     cssFocused: {
         fontSize: 14
     },
@@ -101,6 +104,7 @@ class JlInput extends Component {
                       className={this.props.className}
                       value={this.props.value}
                       fullWidth
+                      mode={this.props.mode}
                       onChange={this.props.onChange}
                       disabled={this.props.disabled}
                       margin={this.props.margin || "normal"}

@@ -168,18 +168,32 @@ class ServiceForm extends Component {
                     fullWidth
                     filters={['name']}
                     route="services/getByName"
-                    displayedFields={['name', 'list_item']}
+                    displayedFields={['name', 'taxation_code', 'list_item']}
                     outData={{
                         aliquot_iss:      'aliquot',
                         description:  'description',
                         list_item:    'list_item',
-                        service_id:   'id'  
+                        service_id:   'id',
+                        taxation_code: 'taxation_code' 
                     }}
                     onSuggestionSelected={this.onSuggestionSelected}
                     onChange={this.handleChangeAutoComplete('name')}
                     margin="normal"
                     variant="outlined"
                 />
+            </Col>
+            <Col className="gutter-row" md={8}>
+              <JlInput
+                id="taxation_code"
+                label="Código de Tributação"
+                className={classes.textField}
+                disabled={true}
+                value={this.state.taxation_code}
+                fullWidth
+                onChange={this.handleChangeValue("taxation_code")}
+                margin="normal"
+                variant="outlined"
+              />
             </Col>
             <Col className="gutter-row" md={8}>
               <JlInput
@@ -194,6 +208,8 @@ class ServiceForm extends Component {
                   variant="outlined"
                 />
             </Col>
+          </Row>
+          <Row gutter={8}>
             <Col className="gutter-row" md={8}>
               <JlInput
                 id="standard-aliquot"
@@ -209,7 +225,7 @@ class ServiceForm extends Component {
                 type="number"
               />
             </Col>
-            <Col className="gutter-row" md={12} sm={12} xs={12}>
+            <Col className="gutter-row" md={8} sm={12} xs={12}>
               <JlInput
                 id="standard-aliquot"
                 label="Aliquota ISS"
@@ -224,7 +240,7 @@ class ServiceForm extends Component {
                 type="number"
               />
             </Col>
-            <Col className="gutter-row" md={12} sm={12} xs={12}>
+            <Col className="gutter-row" md={8} sm={12} xs={12}>
               <JlInput
                 id="standard-aliquot"
                 label="Valor ISS"
@@ -239,6 +255,8 @@ class ServiceForm extends Component {
                 type="number"
               />
             </Col>
+          </Row>
+          <Row gutter={8}>
             <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
                 id="standard-aliquot"
@@ -357,6 +375,38 @@ class ServiceForm extends Component {
                 margin="normal"
                 variant="outlined"
                 type="number"
+              />
+            </Col>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="standard-conditioned-discount"
+                label="Desconto Condicionado"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.conditioned_discount}
+                fullWidth
+                onChange={this.handleChange("conditioned_discount")}
+                margin="normal"
+                variant="outlined"
+                type="text"
+                rows={3}
+                startAdornment="R$"
+              />
+            </Col>
+            <Col className="gutter-row" md={12} sm={12} xs={12}>
+              <JlInput
+                id="standard-unconditioned-discount"
+                label="Desconto Incondicionado"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.unconditioned_discount}
+                fullWidth
+                onChange={this.handleChange("unconditioned_discount")}
+                margin="normal"
+                variant="outlined"
+                type="text"
+                rows={3}
+                startAdornment="R$"
               />
             </Col>
             <Col className="gutter-row" md={24} sm={24} xs={24}>

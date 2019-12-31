@@ -11,6 +11,7 @@ class LotBeloHorizonte extends LotCity
     protected $cod_city_siafi = '4123'; 
     protected $xmlLoteRps     = '';
     protected $id_lote = '1';
+    protected $ambiente = 2;
 
     const URL_PRODUCAO = "https://bhissdigital.pbh.gov.br/bhiss-ws/nfse?wsdl";
     const URL_HOMOLOGACAO = "https://bhisshomologa.pbh.gov.br/bhiss-ws/nfse?wsdl";
@@ -47,9 +48,21 @@ class LotBeloHorizonte extends LotCity
         }
 
         $this->getFooterEnviarLoteRps();
+
+        $domXml = new \DOMDocument("1.0", "UTF-8");
+        $domXml->loadXML($this->xmlLoteRps, LIBXML_NOBLANKS);
+        
+        $this->removerTagsVazias($domXml);
     }
 
-    public function sendLotToWebService() {
+    public function callWebService($xml, $function) {
+        
+        $tmpFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.'certKey'.uniqid().'.pem';
+
+        openssl_pkcs12_read($this->certificate_data, $cert, $this->password);
+
+        file_put_contents($tmpFile, $cert["pkey"]."\r\n".$cert["cert"]);
+
         $context = stream_context_create(array(
             'ssl' => array(
                 'verify_peer' => false,
@@ -59,7 +72,7 @@ class LotBeloHorizonte extends LotCity
         ));
 
         $options = array(
-            'local_cert' => $caminho,
+            'local_cert' => $tmpFile,
             'trace' => 1,
             'uri' => 'http://ws.bhiss.pbh.gov.br/',
             'soap_version' => SOAP_1_1,
@@ -71,16 +84,17 @@ class LotBeloHorizonte extends LotCity
 
         $client = new \SoapClient($url, $options);
         $soapMsg["nfseCabecMsg"] = '<cabecalho xmlns="http://www.abrasf.org.br/nfse.xsd" versao="1.00"><versaoDados>1.00</versaoDados></cabecalho>';
-        $soapMsg["nfseDadosMsg"] = $this->xmlLoteRps;
-
-        /* $resultado = $client->__soapCall($nomeFuncao, array($soapMsg));
-        return $resultado; */
+        $soapMsg["nfseDadosMsg"] = $xml;
+        var_dump($xml);die;
+        $resultado = $client->__soapCall($function, array($soapMsg));
+        var_dump($resultado);die;
+        return $resultado; 
     }
 
     public function transmitLotRps() {
         $this->genXmlEnviarLoteRps();
         $this->signXmlEnviarLoteRps(array("InfRps", "LoteRps"));
-        $this->sendLotToWebService();
+        $this->callWebService($this->xmlLoteRps, 'RecepcionarLoteRps');
     }
 
     /**

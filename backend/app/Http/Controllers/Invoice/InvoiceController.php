@@ -10,7 +10,6 @@ use App\InvoiceServices;
 use App\Lot;
 use Carbon\Carbon;
 use App\Company;
-use NFePHP\Common\Certificate;
 
 class InvoiceController extends Controller {
 
@@ -31,7 +30,8 @@ class InvoiceController extends Controller {
             'provision_state'                   => 'required',
             'provision_city_ibge'               => 'required',
             'provision_city_name'               => 'required',
-            'iss_retain'                        => 'required'
+            'iss_retain'                        => 'required',
+            'series'                            => 'required'
         ]);
         
         $invoice = new Invoice([
@@ -48,9 +48,10 @@ class InvoiceController extends Controller {
             'provision_state'                   => $request->provision_state,
             'provision_city_ibge'               => $request->provision_city_ibge,
             'provision_city_name'               => $request->provision_city_name,
-            'iss_retain'                        => $request->iss_retain
+            'iss_retain'                        => $request->iss_retain,
+            'series'                            => $request->series
         ]);
-            
+
         $invoice->save();
 
         return response()->json([
@@ -155,26 +156,13 @@ class InvoiceController extends Controller {
 
         $provider_id = $invoices[0]["provider_id"];     
 
-        $company = Company::where('id', '=', $provider_id)->get();
-        
-        if(!isset($company[0])) throw new \Exception("Empresa da nota fiscal não encontrada.");
-
-        $company = $company[0];
-
-        $certificate = array(
-            "file" => ($company["certify_data"]) ? base64_decode($company["certify_data"]) : '',
-            "password" => $company["certify_password"]
-        );
-
-        $certificate = Certificate::readPfx($certificate["file"], $certificate["password"]);
-
         $i = 0;
         $transmitLots = array();
         $consultLots  = array();
 
         $this->separeteNotesByState($invoices, $transmitLots, $consultLots); 
 
-        $succesInvoices = $this->sendInvoice($transmitLots, $certificate);
+        $succesInvoices = $this->sendInvoice($transmitLots);
 
         foreach($succesInvoices as $invoice) {
             addLotToConsult($invoice, $consultLots);
@@ -184,7 +172,7 @@ class InvoiceController extends Controller {
 
             $lot = Lot::where('id', '=', $consultLot);
             $invoices = Invoice::where('lot_rps', '=', $consultLot);
-            $loteRps = new LotBeloHorizonte(array(), $certificate, $lot);
+            $loteRps = new LotBeloHorizonte(array(), $lot);
             $loteRps->consultLotRps();
 
         }
@@ -218,7 +206,7 @@ class InvoiceController extends Controller {
         }
     }
 
-    protected function sendInvoice($transmitLots, $certificate) {
+    protected function sendInvoice($transmitLots) {
         $succesInvoices = array();
         foreach($transmitLots as $invoice_lot) {
 
@@ -234,7 +222,7 @@ class InvoiceController extends Controller {
             ]);
 
             $lot->save();
-            $loteRps = new LotBeloHorizonte($invoice_lot, $certificate, $lot);
+            $loteRps = new LotBeloHorizonte($invoice_lot, $lot);
             $loteRps->transmitLotRps();
             $succesInvoices[] = $invoice_lot;
         }

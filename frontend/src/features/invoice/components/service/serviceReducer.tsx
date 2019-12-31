@@ -9,7 +9,7 @@ export default function(state = { formOpen: false, mode: null, service: {}, load
         formOpen: true,
         mode: 'new',
         service: {name: "", list_item: '', invoice_id: '', service_id: '', value: "0.00", aliquot_iss: "0.00", value_iss: "0.00", aliquot_pis: "0.00", value_pis: "0.00", aliquot_cofins: "0.00", value_cofins: "0.00",
-                  aliquot_inss: "0.00", value_inss: "0.00", aliquot_csll: "0.00", value_csll: "0.00", description: '' }
+                  aliquot_inss: "0.00", value_inss: "0.00", aliquot_csll: "0.00", value_csll: "0.00", description: '', taxation_code: '', conditioned_discount: "0.00", unconditioned_discount: "0.00" }
       };
     case types.INVOICE_SERVICE_EDIT:
       console.log(`[Invoice Service Reducer] Action: INVOICE_SERVICE_EDIT`);

@@ -12,8 +12,8 @@ class InvoiceBeloHorizonte extends InvoiceCity
     public function getRps() {
 
         $client_inscription = str_replace(array(".", "/", "-"), "", $this->invoice["client_inscription"]);
-        $client_inscription_municipal = str_replace(array(".", "/", "-"), "", $this->client["client_inscription_municipal"]);
-    
+        // $client_inscription_municipal = str_replace(array(".", "/", "-"), "", $this->client["client_inscription_municipal"]);
+        $client_inscription_municipal = '11111';
         $provider_inscription = str_replace(array(".", "/", "-"), "", $this->invoice["provider_inscription"]);
         $provider_inscription_municipal = str_replace(array(".", "/", "-"), "", $this->invoice["provider_inscription_municipal"]);
 
@@ -31,14 +31,14 @@ class InvoiceBeloHorizonte extends InvoiceCity
                         <InfRps Id="'.$this->idRps.'">
                             <IdentificacaoRps>
                                 <Numero>'.str_pad($this->number, 0, 15).'</Numero>
-                                <Serie>'.''.'</Serie>
+                                <Serie>'.$this->invoice['series'].'</Serie>
                                 <Tipo>1</Tipo>
                             </IdentificacaoRps>
                             <DataEmissao>'.$date->format('Y-m-d').'T'.$date->format('h:i:s').'</DataEmissao>
                             <NaturezaOperacao>'.$this->getNatureOperation().'</NaturezaOperacao>
                             <RegimeEspecialTributacao>'.$this->company['taxation_regime'].'</RegimeEspecialTributacao>
                             <OptanteSimplesNacional>'.$this->company['national_simple'].'</OptanteSimplesNacional>
-                            <IncentivadorCultural>'.$this->company['national_simple'].'</IncentivadorCultural>
+                            <IncentivadorCultural>'.$this->company['cultural_promoter'].'</IncentivadorCultural>
                             <Status>1</Status>
                             <Servico>
                                 <Valores>
@@ -49,19 +49,19 @@ class InvoiceBeloHorizonte extends InvoiceCity
                                     <ValorInss>'.$this->valueInss.'</ValorInss>
                                     <ValorIr>'.$this->valueIr.'</ValorIr>
                                     <ValorCsll>'.$this->valueCsll.'</ValorCsll>
-                                    <IssRetido>'.$this->service["iss_retain"].'</IssRetido>
+                                    <IssRetido>'.$this->invoice["iss_retain"].'</IssRetido>
                                     <ValorIss>'.$this->formatNumber($this->service["value_iss"]).'</ValorIss>
                                     <ValorIssRetido>'.$this->formatNumber($this->invoice["iss_retain"] == 1 ? $this->service["value_iss"] : 0).'</ValorIssRetido>
                                     <OutrasRetencoes>'.$this->formatNumber(0).'</OutrasRetencoes>
                                     <BaseCalculo>'.$this->service["value"].'</BaseCalculo>
                                     <Aliquota>'.$this->formatNumber($this->service["aliquot_iss"]).'</Aliquota>
                                     <ValorLiquidoNfse>'.$this->liquidValue.'</ValorLiquidoNfse>
-                                    <DescontoIncondicionado>'.''.'</DescontoIncondicionado>
-                                    <DescontoCondicionado>'.''.'</DescontoCondicionado>
+                                    <DescontoIncondicionado>'.$this->formatNumber($this->service["conditioned_discount"]).'</DescontoIncondicionado>
+                                    <DescontoCondicionado>'.$this->formatNumber($this->service["unconditioned_discount"]).'</DescontoCondicionado>
                                 </Valores>
-                                <ItemListaServico>'.$this->system_service["list_item"].'</ItemListaServico>
-                                <CodigoCnae>'.''.'</CodigoCnae>
-                                <CodigoTributacaoMunicipio>'.''.'</CodigoTributacaoMunicipio>
+                                <ItemListaServico>'.str_replace(array("-", "/", ".", " "), "", $this->system_service["list_item"]).'</ItemListaServico>
+                                <CodigoCnae>'.str_replace(array("-", "/", ".", " "), "", $this->company["cnae"]).'</CodigoCnae>
+                                <CodigoTributacaoMunicipio>'.str_replace(array("-", "/", ".", " "), "", $this->service["taxation_code"]).'</CodigoTributacaoMunicipio>
                                 <Discriminacao>'.substr($this->service["description"], 0, 2000).'</Discriminacao>
                                 <CodigoMunicipio>'.$this->invoice["provision_city_ibge"].'</CodigoMunicipio>
                             </Servico>
@@ -91,7 +91,7 @@ class InvoiceBeloHorizonte extends InvoiceCity
                                     <Numero>'.$this->client['address_number'].'</Numero>
                                     <Complemento>'.$this->client['address_complement'].'</Complemento>
                                     <Bairro>'.$this->client['address_district'].'</Bairro>
-                                    <CodigoMunicipio>'.''.'</CodigoMunicipio>
+                                    <CodigoMunicipio>'.$this->client['city_ibge_code'].'</CodigoMunicipio>
                                     <Uf>'.substr($this->client['cep'], 0, 2).'</Uf>
                                     <Cep>'.str_replace("-", "", $this->client["cep"]).'</Cep>
                                 </Endereco>

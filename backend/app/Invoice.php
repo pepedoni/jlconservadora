@@ -21,7 +21,8 @@ class Invoice extends Model
         'provision_city_ibge',
         'provision_city_name',              
 		'iss_retain',
-		'state'                
+		'state',
+		'series'                
     ];
 
     protected $guarded = ['id', 'created_at', 'update_at'];

@@ -240,7 +240,20 @@ class InvoiceForm extends Component {
             </Col>
           </Row>
           <Row gutter={8}>
-            <Col className="gutter-row" md={8}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
+              <JlInput
+                id="series"
+                label="Série"
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
+                value={this.state.series}
+                onChange={this.handleChange("series")}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
                 id="standard-number"
                 label="Número"
@@ -252,7 +265,7 @@ class InvoiceForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={8} sm={12} xs={12}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlDate
                 id="standard-date"
                 label="Data"
@@ -265,7 +278,7 @@ class InvoiceForm extends Component {
                 variant="outlined"
               />
             </Col>
-            <Col className="gutter-row" md={8} sm={12} xs={12}>
+            <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
                 id="standard-date"
                 label="Valor"
@@ -291,7 +304,7 @@ class InvoiceForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.iss_retain}
                 dataSource={[
-                  { key: 0, description: "Não", label: "Não" },
+                  { key: 2, description: "Não", label: "Não" },
                   { key: 1, description: "Sim", label: "Sim" }
                 ]}
                 fullWidth
