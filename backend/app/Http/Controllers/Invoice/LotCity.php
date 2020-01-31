@@ -6,6 +6,7 @@ use NFePHP\Common\Certificate;
 use App\Lot;
 use App\Newcode;
 use App\Company;
+use App\Invoice;
 
 abstract class LotCity {
 
@@ -15,6 +16,7 @@ abstract class LotCity {
     protected $certificate = '';
     protected $password = '';
     protected $certificate_data = '';
+    protected $errors = array();
 
     public function __construct($invoices, Lot $lot) {
         $this->invoices = $invoices;
@@ -22,11 +24,31 @@ abstract class LotCity {
         $this->getCertificate();
         $this->lot = $lot;
         $this->idLotRps = $this->genNumberLoteRps();
+        $this->setLotInvoices();
     }
 
     abstract protected function genXmlEnviarLoteRps();
     abstract public function transmitLotRps();
+    abstract protected function treatReturnWebService($result);
     abstract public function consultLotRps();
+
+    public function getErrors() {
+        return $this->errors;
+    }
+
+    /**
+     * @param \DOMNode
+     * @param string
+     * @return \DOMNode
+     */
+    public function getChildNodeByName(\DOMNode $node, $name) {
+        foreach ($node->childNodes as $childNode) {
+            if ($childNode->nodeName == $name) {
+                return $childNode;
+            }
+        }
+        return null;
+    }
 
     protected function signXmlEnviarLoteRps($tags, $assinatura = "") {
 
@@ -172,12 +194,42 @@ abstract class LotCity {
 
     protected function removerTagsVazias(\DOMDocument $xml) {
         $xpath = new \DOMXPath($xml);
+
         foreach($xpath->query('//*[not(node())]') as $node) {
             if (!$node->hasAttributes()) {
                 $node->parentNode->removeChild($node);
             }
         }
+
         return $xml;
+    }
+
+    protected function updateSendedLot($protocol, $receivement) {
+        $lot = Lot::findOrFail($this->lot["id"]);
+
+        $lot["protocol"] = $protocol;
+        $lot["receivement"] = $receivement;
+        $lot["state"]  = 1;
+
+        $lot->save();
+    }
+
+    protected function updateSendedInvoices() {
+        foreach($this->invoices as $invoice) {
+            $invoice = Invoice::findOrFail($invoice["id"]);
+    
+            $invoice["state"] = 1;
+            $invoice->save();
+        }
+    }
+
+    private function setLotInvoices() {
+        foreach($this->invoices as $invoice) {
+            $invoice = Invoice::findOrFail($invoice["id"]);
+    
+            $invoice["lot_id"] = $this->lot["id"];
+            $invoice->save();
+        }
     }
 
 }

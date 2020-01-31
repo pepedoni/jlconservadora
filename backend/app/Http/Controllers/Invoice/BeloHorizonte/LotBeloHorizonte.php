@@ -51,8 +51,8 @@ class LotBeloHorizonte extends LotCity
 
         $domXml = new \DOMDocument("1.0", "UTF-8");
         $domXml->loadXML($this->xmlLoteRps, LIBXML_NOBLANKS);
-        
-        $this->removerTagsVazias($domXml);
+        $this->xmlLoteRps = $domXml->saveXml();
+        //$this->xmlLoteRps = $this->removerTagsVazias($domXml)->saveXml();
     }
 
     public function callWebService($xml, $function) {
@@ -85,16 +85,60 @@ class LotBeloHorizonte extends LotCity
         $client = new \SoapClient($url, $options);
         $soapMsg["nfseCabecMsg"] = '<cabecalho xmlns="http://www.abrasf.org.br/nfse.xsd" versao="1.00"><versaoDados>1.00</versaoDados></cabecalho>';
         $soapMsg["nfseDadosMsg"] = $xml;
-        var_dump($xml);die;
         $resultado = $client->__soapCall($function, array($soapMsg));
-        var_dump($resultado);die;
+  
+        
         return $resultado; 
     }
 
     public function transmitLotRps() {
         $this->genXmlEnviarLoteRps();
         $this->signXmlEnviarLoteRps(array("InfRps", "LoteRps"));
-        $this->callWebService($this->xmlLoteRps, 'RecepcionarLoteRps');
+        try {
+            $result = $this->callWebService($this->xmlLoteRps, 'RecepcionarLoteRps');
+        }
+        catch (\Exception $ex) {
+            throw new \Exception($ex->getMessage());
+        }
+
+        return $this->treatReturnWebService($result);
+    }
+
+    protected function treatReturnWebService($resultado) {
+
+        if ($resultado->outputXML) {
+
+            $domResult = new \DOMDocument("1.0", "UTF-8");
+            $domResult->loadXML($resultado->outputXML);
+            if ($domResult->getElementsByTagName("NumeroLote")->length > 0) {
+
+                $protocol = $domResult->getElementsByTagName("Protocolo")->item(0)->nodeValue;
+                $receivement = $domResult->getElementsByTagName("DataRecebimento")->item(0)->nodeValue;
+                $receivement = date_create_from_format("Y-m-d\TH:i:s", $receivement);
+                
+                $this->updateSendedLot($protocol, $receivement);
+                $this->updateSendedInvoices();
+
+                return true;
+            }
+            else if ($domResult->getElementsByTagName("MensagemRetorno")->length > 0) {
+
+                foreach ($domResult->getElementsByTagName("MensagemRetorno") as $error) {
+                    $errors[] = array(
+                        "TIPO"   => 2,
+                        "CODIGO" => $this->getChildNodeByName($error, "Codigo")->nodeValue,
+                        "DESCRICAO" => $this->getChildNodeByName($error, "Mensagem")->nodeValue
+                    );
+                }
+                
+                $this->errors = $errors;
+
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
     }
 
     /**

@@ -22,7 +22,10 @@ class Invoice extends Model
         'provision_city_name',              
 		'iss_retain',
 		'state',
-		'series'                
+		'series',
+		'lot_id',
+		'emission',
+		'competence'                
     ];
 
     protected $guarded = ['id', 'created_at', 'update_at'];

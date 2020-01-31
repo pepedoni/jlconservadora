@@ -87,8 +87,9 @@ class InvoiceController extends Controller {
         foreach($invoices as &$invoice) {
             $date = new \DateTime($invoice["provision_date"]);
             $invoice["provision_date_grid"] = $date->format('d/m/Y');
-            $invoice["description_state"]   = ($invoice["state"] == '0')  ? 'Pendente' 
-                                                : (($invoice["state"] == '1') ? 'Transmitida' : 'Aceita');
+            $invoice["description_state"]   = ($invoice["state"] == 0)  ? 'Pendente' 
+                                                : (($invoice["state"] == 1) ? 'Transmitida' 
+                                                : (($invoice["state"] == 2) ? 'Aceita' : 'Rejeitada'));
         }
 
         return $invoices;
@@ -162,27 +163,16 @@ class InvoiceController extends Controller {
 
         $this->separeteNotesByState($invoices, $transmitLots, $consultLots); 
 
-        $succesInvoices = $this->sendInvoice($transmitLots);
+        $result = $this->sendInvoice($transmitLots);
 
-        foreach($succesInvoices as $invoice) {
-            addLotToConsult($invoice, $consultLots);
-        }
+        return response()->json(['result'=> $result]);
 
-        foreach($consultLots as $consultLot) {
-
-            $lot = Lot::where('id', '=', $consultLot);
-            $invoices = Invoice::where('lot_rps', '=', $consultLot);
-            $loteRps = new LotBeloHorizonte(array(), $lot);
-            $loteRps->consultLotRps();
-
-        }
-        
     }
 
     private function addLotToConsult($invoice, &$consultLots) {
-        $lotRps = $invoice["lot_rps"];
+        $lotRps = $invoice["lot_id"];
         if(!isset($consultLots[$lotRps])) {
-            $consultLots[$loteRps] = $lotRps;
+            $consultLots[$lotRps] = $lotRps;
         }
     }
 
@@ -201,13 +191,14 @@ class InvoiceController extends Controller {
                 }
             }
             else if($invoice["state"] == 1) {
-                addLotToConsult($invoice, $consultLots);
+                $this->addLotToConsult($invoice, $consultLots);
             }
         }
     }
 
     protected function sendInvoice($transmitLots) {
         $succesInvoices = array();
+        $errors = array();
         foreach($transmitLots as $invoice_lot) {
 
             $provider_inscription = $invoice_lot[0]["provider_inscription"];
@@ -222,10 +213,15 @@ class InvoiceController extends Controller {
             ]);
 
             $lot->save();
-            $loteRps = new LotBeloHorizonte($invoice_lot, $lot);
-            $loteRps->transmitLotRps();
-            $succesInvoices[] = $invoice_lot;
+            $lotRps = new LotBeloHorizonte($invoice_lot, $lot);
+            $result = $lotRps->transmitLotRps();
+            if($result) {
+                $succesInvoices = array_merge($succesInvoices, $invoice_lot);
+            }
+            else {
+                $errors = array_merge($errors, $lotRps->getErrors());
+            }
         }
-        return $succesInvoices;
+        return array("succesInvoices" => $succesInvoices, "errors" => $errors);
     }
 }

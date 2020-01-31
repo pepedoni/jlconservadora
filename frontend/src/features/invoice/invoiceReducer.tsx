@@ -12,7 +12,7 @@ export default function(state = { formOpen: false, mode: null, invoice: {}, tabs
         filterOpen: false,
         tabsAtivas: false,
         invoice: {provision_date: getData(), provider_id: '', provider_inscription: '', provider_name: '', client_inscription: '', client_name: '', provider_inscription_municipal: '',
-        provision_state: '31', provision_city_name: '', provision_city_ibge: '', provider_social_name: '', iss_retain: 0, value: '', series: '' }
+        provision_state: '31', provision_city_name: '', provision_city_ibge: '', provider_social_name: '', iss_retain: 0, value: '', series: '', state: '' }
       };
     case types.INVOICE_EDIT:
       console.log(`[Invoice Reducer] Action: INVOICE_EDIT`);

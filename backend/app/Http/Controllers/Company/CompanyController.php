@@ -15,8 +15,8 @@ class CompanyController extends Controller
             'inscription'            => 'required|string|max:255',
             'name'                   => 'required|string|max:255',
             'taxation_regime'        => 'required|integer|min:0|max:5',
-            'national_simple'        => 'required|integer|min:0|max:1',
-            'cultural_promoter'      => 'required|integer|min:0|max:1',
+            'national_simple'        => 'required|integer|min:1|max:2',
+            'cultural_promoter'      => 'required|integer|min:1|max:2',
             'cnae'                   => 'required|string|max:10'
         ]);
         

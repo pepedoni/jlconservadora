@@ -62,7 +62,7 @@ class InvoiceBeloHorizonte extends InvoiceCity
                                 <ItemListaServico>'.str_replace(array("-", "/", ".", " "), "", $this->system_service["list_item"]).'</ItemListaServico>
                                 <CodigoCnae>'.str_replace(array("-", "/", ".", " "), "", $this->company["cnae"]).'</CodigoCnae>
                                 <CodigoTributacaoMunicipio>'.str_replace(array("-", "/", ".", " "), "", $this->service["taxation_code"]).'</CodigoTributacaoMunicipio>
-                                <Discriminacao>'.substr($this->service["description"], 0, 2000).'</Discriminacao>
+                                <Discriminacao>'.substr($this->retiraAcento($this->service["description"]), 0, 2000).'</Discriminacao>
                                 <CodigoMunicipio>'.$this->invoice["provision_city_ibge"].'</CodigoMunicipio>
                             </Servico>
                             <Prestador>
