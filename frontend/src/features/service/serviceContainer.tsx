@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { serviceAdd, serviceEdit, serviceView, serviceSave, serviceDelete, serviceCloseForm, onRowClick } from './serviceActions';
+import { serviceAdd, serviceEdit, serviceView, serviceSave, onDelete, serviceCloseForm, onRowClick } from './serviceActions';
 
 import Service from "./serviceComponent";
 // import {withRouter} from "react-router-dom";
@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-        serviceAdd, serviceEdit, serviceView, serviceSave, serviceDelete, serviceCloseForm, onRowClick
+        serviceAdd, serviceEdit, serviceView, serviceSave, onDelete, serviceCloseForm, onRowClick
     },
     dispatch
 );

@@ -244,9 +244,10 @@ class InvoiceForm extends Component {
               <JlInput
                 id="series"
                 label="Série"
-                className={this.props.mode === "edit" ? classes.textFieldReadOnly : classes.textField}
-                disabled={true}
+                className={classes.textField}
+                disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.series}
+                onChange={this.handleChange("series")}
                 fullWidth
                 margin="normal"
                 variant="outlined"
@@ -303,7 +304,7 @@ class InvoiceForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.iss_retain}
                 dataSource={[
-                  { key: 0, description: "Não", label: "Não" },
+                  { key: 2, description: "Não", label: "Não" },
                   { key: 1, description: "Sim", label: "Sim" }
                 ]}
                 fullWidth

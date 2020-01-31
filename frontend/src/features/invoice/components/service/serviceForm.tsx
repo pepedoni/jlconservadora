@@ -157,7 +157,7 @@ class ServiceForm extends Component {
           wrapperClassName="spin"
         >
           <Row gutter={8}>
-            <Col className="gutter-row" md={6}>
+            <Col className="gutter-row" md={8}>
                 <JlAutoComplete
                     id="standard-provider_inscription"
                     label="Nome do Serviço"
@@ -168,7 +168,7 @@ class ServiceForm extends Component {
                     fullWidth
                     filters={['name']}
                     route="services/getByName"
-                    displayedFields={['name', 'list_item']}
+                    displayedFields={['name', 'taxation_code', 'list_item']}
                     outData={{
                         aliquot_iss:      'aliquot',
                         description:  'description',
@@ -182,7 +182,20 @@ class ServiceForm extends Component {
                     variant="outlined"
                 />
             </Col>
-            <Col className="gutter-row" md={6}>
+            <Col className="gutter-row" md={8}>
+              <JlInput
+                id="taxation_code"
+                label="Código de Tributação"
+                className={classes.textField}
+                disabled={true}
+                value={this.state.taxation_code}
+                fullWidth
+                onChange={this.handleChangeValue("taxation_code")}
+                margin="normal"
+                variant="outlined"
+              />
+            </Col>
+            <Col className="gutter-row" md={8}>
               <JlInput
                   id="standard-aliquot"
                   label="Item da Lista"
@@ -195,7 +208,9 @@ class ServiceForm extends Component {
                   variant="outlined"
                 />
             </Col>
-            <Col className="gutter-row" md={6}>
+          </Row>
+          <Row gutter={8}>
+            <Col className="gutter-row" md={8}>
               <JlInput
                 id="standard-aliquot"
                 label="Valor do Serviço"
@@ -210,21 +225,7 @@ class ServiceForm extends Component {
                 type="number"
               />
             </Col>
-            <Col className="gutter-row" md={6}>
-              <JlInput
-                id="taxation_code"
-                label="Código de Tributação"
-                className={classes.textField}
-                disabled={true}
-                value={this.state.taxation_code}
-                fullWidth
-                onChange={this.handleChangeValue("taxation_code")}
-                margin="normal"
-                variant="outlined"
-                type="number"
-              />
-            </Col>
-            <Col className="gutter-row" md={12} sm={12} xs={12}>
+            <Col className="gutter-row" md={8} sm={12} xs={12}>
               <JlInput
                 id="standard-aliquot"
                 label="Aliquota ISS"
@@ -239,7 +240,7 @@ class ServiceForm extends Component {
                 type="number"
               />
             </Col>
-            <Col className="gutter-row" md={12} sm={12} xs={12}>
+            <Col className="gutter-row" md={8} sm={12} xs={12}>
               <JlInput
                 id="standard-aliquot"
                 label="Valor ISS"
@@ -254,6 +255,8 @@ class ServiceForm extends Component {
                 type="number"
               />
             </Col>
+          </Row>
+          <Row gutter={8}>
             <Col className="gutter-row" md={6} sm={12} xs={12}>
               <JlInput
                 id="standard-aliquot"

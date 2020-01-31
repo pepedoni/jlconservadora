@@ -284,7 +284,7 @@ class CompanyForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.national_simple}
                 dataSource={[
-                  { key: 0, description: "Não", label: "Não" },
+                  { key: 2, description: "Não", label: "Não" },
                   { key: 1, description: "Sim", label: "Sim" }
                 ]}
                 fullWidth
@@ -302,7 +302,7 @@ class CompanyForm extends Component {
                 disabled={this.isReadOnly(this.props.mode, false)}
                 value={this.state.cultural_promoter}
                 dataSource={[
-                  { key: 0, description: "Não", label: "Não" },
+                  { key: 2, description: "Não", label: "Não" },
                   { key: 1, description: "Sim", label: "Sim" }
                 ]}
                 fullWidth
@@ -447,7 +447,7 @@ class CompanyForm extends Component {
                   disabled={this.isReadOnly(this.props.mode, false)}
                   fullWidth
                   type="password"
-                  onChange={this.handleChange("certify_passwod")}
+                  onChange={this.handleChange("certify_password")}
                   margin="normal"
                   variant="outlined"
                 />

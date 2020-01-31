@@ -22,7 +22,7 @@ export const serviceView = () => {
     }
 }
 
-export const serviceDelete= () => {
+const serviceDelete= () => {
     return {
         type: types.SERVICE_DELETE
     }
@@ -88,4 +88,15 @@ export const serviceSave = (service, mode) => (dispatch) => {
             dispatch(loading(false));
         });
     }
+}
+
+export const onDelete = (service) => (dispatch) => {
+    dispatch(loading(true));
+
+    request.delete('/services/' + service.id, service).then( response =>  {
+        dispatch(serviceDelete());
+        dispatch(loading(false));
+    }).catch( error => {
+        dispatch(loading(false));
+    });
 }

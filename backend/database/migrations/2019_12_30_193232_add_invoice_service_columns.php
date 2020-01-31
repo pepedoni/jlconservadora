@@ -14,7 +14,7 @@ class AddInvoiceServiceColumns extends Migration
     public function up()
     {
         Schema::table('invoice_services', function (Blueprint $table) {
-            $table->integer('taxation_code');
+            $table->string('taxation_code', 20);
             $table->double('conditioned_discount');
             $table->double('unconditioned_discount');
         });

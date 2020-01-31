@@ -15,7 +15,7 @@ class ServiceController extends Controller
             'list_item' => 'required|string|min:1|max:12',
             'aliquot'   => 'required|numeric|between:0,99.99',
             'description' => 'required|string|min:1|max:255',
-            'taxation_code' => 'required|numeric'
+            'taxation_code' => 'required|string'
         ]);
         // var_dump($request->taxation_code);die;
         
@@ -24,7 +24,7 @@ class ServiceController extends Controller
             'list_item' => $request->list_item,
             'aliquot'   => round($request->aliquot, 2),
             'description' => $request->description,
-            'taxation_code' => (int) $request->taxation_code
+            'taxation_code' => $request->taxation_code
         ]);
             
         $service->save();
@@ -61,5 +61,11 @@ class ServiceController extends Controller
     
     public function getServiceByName(Request $request) {
         return Service::distinct()->where('name', 'LIKE', $request->query('name').'%')->get();
+    }
+
+    public function remove(Request $request, Service $service) {
+        $service = Service::findOrFail($request->id);
+
+        $service->delete();
     }
 }

@@ -75,7 +75,7 @@ export default function(state = { formOpen: false, mode: null, client: {}, loadi
         client: action.payload.client,
         mode: action.payload.mode,
         filterOpen: false,
-        errors: action.payload.errors
+        errors: action.payload.errors || {}
       }
     case types.CLIENT_OPEN_FILTER:
       console.log(`[Client Reducer] Action: CLIENT_OPEN_FILTER`);

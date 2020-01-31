@@ -8,7 +8,7 @@ export default function(state = { formOpen: false, mode: null, company: {}, load
         ...state,
         formOpen: true,
         mode: 'new',
-        company: {municipal_inscription: '',  inscription: '',  name: '', nature_operation: '',  taxation_regime: 5,  national_simple: 1,  cultural_promoter: 0,
+        company: {municipal_inscription: '',  inscription: '',  name: '', taxation_regime: 5,  national_simple: 1,  cultural_promoter: 0,
                   cep: '', state: '', city: '', address: '', address_district: '', address_number: '', address_complement: '', certify_name: '',
                   certify_password: '', cnae: ''
         }

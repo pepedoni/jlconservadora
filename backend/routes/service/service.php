@@ -7,5 +7,6 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::get('/getByName', 'ServiceController@getServiceByName');
         Route::post('', 'ServiceController@insertService');
         Route::put('/{id}', 'ServiceController@updateService');
+        Route::delete('/{id}', 'ServiceController@remove');
     });
 });

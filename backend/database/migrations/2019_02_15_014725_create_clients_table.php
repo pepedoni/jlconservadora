@@ -23,7 +23,7 @@ class CreateClientsTable extends Migration
             $table->string('syndic_ap', 5)->nullable()->default(null);;
             $table->date('syndic_birthday')->nullable()->default(null);;
             $table->string('syndic_email', 50);
-            $table->string('home_contact', 11);
+            $table->string('home_contact', 11)->nullable();
             $table->string('phone_contact', 11);
             $table->date('manage_init');
             $table->date('manage_end');

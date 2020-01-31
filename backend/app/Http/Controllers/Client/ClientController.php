@@ -64,7 +64,11 @@ class ClientController extends Controller {
 
         $client = Client::findOrFail($id);
 
-        $client->fill($request->all())->save();
+        $client->fill($request->all());
+        $client->phone_contact = str_replace(array("(", ")", "-", " "), "", $client->phone_contact);
+        $client->home_contact = str_replace(array("(", ")", "-", " "), "", $client->home_contact);
+
+        $client->save();
 
         return response()->json(['data'=> $client]);
     }

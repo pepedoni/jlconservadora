@@ -6,20 +6,39 @@ use App\Invoice;
 use App\InvoiceServices;
 use App\Company;
 use App\Client;
+use App\Service;
+use App\Newcode;
 
 abstract class InvoiceCity {
 
     protected $invoice;
+    protected $company;
+    protected $service;
 
     public function __construct(array $invoice) {
         $this->invoice  = $invoice;
         $this->company  = $this->getCompany($invoice["provider_id"]);
-        $this->services = $this->getInvoiceServices($invoice["id"]);
+        $this->service  = $this->getInvoiceServices($invoice["id"])[0];
+        $this->system_service = $this->getSystemServiceByService($this->service)[0];
         $this->client   = $this->getClient($invoice["client_id"]);
-        $this->discrimnation = $this->getDiscrimination();
+        $this->number   = $this->generateNumberRps();
+        $this->idRps    = "RPS_" . $this->invoice["series"] . "_" . $this->number;
+        $this->calculateTaxesValue();
+        $this->calculateDeductionsValue();
+        $this->calculateLiquidValue();
+    }
+
+    abstract public function getRps(); 
+
+    private function getSystemServiceByService($service) {
+        $system_service = Service::where('id', "=", $service["service_id"])->get();
+        if(!isset($system_service[0])) throw new \Exception("Serviço não encontrado no sistema.");
+        else {
+            return $system_service;
+        }
     }
     
-    protected function getCompany($provider_id) {
+    private function getCompany($provider_id) {
         $company = Company::where('id', '=', $provider_id)->get();
         if(!isset($company[0])) throw new \Exception("Empresa da nota fiscal não encontrada.");
         else {
@@ -27,7 +46,7 @@ abstract class InvoiceCity {
         }
     }
 
-    protected function getInvoiceServices($invoice_id) {
+    private function getInvoiceServices($invoice_id) {
         $services = InvoiceServices::where('invoice_id', '=', $invoice_id)->get();
         if(!isset($services)) throw new \Exception("Serviços da nota fiscal não encontrados.");
         else {
@@ -35,7 +54,7 @@ abstract class InvoiceCity {
         }
     }
 
-    protected function getClient($client_id) {
+    private function getClient($client_id) {
         $client = Client::where('id', '=', $client_id)->get();
         if(!isset($client[0])) throw new \Exception("Cliente da nota fiscal não encontrado.");
         else {
@@ -43,23 +62,57 @@ abstract class InvoiceCity {
         }
     }
 
-    public function getDiscrimination() {
-        $discimination = '';
-        $first = true;
-        foreach($this->services as $service) {
-            if($first) $discimination .= $service["description"];
-            else {
-                $discimination .= '
-                '.$service["description"];
-            }
+    private function generateNumberRps() {
+        $key = "NUMERO_".$this->invoice["provider_id"]."_".$this->invoice["series"];
+        $newCode = Newcode::where('key', '=', $key)->get();
+    
+        if(isset($newCode[0])) {
+            $newCode = $newCode[0];
+            $newCode["code"] += 1;
+            $newCode->save();
+            return $newCode["code"];
         }
-        return $discimination;
+        else {
+            $newCode = new NewCode([
+                "key"  => $key,
+                "code" => 1
+            ]);
+            $newCode->save();
+            return 1;
+        }
     }
 
-    public function formatarNumero($numero, $casasDecimais = 2) {
+    private function calculateLiquidValue() {
+        $this->liquidValue = $this->invoice["value"] - ( $this->valueDeductions + $this->service["conditioned_discount"] + $this->service["unconditioned_discount"] );
+    }
+
+    private function calculateValueForAliquot($service, $aliquot_value) {
+        $value = $service["value"] * ($aliquot_value / 100);
+        return $this->formatNumber($value);
+    }
+
+    private function calculateTaxesValue() {
+        $this->valuePis = $this->calculateValueForAliquot($this->service, $this->service["aliquot_pis"]);
+        $this->valueCofins = $this->calculateValueForAliquot($this->service, $this->service["aliquot_cofins"]);
+        $this->valueInss = $this->calculateValueForAliquot($this->service, $this->service["aliquot_inss"]);
+        $this->valueIr = $this->calculateValueForAliquot($this->service, $this->service["aliquot_ir"]);
+        $this->valueCsll = $this->calculateValueForAliquot($this->service, $this->service["aliquot_csll"]);
+    }
+
+    private function calculateDeductionsValue() {
+        $this->valueDeductions = $this->formatNumber($this->valuePis + $this->valueCofins + $this->valueInss + $this->valueIr + $this->valueCsll + $this->service["value_iss"]);
+    }
+
+    protected function formatNumber($numero, $casasDecimais = 2) {
         return number_format($numero, $casasDecimais, '.', '');
     }
 
-    abstract public function getRps();
+    public function retiraAcento($texto) {
+        $acentos = array('á'=>'a', 'à'=>'a', 'ã'=>'a', 'â'=>'a', 'ä'=>'a', 'é'=>'e', 'ê'=>'e', 'è'=>'e', 'ë'=>'e', 'í'=>'i', 'ì'=>'i', 'ï'=>'i',
+            'î'=>'i', 'ó'=>'o', 'ô'=>'o', 'ò'=>'o', 'õ'=>'o', 'ö'=>'o', 'ú'=>'u', 'ü'=>'u', 'ù'=>'u', 'û'=>'u', 'ç'=>'c', 'Á'=>'A',
+            'À'=>'A', 'Ã'=>'A', 'Â'=>'A', 'Ä'=>'A', 'É'=>'E', 'Ê'=>'E', 'È'=>'E', 'Ë'=>'E', 'Í'=>'I', 'Ì'=>'I', 'Ï'=>'I', 'Î'=>'I',
+            'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ò'=>'O', 'Ö'=>'O', 'Ú'=>'U', 'Ù'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ç'=>'C', "'" => '');
+        return strtr($texto, $acentos);
+    }
 
 }

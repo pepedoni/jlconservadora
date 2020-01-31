@@ -9,7 +9,7 @@ use App\Invoice;
 use App\InvoiceServices;
 use App\Lot;
 use Carbon\Carbon;
-use NFePHP\Common\Certificate;
+use App\Company;
 
 class InvoiceController extends Controller {
 
@@ -31,7 +31,7 @@ class InvoiceController extends Controller {
             'provision_city_ibge'               => 'required',
             'provision_city_name'               => 'required',
             'iss_retain'                        => 'required',
-            'taxation_code'                     => 'required'
+            'series'                            => 'required'
         ]);
         
         $invoice = new Invoice([
@@ -49,11 +49,9 @@ class InvoiceController extends Controller {
             'provision_city_ibge'               => $request->provision_city_ibge,
             'provision_city_name'               => $request->provision_city_name,
             'iss_retain'                        => $request->iss_retain,
-            'taxation_code'                     => $request->taxation_code,
-            'conditioned_discount'              => $request->conditioned_discount,
-            'unconditioned_discount'            => $request->unconditioned_discount
+            'series'                            => $request->series
         ]);
-            
+
         $invoice->save();
 
         return response()->json([
@@ -89,8 +87,9 @@ class InvoiceController extends Controller {
         foreach($invoices as &$invoice) {
             $date = new \DateTime($invoice["provision_date"]);
             $invoice["provision_date_grid"] = $date->format('d/m/Y');
-            $invoice["description_state"]   = ($invoice["state"] == '0')  ? 'Pendente' 
-                                                : (($invoice["state"] == '1') ? 'Transmitida' : 'Aceita');
+            $invoice["description_state"]   = ($invoice["state"] == 0)  ? 'Pendente' 
+                                                : (($invoice["state"] == 1) ? 'Transmitida' 
+                                                : (($invoice["state"] == 2) ? 'Aceita' : 'Rejeitada'));
         }
 
         return $invoices;
@@ -153,13 +152,32 @@ class InvoiceController extends Controller {
     public function transmitInvoice(Request $request) {
         
         $invoices = $request->all();
-        $certificate_file = file_get_contents('../app/Http/Controllers/Invoice/teknisa.pfx');
-        $certificate = Certificate::readPfx($certificate_file, 'teknisa@12');
+
+        if(empty($invoices)) throw new \Excepetion("Nenhuma nota fiscal selecionada.");
+
+        $provider_id = $invoices[0]["provider_id"];     
 
         $i = 0;
         $transmitLots = array();
         $consultLots  = array();
 
+        $this->separeteNotesByState($invoices, $transmitLots, $consultLots); 
+
+        $result = $this->sendInvoice($transmitLots);
+
+        return response()->json(['result'=> $result]);
+
+    }
+
+    private function addLotToConsult($invoice, &$consultLots) {
+        $lotRps = $invoice["lot_id"];
+        if(!isset($consultLots[$lotRps])) {
+            $consultLots[$lotRps] = $lotRps;
+        }
+    }
+
+    protected function separeteNotesByState($invoices, &$transmitLots, &$consultLots) {
+        $i = 0;
         foreach($invoices as $invoice) {
             if($invoice["state"] == 0) {
                 if(empty($transmitLots[$i])) {
@@ -173,10 +191,14 @@ class InvoiceController extends Controller {
                 }
             }
             else if($invoice["state"] == 1) {
-                $consultLots[] = $invoice["lot_rps"];
+                $this->addLotToConsult($invoice, $consultLots);
             }
         }
+    }
 
+    protected function sendInvoice($transmitLots) {
+        $succesInvoices = array();
+        $errors = array();
         foreach($transmitLots as $invoice_lot) {
 
             $provider_inscription = $invoice_lot[0]["provider_inscription"];
@@ -191,20 +213,15 @@ class InvoiceController extends Controller {
             ]);
 
             $lot->save();
-            $loteRps = new LotBeloHorizonte($invoice_lot, $certificate, $lot);
-            $loteRps->transmitLotRps();
-
+            $lotRps = new LotBeloHorizonte($invoice_lot, $lot);
+            $result = $lotRps->transmitLotRps();
+            if($result) {
+                $succesInvoices = array_merge($succesInvoices, $invoice_lot);
+            }
+            else {
+                $errors = array_merge($errors, $lotRps->getErrors());
+            }
         }
-
-        foreach($consultLots as $consultLot) {
-
-            $lot = Lot::where('id', '=', $consultLot);
-            $invoices = Invoice::where('lot_rps', '=', $consultLot);
-            $loteRps = new LotBeloHorizonte(array(), $certificate, $lot);
-            $loteRps->consultLotRps();
-
-        }
-
-        
+        return array("succesInvoices" => $succesInvoices, "errors" => $errors);
     }
 }

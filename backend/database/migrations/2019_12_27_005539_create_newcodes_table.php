@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddServicesTaxationCode extends Migration
+class CreateNewcodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddServicesTaxationCode extends Migration
      */
     public function up()
     {
-        Schema::table('services', function (Blueprint $table) {
-            $table->string('taxation_code', 20);
+        Schema::create('newcodes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('key', 200);
+            $table->integer('code');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddServicesTaxationCode extends Migration
      */
     public function down()
     {
-        Schema::table('services', function (Blueprint $table) {
-            $table->dropColumn('taxation_code');
-        });
+        Schema::dropIfExists('newcodes');
     }
 }

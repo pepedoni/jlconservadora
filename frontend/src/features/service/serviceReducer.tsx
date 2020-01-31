@@ -28,7 +28,7 @@ export default function(state = { formOpen: false, mode: null, service: {}, load
       console.log(`[Service Reducer] Action: SERVICE_DELETE`);
       return {
         ...state,
-        formOpen: true,
+        formOpen: false,
         mode: 'delete'
       };
     case types.SERVICE_CLOSEFORM:

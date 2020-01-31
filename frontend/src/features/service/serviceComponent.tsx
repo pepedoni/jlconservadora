@@ -23,7 +23,7 @@ export default class ServiceComponent extends Component {
                         mode={this.props.mode} 
                         onEdit={this.props.serviceEdit}
                         onSave={this.props.serviceSave} 
-                        onDelete={this.props.serviceDelete} 
+                        onDelete={this.props.onDelete} 
                         service={this.props.service}
                         loading={this.props.loading}
                         view={this.props.serviceView}/>

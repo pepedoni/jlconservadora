@@ -14,7 +14,7 @@ class AddInvoiceSeries extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->string('series', 9)->nullable();
+            $table->string('series', 9);
         });
     }
 
