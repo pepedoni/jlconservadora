@@ -19,7 +19,7 @@
   "homepage": "https://github.com/pepedoni/jlconservadora/blob/master/README.md",
   "devDependencies": {
     "@babel/cli": "^7.1.0",
-    "@babel/core": "^7.1.0",
+    "@babel/core": "^7.20.12",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
